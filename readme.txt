@@ -1,6 +1,6 @@
 
 project name: xanadu
-project type: game server for GMS v0.62 (Global MapleStory version 0.62)
+project type: game server for GMS v0.83 (Global MapleStory version 0.83)
 
 by Buya (the developer's pseudonym)
 
