@@ -48,3 +48,9 @@ Corsair = 522
 
 Gm = 900
 SuperGM = 910
+
+.... to-do:
+
+cygnus
+
+aran
