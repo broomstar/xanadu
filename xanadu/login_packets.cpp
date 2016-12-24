@@ -133,6 +133,7 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	  */
 	write<signed char>(0);
 	write<signed char>(0);
+	write<signed char>(0);
 
 	write<std::string>(account_name);
 	write<signed char>(0); // LOBYTE(nPurchaseExp) = CInPacket::Decode1(iPacket); ?
@@ -140,6 +141,17 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	write<long long>(0); // quiet ban/chat block time/date
 	write<long long>(0); // register date
 	write<int>(8); // nNumOfCharacter
+	write<signed char>(2); // PIN?
+
+	/*
+	info the byte below:
+
+	like above, it's apparently something for admin shop
+
+	sMsg._m_pStr[432] = CInPacket::Decode1(iPacket);
+	*/
+
+	write<signed char>(0);
 }
 
 /*
@@ -240,7 +252,7 @@ void PacketCreator::AddCharStats(Character *character)
 	write<short>(0); // sp
 	write<int>(0); // exp
 	write<short>(character->get_fame());
-	write<int>(0);
+	write<int>(0); // gachapon exp?
 	write<int>(0); // map id
 	write<signed char>(0); // map spawn point
 	write<int>(0);
@@ -331,6 +343,8 @@ void PacketCreator::ShowCharacter(Character *character)
 	AddCharStats(character);
 	AddCharLook(character);
 
+	write<signed char>(0); // ? written only if not viewall?
+
 	// rankings
 
 	bool enable_rankings = false;
@@ -365,6 +379,10 @@ void PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *charact
 		Character *character = it.second;
 		ShowCharacter(character);
 	}
+	
+	// enable PIC?
+	// 2 = disable, 1 = need to set one, 0 = enable ?
+	write<signed char>(2);
 
 	write<int>(character_slots);
 }

@@ -21,6 +21,7 @@ namespace receive_headers_login
 
 namespace receive_headers
 {
+	// all opcodes not updated yet
 	constexpr short kREQUEST_MAP_CHANGE = 0x23;
 	constexpr short kCHANGE_CHANNEL = 0x24;
 	constexpr short kENTER_CASHSHOP = 0x25;

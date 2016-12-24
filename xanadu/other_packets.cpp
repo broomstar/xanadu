@@ -646,8 +646,14 @@ void PacketCreator::AddCharStats(Player *player)
 void PacketCreator::writeCharacterData(Player *player)
 {
 	write<long long>(-1);
+	write<signed char>(0);
 	AddCharStats(player);
 	write<signed char>(player->get_buddy_list_capacity());
+
+	// linked name?
+	// bool byte: false = nothing, true = string (linked name) follows?
+	write<bool>(false);
+
 	AddInventoryInfo(player);
 	AddSkillInfo(player);
 	AddCoolDownInfo(player);
@@ -692,7 +698,19 @@ void PacketCreator::writeCharacterData(Player *player)
 
 	AddRingInfo();
 	AddTeleportRockInfo();
-	write<int>(0);
+
+	// monster book info?
+	write<int>(0); // monster book cover?
+	write<signed char>(0);
+	write<short>(0); // cards size? loop follows if not 0
+
+	// new year info?
+	write<short>(0);
+
+	// area info?
+	write<short>(0);
+
+	write<short>(0);
 }
 
 void PacketCreator::AddInventoryInfo(Player *player)
@@ -723,7 +741,7 @@ void PacketCreator::AddInventoryInfo(Player *player)
 		}
 	}
 
-	write<signed char>(kEndInventory);
+	write<short>(kEndInventory);
 
 	// equipped inventory (only cash)
 	for (auto &it : *items)
@@ -736,7 +754,7 @@ void PacketCreator::AddInventoryInfo(Player *player)
 		}
 	}
 
-	write<signed char>(kEndInventory);
+	write<short>(kEndInventory);
 
 	// equip inventory
 	items = player->get_inventory(kInventoryConstantsTypesEquip)->get_items();
@@ -746,7 +764,7 @@ void PacketCreator::AddInventoryInfo(Player *player)
 		ItemInfo(it.second.get());
 	}
 
-	write<signed char>(kEndInventory);
+	write<int>(kEndInventory);
 
 	// use inventory
 	items = player->get_inventory(kInventoryConstantsTypesUse)->get_items();
@@ -884,6 +902,7 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
 	write<bool>(is_connect_packet);
 
 	// messages on the screen that disappears after some seconds
+	// maybe used in combination with quiet ban? (so upon login player is informed about it)
 
 	write<short>(0); // 0 = nothing, more than 0 = amount of message lines
 
@@ -937,6 +956,8 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
 	}
 	else
 	{
+		write<int>(0); // ?
+		write<signed char>(0); // ?
 		write<int>(player->get_map()->get_id());
 		write<signed char>(player->get_spawn_point());
 		write<short>(player->get_hp());

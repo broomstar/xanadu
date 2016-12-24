@@ -20,6 +20,7 @@ namespace send_headers_login
 
 namespace send_headers
 {
+	// all opcodes not updated yet
 	constexpr short kMODIFY_INVENTORY_ITEM = 0x1A;
 	constexpr short kUPDATE_STATS = 0x1C;
 	constexpr short kGIVE_BUFF = 0x1D;
