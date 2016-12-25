@@ -468,43 +468,51 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 void PacketCreator::UpdateSlot(std::shared_ptr<Item> item)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client
+	write<bool>(true); // unstuck the client and update tick
 	write<signed char>(1); // how many items to upgrade
-	write<signed char>(1); // bag
+
+	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(item->get_inventory_id());
 	write<short>(item->get_slot());
+
 	write<short>(item->get_amount());
 }
 
 void PacketCreator::MoveItem(signed char inventory_id, short source_slot, short destination_slot)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client
+	write<bool>(true); // unstuck the client and update tick
 	write<signed char>(1); // how many items to update
-	write<signed char>(2);
+
+	write<signed char>(2); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(source_slot);
+
 	write<short>(destination_slot);
+
 	write<signed char>(0);
 }
 
 void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(from_drop); // unstuck the client
+	write<bool>(from_drop); // unstuck the client and update tick
 	write<signed char>(1); // how many items to add
-	write<signed char>(0);
+
+	write<signed char>(0); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(item->get_inventory_id());
 	write<short>(item->get_slot());
+
 	ItemInfo(item.get(), false);
 }
 
 void PacketCreator::remove_item(signed char inventory_id, int slot, bool from_drop)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(from_drop); // unstuck the client
+	write<bool>(from_drop); // unstuck the client and update tick
 	write<signed char>(1); // how many items to remove
-	write<signed char>(3);
+
+	write<signed char>(3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(slot);
 
@@ -517,38 +525,46 @@ void PacketCreator::remove_item(signed char inventory_id, int slot, bool from_dr
 void PacketCreator::MoveItemMerge(signed char inventory_id, short source_slot, short destination_slot, short amount)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client
+	write<bool>(true); // unstuck the client and update tick
 	write<signed char>(2); // how many items to update
-	write<signed char>(3);
+
+	write<signed char>(3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(source_slot);
-	write<signed char>(1);
+
+	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(destination_slot);
+
 	write<short>(amount);
 }
 
 void PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot, short source_amount, short destination_slot, short destination_amount)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client
+	write<bool>(true); // unstuck the client and update tick
 	write<signed char>(2); // how many items to update
-	write<signed char>(1);
+
+	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(source_slot);
+
 	write<short>(source_amount);
-	write<signed char>(1);
+
+	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(inventory_id);
 	write<short>(destination_slot);
+
 	write<short>(destination_amount);
 }
 
 void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<Item> equip, bool destroyed)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client
-	write<signed char>(destroyed ? 2 : 3);
-	write<signed char>((scroll->get_amount() > 1) ? 1 : 3);
+	write<bool>(true); // unstuck the client and update tick
+	write<signed char>(destroyed ? 2 : 3); // how many items to update
+
+	write<signed char>((scroll->get_amount() > 1) ? 1 : 3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(scroll->get_inventory_id());
 	write<short>(scroll->get_slot());
 
@@ -557,13 +573,13 @@ void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<I
 		write<short>(scroll->get_amount() - 1);
 	}
 
-	write<signed char>(3);
+	write<signed char>(3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 	write<signed char>(kInventoryConstantsTypesEquip);
 	write<short>(equip->get_slot());
 
 	if (!destroyed)
 	{
-		write<signed char>(0);
+		write<signed char>(0); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
 		write<signed char>(kInventoryConstantsTypesEquip);
 		write<short>(equip->get_slot());
 		ItemInfo(equip.get(), false);
