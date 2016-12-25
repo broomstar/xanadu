@@ -1,5 +1,5 @@
-CREATE DATABASE xanadu62;
-USE xanadu62;
+CREATE DATABASE xanadu83;
+USE xanadu83;
 
 CREATE TABLE buddy_lists (
   `primary_id` INT NOT NULL AUTO_INCREMENT,

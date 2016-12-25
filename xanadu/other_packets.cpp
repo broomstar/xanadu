@@ -637,7 +637,7 @@ void PacketCreator::AddCharStats(Player *player)
 	write<short>(player->get_sp());
 	write<int>(player->get_exp());
 	write<short>(player->get_fame());
-	write<int>(0);
+	write<int>(0); // gachapon exp?
 	write<int>(player->get_map()->get_id());
 	write<signed char>(player->get_spawn_point());
 	write<int>(0);
