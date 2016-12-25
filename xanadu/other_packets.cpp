@@ -637,10 +637,10 @@ void PacketCreator::AddCharStats(Player *player)
 	write<short>(player->get_sp());
 	write<int>(player->get_exp());
 	write<short>(player->get_fame());
-	write<int>(0); // gachapon exp?
+	write<int>(0); // gachapon exp? (_ZtlSecureTear_nTempEXP_CS)
 	write<int>(player->get_map()->get_id());
 	write<signed char>(player->get_spawn_point());
-	write<int>(0);
+	write<int>(0); // v3->nPlaytime = CInPacket::Decode4(iPacket);
 }
 
 void PacketCreator::writeCharacterData(Player *player)
@@ -704,8 +704,8 @@ void PacketCreator::writeCharacterData(Player *player)
 	write<signed char>(0);
 	write<short>(0); // cards size? loop follows if not 0
 
-	// new year info?
-	write<short>(0);
+	// new year info
+	write<short>(0); // size
 
 	// area info?
 	write<short>(0);
@@ -959,8 +959,7 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
 	}
 	else
 	{
-		write<int>(0); // ?
-		write<signed char>(0); // ?
+		write<signed char>(0);
 		write<int>(player->get_map()->get_id());
 		write<signed char>(player->get_spawn_point());
 		write<short>(player->get_hp());
