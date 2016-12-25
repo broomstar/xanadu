@@ -43,8 +43,8 @@ namespace receive_headers
 	constexpr short kSTORAGE = 0x3E;
 	constexpr short kHIRED_MERCHANT_REQUEST = 0x3F;
 	constexpr short kFREDRICK_OPERATION = 0x40;
-	constexpr short kITEM_SORT = 0x45; // untested
-	constexpr short kMOVE_ITEM = 0x47; // untested
+	constexpr short kITEM_SORT = 0x45;
+	constexpr short kMOVE_ITEM = 0x47;
 	constexpr short kUSE_ITEM = 0x48;
 	constexpr short kCANCEL_ITEM_BUFF = 0x49;
 	constexpr short kUSE_SUMMON_BAG = 0x4B;

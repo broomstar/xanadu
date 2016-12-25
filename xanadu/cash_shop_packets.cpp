@@ -376,6 +376,47 @@ void PacketCreator::EnterCashShop(Player *player)
 
 	write<short>(0); // CCashShop::DecodeLimitGoods size
 
+					 // -------------------------------------------------------------------------------
+
+					 /*
+		+					 from v0.95 GMS
+		+
+		+					 CCashShop::DecodeZeroGoods(v53, v54);
+		+					 v79 = -1;
+		+					 if ( pBase.m_pInterface )
+		+					 pBase.m_pInterface->vfptr->Release((IUnknown *)pBase.m_pInterface);
+		+					 }
+		+
+		+					 int __thiscall CCashShop::DecodeZeroGoods(CCashShop *this, CInPacket *iPacket)
+		+					 {
+		+					 CInPacket *v2; // ebx@1
+		+					 CCashShop *v3; // edi@1
+		+					 signed int v4; // esi@1
+		+					 int result; // eax@2
+		+					 ZArray<CS_ZEROGOODS> *v6; // edi@3
+		+
+		+					 v2 = iPacket;
+		+					 v3 = this;
+		+					 v4 = CInPacket::Decode2(iPacket);
+		+					 if ( v4 > 0 )
+		+					 {
+		+					 v6 = &v3->m_aZeroGoods;
+		+					 ZArray<CS_ZEROGOODS>::_Realloc(v6, v4, 1, (ZAllocHelper *)&iPacket);
+		+					 CInPacket::DecodeBuffer(v2, v6->a, 68 * v4);
+		+					 result = 1;
+		+					 }
+		+					 else
+		+					 {
+		+					 result = 0;
+		+					 }
+		+					 return result;
+		+					 }
+		+					 */
+
+	write<short>(0); // probably DecodeZeroGoods size
+
+					 // -------------------------------------------------------------------------------
+
 	write<bool>(false); // m_bEventOn
 	write<int>(150); // m_nHighestCharacterLevelInThisAccount
 
@@ -400,7 +441,7 @@ void PacketCreator::ShowCashPoints(int nx_credit)
 void PacketCreator::GetCashShopInventory(std::vector<std::shared_ptr<Item>> items, int account_id, short storage_slots, short character_slots)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<signed char>(0x2F); // action
+	write<signed char>(0x4B); // action
 	write<short>(static_cast<short>(items.size()));
 	for (auto item : items)
 	{
@@ -413,10 +454,10 @@ void PacketCreator::GetCashShopInventory(std::vector<std::shared_ptr<Item>> item
 void PacketCreator::CashShopShowGifts()
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<signed char>(0x31); // action
+	write<signed char>(0x4D); // action
 	write<short>(0); // size
-	
-    // for each size write a little modified version of CashShopAddCashItemData
+
+	// for each size write a little modified version of CashShopAddCashItemData
 
 	// loop here with CashShopAddCashItemData
 }
@@ -424,7 +465,7 @@ void PacketCreator::CashShopShowGifts()
 void PacketCreator::CashShopShowWishlist()
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<signed char>(0x33); // action
+	write<signed char>(0x4F); // action
 	for (int i = 0; i < 10; ++i)
 	{
 		write<int>(0); // item commodity SN
@@ -434,14 +475,14 @@ void PacketCreator::CashShopShowWishlist()
 void PacketCreator::ShowBoughtCashItem(const std::shared_ptr<Item> &item, int account_id)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(0x3B); // action
+	write<unsigned char>(0x57); // action
 	CashShopAddCashItemData(item, account_id);
 }
 
 void PacketCreator::IncreaseInventorySlots(signed char inventory_id, signed char slots)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<signed char>(0x44); // action
+	write<signed char>(0x60); // action
 	write<signed char>(inventory_id);
 	write<short>(slots);
 }
@@ -449,21 +490,21 @@ void PacketCreator::IncreaseInventorySlots(signed char inventory_id, signed char
 void PacketCreator::IncreaseStorageSlots(signed char slots)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(0x46); // action
+	write<unsigned char>(0x62); // action
 	write<short>(slots);
 }
 
 void PacketCreator::CashShopIncreaseCharacterSlots(short slots)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(0x48); // action
+	write<unsigned char>(0x64); // action
 	write<short>(slots);
 }
 
 void PacketCreator::TakeOutFromCashShopInventory(Item *item, short position)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(74); // action
+	write<unsigned char>(0x68); // action
 	write<short>(position);
 	ItemInfo(item, false);
 }
@@ -471,14 +512,14 @@ void PacketCreator::TakeOutFromCashShopInventory(Item *item, short position)
 void PacketCreator::TransferToCashShopInventory(const std::shared_ptr<Item> &item, int account_id)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(76); // action
+	write<unsigned char>(0x6A); // action
 	CashShopAddCashItemData(item, account_id);
 }
 
 void PacketCreator::CashShopShowBoughtPackage(std::vector<std::shared_ptr<Item>> items, int account_id)
 {
 	write<short>(send_headers::kCASHSHOP_OPERATION);
-	write<unsigned char>(105); // action
+	write<unsigned char>(0x89); // action
 	write<signed char>(static_cast<signed char>(items.size()));
 	for (auto item : items)
 	{

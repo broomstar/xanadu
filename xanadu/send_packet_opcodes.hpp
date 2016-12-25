@@ -117,7 +117,7 @@ namespace send_headers
 	constexpr short kFREDRICK_OPERATION = 0xF2; // wrong
 	constexpr short kMESSENGER = 0xF4; // wrong
 	constexpr short kPLAYER_INTERACTION = 0xF5; // wrong
-	constexpr short kSHOW_CASH = 0xFF; // wrong
-	constexpr short kCASHSHOP_OPERATION = 0x100; // wrong
-	constexpr short kKEYMAP = 0x107; // wrong
+	constexpr short kSHOW_CASH = 0x144;
+	constexpr short kCASHSHOP_OPERATION = 0x145;
+	constexpr short kKEYMAP = 0x14F;
 }
