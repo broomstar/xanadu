@@ -3,7 +3,11 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
--
+- send opcodes need to be updated to v0.83
+
+- receive opcodes need to be updated to v0.83
+
+- packets need to be updated to v0.83
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
 

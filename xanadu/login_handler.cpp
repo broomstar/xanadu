@@ -8,6 +8,7 @@
 #include "valid_char_data_provider.hpp"
 #include "packetcreator.hpp"
 #include "constants.hpp"
+#include "job_constants.hpp"
 
 #include "Poco\Data\RecordSet.h"
 
@@ -238,6 +239,22 @@ void Player::handle_create_character()
 	{
 		return;
 	}
+	int job = read<int>(); // explorer, cygnus or aran
+	short job_id = -1;
+	switch (job)
+	{
+	case 0:
+		job_id = 1000;
+		break;
+	case 1:
+		job_id = job_ids::kBeginner;
+		break;
+	case 2:
+		job_id = 2000;
+		break;
+	default:
+		return;
+	}
 	int face = read<int>();
 	int hair = read<int>();
 	int hair_color = read<int>();
@@ -274,16 +291,13 @@ void Player::handle_create_character()
 		return;
 	}
 
-	int str = read<signed char>();
-	int dex = read<signed char>();
-	int intt = read<signed char>();
-	int luk = read<signed char>();
-	if (str + dex + intt + luk != 25 || str < 4 || dex < 4 || intt < 4 || luk < 4)
-	{
-		return;
-	}
+	// this needs to be checked further
+	int str = 4;
+	int dex = 4;
+	int intt = 4;
+	int luk = 4;
+	int ap = 9;
 
-	short job_id = 0; // 0 is the beginner job
 	unsigned char level = 1; // 1 is the standard starting level
 
 	World *world = World::get_instance();
