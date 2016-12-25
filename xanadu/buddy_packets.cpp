@@ -23,11 +23,13 @@ void PacketCreator::BuddyList(Player *player)
 		write_string(buddy->get_player_name(), 13);
 		write<signed char>(buddy->get_opposite_status());
 		write<int>(buddy->get_channel_id());
+		write_string("test group", 13); // group name
+		write<int>(0); // map id?
 	}
 
 	for (signed char i = 0; i < buddylist_size; ++i)
 	{
-		write<int>(0);
+		write<int>(0); // map id?
 	}
 }
 

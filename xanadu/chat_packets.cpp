@@ -43,7 +43,7 @@ void PacketCreator::ShowMessage(const std::string &message, unsigned char type, 
 		write<signed char>(whisper);
 	}
 
-	// display item in item meagphone
+	// display item in item megaphone
 
 	if (type == 8)
 	{
