@@ -723,6 +723,8 @@ void PacketCreator::AddInventoryInfo(Player *player)
 	write<signed char>(player->get_etc_slots());
 	write<signed char>(player->get_cash_slots());
 
+	write<long long>(kZeroTime);
+
 	enum Constants
 	{
 		kEndInventory
@@ -816,6 +818,7 @@ void PacketCreator::AddSkillInfo(Player *player)
 
 		write<int>(skill_id);
 		write<int>(skill.level_);
+		write<long long>(kNoExpirationTime); // expiration time
 
 		if (tools::is_fourth_job_skill(skill_id))
 		{

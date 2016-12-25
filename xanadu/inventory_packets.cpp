@@ -2,6 +2,7 @@
 
 #include "packetcreator.hpp"
 
+#include "equip_data.hpp"
 #include "item_data_provider.hpp"
 #include "item_data.hpp"
 #include "item.hpp"
@@ -89,6 +90,102 @@ else
 {
 result = CInPacket::DecodeBuffer(v2, (char *)v3 + 180, 8u);
 }
+return result;
+}
+
+from v0.83 GMS extract:
+
+int __thiscall iteminfo_maybe_sub_4E3C3D(void *this, int a2)
+{
+int v2; // edi@1
+void *v3; // esi@1
+int v4; // ecx@1
+int v5; // ecx@1
+int v6; // eax@1
+int v7; // eax@1
+int v8; // eax@1
+int v9; // eax@1
+int v10; // eax@1
+int v11; // eax@1
+int v12; // eax@1
+int v13; // eax@1
+int v14; // eax@1
+int v15; // eax@1
+int v16; // eax@1
+int v17; // eax@1
+int v18; // eax@1
+int v19; // eax@1
+int v20; // eax@1
+_DWORD *v21; // eax@1
+int v22; // eax@1
+int v23; // ecx@1
+int v24; // ecx@1
+int v25; // eax@1
+int v26; // eax@1
+int result; // eax@4
+
+v2 = a2;
+v3 = this;
+sub_4E36A2(this, a2);
+LOBYTE(v4) = CInPacket::Decode1(v2);
+*(_DWORD *)((char *)v3 + 42) = sub_4E807A(v4, (char *)v3 + 40);
+LOBYTE(v5) = CInPacket::Decode1(v2);
+*((_DWORD *)v3 + 12) = sub_4E807A(v5, (char *)v3 + 46);
+LOWORD(v6) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 14) = sub_4E80EB(v6, (char *)v3 + 52);
+LOWORD(v7) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 16) = sub_4E80EB(v7, (char *)v3 + 60);
+LOWORD(v8) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 18) = sub_4E80EB(v8, (char *)v3 + 68);
+LOWORD(v9) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 20) = sub_4E80EB(v9, (char *)v3 + 76);
+LOWORD(v10) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 22) = sub_4E80EB(v10, (char *)v3 + 84);
+LOWORD(v11) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 24) = sub_4E80EB(v11, (char *)v3 + 92);
+LOWORD(v12) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 26) = sub_4E80EB(v12, (char *)v3 + 100);
+LOWORD(v13) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 28) = sub_4E80EB(v13, (char *)v3 + 108);
+LOWORD(v14) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 30) = sub_4E80EB(v14, (char *)v3 + 116);
+LOWORD(v15) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 32) = sub_4E80EB(v15, (char *)v3 + 124);
+LOWORD(v16) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 34) = sub_4E80EB(v16, (char *)v3 + 132);
+LOWORD(v17) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 36) = sub_4E80EB(v17, (char *)v3 + 140);
+LOWORD(v18) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 38) = sub_4E80EB(v18, (char *)v3 + 148);
+LOWORD(v19) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 40) = sub_4E80EB(v19, (char *)v3 + 156);
+LOWORD(v20) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 42) = sub_4E80EB(v20, (char *)v3 + 164);
+v21 = (_DWORD *)CinPacket::DecodeStr(v2, (int)&a2);
+lstrcpy((char *)v3 + 224, *v21);
+sub_4062DF(&a2);
+LOWORD(v22) = CInPacket::Decode2(v2);
+*((_DWORD *)v3 + 44) = sub_4E80EB(v22, (char *)v3 + 172);
+LOBYTE(v23) = CInPacket::Decode1(v2);
+*(_DWORD *)((char *)v3 + 182) = sub_4E807A(v23, (char *)v3 + 180);
+LOBYTE(v24) = CInPacket::Decode1(v2);
+*((_DWORD *)v3 + 47) = sub_4E807A(v24, (char *)v3 + 186);
+v25 = CInPacket::Decode4(v2);
+*((_DWORD *)v3 + 50) = sub_4165B1(v25, (char *)v3 + 192);
+v26 = CInPacket::Decode4(v2);
+*((_DWORD *)v3 + 53) = sub_4165B1(v26, (char *)v3 + 204);
+if ( *((_QWORD *)v3 + 3) )
+{
+*((_DWORD *)v3 + 54) = 0;
+*((_DWORD *)v3 + 55) = 0;
+}
+else
+{
+CInPacket::DecodeBuffer(v2, (char *)v3 + 216, 8u);
+}
+CInPacket::DecodeBuffer(v2, (char *)v3 + 237, 8u);
+result = CInPacket::Decode4(v2);
+*(_DWORD *)((char *)v3 + 245) = result;
 return result;
 }
 
@@ -265,33 +362,31 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 
 	if (show_position)
 	{
-		char slot = item->get_slot();
+		signed char pos = item->get_slot();
 
-		// equipped
-
-		if (slot < 0)
+		if (item->is_equip())
 		{
-			slot *= -1;
-			
-			if (slot > 100)
+			if (pos < 0)
 			{
-				is_cash = true;
-
-				write<signed char>(slot - 100);
+				pos *= -1;
 			}
-			else
+			if (pos > 100)
 			{
-				write<signed char>(slot);
+				pos -= 100;
 			}
 		}
-		else // not equipped
+
+		write<signed char>(pos);
+
+		if (item->is_equip())
 		{
-			write<signed char>(slot);
+			write<signed char>(0);
 		}
 	}
 
 	write<signed char>(item_type);
 	write<int>(item_id);
+
 	write<bool>(is_cash);
 
 	if (is_cash)
@@ -324,11 +419,18 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 		write<short>(item->get_jump());
 		write<std::string>(item->get_owner_name());
 		write<short>(item->get_flag());
+		write<signed char>(0); // item level?
+		write<signed char>(0); // item level up type?
+		write<int>(0); // item exp?
+		write<int>(0); // vicous hammer
 
 		if (!is_cash)
 		{
 			write<long long>(0);
 		}
+
+		write<long long>(kZeroTime); // ftEquipped?
+		write<int>(-1); // nPrevBonusExpRate?
 
 		break;
 	}
@@ -354,6 +456,8 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 		write<short>(item->get_pet_closeness());
 		write<signed char>(item->get_pet_fullness());
 		write<long long>(item->get_expiration_time());
+		write<int>(0);
+		write<short>(0);
 		write<int>(0);
 
 		break;
