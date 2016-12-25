@@ -77,6 +77,7 @@ void PacketCreator::send_simple(int npc_id, std::string text)
 	write<signed char>(4);
 	write<int>(npc_id);
 	write<signed char>(4); // type: Simple
+	write<signed char>(0); // speaker
 	write<std::string>(text);
 }
 
@@ -86,6 +87,7 @@ void PacketCreator::send_yes_no(int npc_id, std::string text)
 	write<signed char>(4);
 	write<int>(npc_id);
 	write<signed char>(1); // type: YesNo
+	write<signed char>(0); // speaker
 	write<std::string>(text);
 }
 
@@ -95,6 +97,7 @@ void PacketCreator::send_back_next(int npc_id, std::string text, bool back, bool
 	write<signed char>(4);
 	write<int>(npc_id);
 	write<signed char>(0); // type: Normal
+	write<signed char>(0); // speaker
 	write<std::string>(text);
 
 	write<signed char>(back);
@@ -107,6 +110,7 @@ void PacketCreator::send_style(int styles[], int size, int npc_id, std::string &
 	write<signed char>(4);
 	write<int>(npc_id);
 	write<signed char>(7); // type: Style
+	write<signed char>(0); // speaker
 	write<std::string>(text);
 
 	write<signed char>(size);
