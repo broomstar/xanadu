@@ -490,7 +490,11 @@ void PacketCreator::MoveItem(signed char inventory_id, short source_slot, short 
 
 	write<short>(destination_slot);
 
-	write<signed char>(0);
+	// add movement
+	if (destination_slot < 0 || source_slot < 0)
+	{
+		write<signed char>(source_slot < 0 ? 1 : 2);
+	}
 }
 
 void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop)
@@ -516,9 +520,10 @@ void PacketCreator::remove_item(signed char inventory_id, int slot, bool from_dr
 	write<signed char>(inventory_id);
 	write<short>(slot);
 
+	// add movement
 	if (slot < 0)
 	{
-		write<signed char>(1);
+		write<signed char>(2);
 	}
 }
 
@@ -537,6 +542,8 @@ void PacketCreator::MoveItemMerge(signed char inventory_id, short source_slot, s
 	write<short>(destination_slot);
 
 	write<short>(amount);
+
+	write<signed char>(2); // add movement
 }
 
 void PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot, short source_amount, short destination_slot, short destination_amount)
@@ -585,5 +592,8 @@ void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<I
 		ItemInfo(equip.get(), false);
 	}
 
-	write<signed char>(1);
+	if (scroll->get_amount() > 1 && scroll->get_slot() < 0 || equip->get_slot() < 0)
+	{
+		write<signed char>(2); // add movement
+	}
 }
