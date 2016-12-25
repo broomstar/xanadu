@@ -252,10 +252,10 @@ void PacketCreator::AddCharStats(Character *character)
 	write<short>(0); // sp
 	write<int>(0); // exp
 	write<short>(character->get_fame());
-	write<int>(0); // gachapon exp?
+	write<int>(0); // gachapon exp? (_ZtlSecureTear_nTempEXP_CS)
 	write<int>(0); // map id
 	write<signed char>(0); // map spawn point
-	write<int>(0);
+	write<int>(0); // v3->nPlaytime = CInPacket::Decode4(iPacket);
 }
 
 void PacketCreator::AddCharLook(Character *character, bool megaphone)
