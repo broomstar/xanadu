@@ -292,14 +292,14 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	//write<long long>(buff_mask_pos_1);
 
+	write<long long>(buff_mask_pos_2);
+
 	if (buff_value != 0)
 	{
 		write<signed char>(buff_value);
 
 		// morph has another byte
 	}
-
-	write<long long>(buff_mask_pos_2);
 
 	// TwoStateTemporaryStat area
 
