@@ -10,14 +10,15 @@ void PacketCreator::ControlMob(Mob *mob, signed char spawn_type)
 {
 	write<short>(send_headers::kSPAWN_MONSTER_CONTROL);
 
-	write<signed char>(1);
+	write<signed char>(1); // aggro?
 	write<int>(mob->get_object_id());
 	write<signed char>(mob_constants::kControlStatusControlNormal);
 	write<int>(mob->get_monster_id());
-	write<signed char>(0);
-	write<short>(0);
-	write<signed char>(8);
-	write<int>(0);
+
+	write_null(15);
+	write<unsigned char>(0x88);
+	write_null(6);
+
 	write<short>(mob->get_position_x());
 	write<short>(mob->get_position_y());
 	write<signed char>(mob->get_stance());
@@ -44,10 +45,11 @@ void PacketCreator::SpawnMonster(Mob *mob, signed char spawn_type, int from)
 	write<int>(mob->get_object_id());
 	write<signed char>(mob_constants::kControlStatusControlNormal);
 	write<int>(mob->get_monster_id());
-	write<signed char>(0);
-	write<short>(0);
-	write<signed char>(8);
-	write<int>(0);
+
+	write_null(15);
+	write<unsigned char>(0x88);
+	write_null(6);
+
 	write<short>(mob->get_position_x());
 	write<short>(mob->get_position_y());
 	write<signed char>(mob->get_stance());
@@ -70,6 +72,7 @@ void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char actio
 	write<short>(send_headers::kMOVE_MONSTER);
 
 	write<int>(mob_object_id);
+	write<signed char>(0);
 	write<bool>(use_skill);
 	write<signed char>(action);
 	write<signed char>(skill_id);

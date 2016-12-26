@@ -3,10 +3,6 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
-- send opcodes need to be updated to v0.83
-
-- receive opcodes need to be updated to v0.83
-
 - packets need to be updated to v0.83
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
@@ -102,6 +98,8 @@ need to work out the details of these features first
 - to-do fix when closing hired merchant, items are stored, but it seems that amount of items stays at 1, so if multiple items were put it, some are lost
 
 -------------------- cashshop --------------------
+
+- when transfering cashitem from cash inventory to item inventory and otherwise, this may cause bugs like amount = 0 and if item already exists, amount doesn't increase
 
 - when buying cash item or package or storing or retrieving cash items, it needs to be checked first if the cash storage/item inventory has space for it
 
