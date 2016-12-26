@@ -1347,6 +1347,23 @@ void PacketCreator::ShowInfo(Player *player)
 	write<int>(0); // total cards?
 	write<int>(0); // monster book cover?
 	// end of monster book info
+
+	// equipped medal info
+	Inventory *inventory = player->get_inventory(kInventoryConstantsTypesEquipped);
+	if (!inventory)
+	{
+		write<int>(0);
+	}
+	else
+	{
+		auto medal = inventory->get_item_by_slot(kItemConstantsEquippedSlotsMedal);
+		write<int>(medal ? medal->get_item_id() : 0);
+	}
+	
+	// collected medals info
+	write<short>(0); // size
+	// to-do write collected medals info here
+
 }
 
 void PacketCreator::SendFame(std::string name, signed char type)
