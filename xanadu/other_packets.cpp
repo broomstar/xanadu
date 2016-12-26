@@ -262,7 +262,7 @@ void PacketCreator::ShowPlayer(Player *player)
 	write<short>(0);
 	write<unsigned char>(0xFC);
 	write<signed char>(1);
-	write<int>(0); // morph
+	write<int>(0); // 2 = morph, 0 = not morph?
 
 	long long buff_mask = 0;
 	signed char buff_value = 0;
@@ -288,7 +288,7 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	if (player->get_mount_item_id() != 0)
 	{
-		buff_mask |= buffstat_constants::kMonsterRiding;
+		buff_mask |= buffstat_constants_position_1::kMonsterRiding;
 	}
 
 	write<int>(static_cast<int>((buff_mask >> 32) & 0xffffffffL));
@@ -395,49 +395,75 @@ In lower versions before recent updates after GMS v170, there were only 7 known 
 
 */
 
-	int CHAR_MAGIC_SPAWN = 4562313;
+	// this is not done yet and experimental
 
-	write<int>(0);
-	write<short>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
-	write<int>(0);
-	write<int>(0);
-	write<short>(0);
-	write<signed char>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
-	write<int>(0);
-	write<int>(0);
-	write<short>(0);
-	write<signed char>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
-	write<short>(0);
-	write<signed char>(0);
+	write<signed char>(0); // nDefenseAtt
+	write<signed char>(0); // nDefenseState
 
-	// mount info
+	// 1. (index 0) is energy charge
 
-	if (player->get_mount_item_id() != 0)
+	write<int>(0); // n option/value
+	write<int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	write<short>(0); // dynamic
+
+	// 2. (index 1) is dash speed
+
+	write<int>(0); // n option/value
+	write<int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	//write<short>(0); // dynamic
+
+	// 3. (index 2) is dash jump
+
+	write<int>(0); // n option/value
+	write</*short*/int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	//write<short>(0); // dynamic
+
+	// 4. (index 3) is ridevehicle = mount info
+
+	if (player->get_mount_item_id() /*!=*/== 0)
 	{
-		write<int>(player->get_mount_item_id());
-		write<int>(player->get_mount_skill_id());
+		write<int>(/*player->get_mount_item_id()*/1902001);
+		write<int>(/*player->get_mount_skill_id()*/1004);
 	}
 	else
 	{
-		write<long long>(0);
+		write<int>(0);
+		write<int>(0);
 	}
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
 
-	write<int>(CHAR_MAGIC_SPAWN);
-	write<long long>(0);
-	write<signed char>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
+	// 5. (index 4) is PartyBooster (Speed Infusion for Buccaneers)
+
+	write<int>(0); // n option/value
+	write<int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	write<short>(0); // usexpireterm
+
+	// 6. (index 5) is GuidedBullet (Gaviota for Corsairs)
+
+	write<int>(0); // n option/value
+	write<int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	write<int>(0); // mob id
+
+	// 7. (index 6) is Undead
+
+	write<int>(0); // n option/value
+	write<int>(0); // r option/reason
+	write<int>(565666546); // time part 1
+	write<signed char>(120); // time part 2
+	write<short>(0); // dynamic
+
 	write<short>(0);
-	write<int>(0);
-	write<short>(0);
-	write<long long>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
-	write<long long>(0);
-	write<int>(0);
-	write<signed char>(0);
-	write<int>(CHAR_MAGIC_SPAWN);
 	write<short>(0);
 	write<signed char>(0);
 
