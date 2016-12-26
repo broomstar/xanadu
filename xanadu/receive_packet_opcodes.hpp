@@ -21,7 +21,6 @@ namespace receive_headers_login
 
 namespace receive_headers
 {
-	// all opcodes not updated yet
 	constexpr short kREQUEST_MAP_CHANGE = 0x26;
 	constexpr short kCHANGE_CHANNEL = 0x27;
 	constexpr short kENTER_CASHSHOP = 0x28;
@@ -31,7 +30,7 @@ namespace receive_headers
 	constexpr short kREQUEST_CLOSE_RANGE_ATTACK = 0x2C;
 	constexpr short kRANGED_ATTACK = 0x2D;
 	constexpr short kMAGIC_ATTACK = 0x2E;
-	constexpr short kENERGY_ATTACK = 0x2F; // untested
+	constexpr short kENERGY_ATTACK = 0x2F;
 	constexpr short kREQUEST_TAKE_DAMAGE = 0x30;
 	constexpr short kGENERAL_CHAT = 0x31;
 	constexpr short kCLOSE_CHALKBOARD = 0x32;
@@ -75,20 +74,19 @@ namespace receive_headers
 	constexpr short kGUILD_DENIE = 0x7F;
 	constexpr short kBUDDY_LIST = 0x82;
 	constexpr short kMOVE_PET = 0xA7;
-	constexpr short kPET_CHAT = 0x8D; // wrong
-	constexpr short kPET_COMMAND = 0x8E; // wrong
-	constexpr short kPET_LOOT = 0x8F; // wrong
+	constexpr short kPET_CHAT = 0xA8;
+	constexpr short kPET_COMMAND = 0xA9;
+	constexpr short kPET_LOOT = 0xAA;
 	constexpr short kSUMMON_MOVE = 0xAF;
-	constexpr short kDAMAGE_MOB_SUMMON = 0x95; // wrong
-	constexpr short kSUMMON_DAMAGE = 0x96; // wrong
+	constexpr short kDAMAGE_MOB_SUMMON = 0xB0;
+	constexpr short kSUMMON_DAMAGE = 0xB1;
 	constexpr short kUSE_DOOR = 0x85;
 	constexpr short kCHANGE_KEYMAP = 0x87;
 	constexpr short kGUILD_BBS_OPERATION = 0x9B;
 	constexpr short kENTER_MTS = 0x9C;
 	constexpr short kMOVE_LIFE = 0xBC;
-	constexpr short kHIT_BY_MOB = 0xA1; // wrong
 	constexpr short kREQUEST_ITEM_PICKUP = 0xCA;
-	constexpr short kHIT_REACTOR = 0xAE; // wrong
+	constexpr short kHIT_REACTOR = 0xCD;
 	constexpr short kCHECK_CASH = 0xE4;
 	constexpr short kCASHSHOP_OPERATION = 0xE5;
 }
