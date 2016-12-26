@@ -258,18 +258,13 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	// buff info
 
-	write<int>(0);
-	write<short>(0);
-	write<unsigned char>(0xFC);
-	write<signed char>(1);
-	write<int>(0); // 2 = morph, 0 = not morph ?
-
-	long long buff_mask = 0;
+	long long buff_mask_pos_1 = 0;
+	long long buff_mask_pos_2 = 0;
 	signed char buff_value = 0;
 
 	if (player->is_buff_stat_active(buffstat_constants::kCombo))
 	{
-		buff_mask |= buffstat_constants::kCombo;
+		buff_mask_pos_2 |= buffstat_constants::kCombo;
 		buff_value = player->get_crusader_combo_value();
 	}
 
@@ -278,20 +273,24 @@ void PacketCreator::ShowPlayer(Player *player)
 		int skill_id = 4111002;
 		// 4211008
 		// 14111000
-		buff_mask |= buffstat_constants::kShadowPartner;
+		buff_mask_pos_2 |= buffstat_constants::kShadowPartner;
 	}
 
 	if (player->is_buff_stat_active(buffstat_constants::kDarksight))
 	{
-		buff_mask |= buffstat_constants::kDarksight;
+		buff_mask_pos_2 |= buffstat_constants::kDarksight;
 	}
 
-	/*if (player->get_mount_item_id() != 0)
-	{
-		buff_mask |= buffstat_constants_position_1::kMonsterRiding;
-	}*/
+	// are these 8 bytes one long long buffstat instead of 4, 2, 1, 1?
+	// probably, but maybe there is nothing in v0.83 that uses it
+	// though, it seems to have a standard value (not null) that is always sent, even if no buff stats are active
 
-	write<int>(static_cast<int>((buff_mask >> 32) & 0xffffffffL));
+	write<int>(0);
+	write<short>(0);
+	write<unsigned char>(0xFC);
+	write<signed char>(1);
+
+	//write<long long>(buff_mask_pos_1);
 
 	if (buff_value != 0)
 	{
@@ -300,133 +299,38 @@ void PacketCreator::ShowPlayer(Player *player)
 		// morph has another byte
 	}
 
-	write<int>(static_cast<int>(buff_mask & 0xffffffffL));
+	write<long long>(buff_mask_pos_2);
 
 	// TwoStateTemporaryStat area
-
-	/*
-	oPacket.Encode1(nDefenseAtt); 
-oPacket.Encode1(nDefenseState); 
-for (TSIndex enIndex : TSIndex.values()) { 
-    aTemporaryStat.get(enIndex.getIndex()).EncodeForClient(oPacket); 
-}  
-
-public static CharacterTemporaryStat get_CTS_from_TSIndex(int nIdx) {
-switch (nIdx) {
-case 0:
-return CharacterTemporaryStat.EnergyCharged;
-case 1:
-return CharacterTemporaryStat.DashSpeed;
-case 2:
-return CharacterTemporaryStat.DashJump;
-case 3:
-return CharacterTemporaryStat.RideVehicle;
-case 4:
-return CharacterTemporaryStat.PartyBooster;
-case 5:
-return CharacterTemporaryStat.GuidedBullet;
-case 6:
-return CharacterTemporaryStat.Undead;
-default: {
-return null;
-}
-}
-}
-
-public static int get_TSIndex_from_CTS(CharacterTemporaryStat uFlag) {
-for (int i = 0; i < TSIndex.values().length; i++) {
-if (get_CTS_from_TSIndex(i) == uFlag)
-return i;
-}
-return -1;
-}
-
-public static boolean is_valid_TSIndex(CharacterTemporaryStat uFlag) {
-for (int i = 0; i < TSIndex.values().length; i++) {
-if (get_CTS_from_TSIndex(i) == uFlag)
-return true;
-}
-return false;
-}
-
-In lower versions before recent updates after GMS v170, there were only 7 known Two States. Here is the enum for all of them:
-
-/*
-*     This file is part of Development, a MapleStory Emulator Project.
-*     Copyright (C) 2015 Eric Smith <muffinman75013@yahoo.com>
-*
-*     This program is free software: you can redistribute it and/or modify
-*     it under the terms of the GNU General Public License as published by
-*     the Free Software Foundation, either version 3 of the License, or
-*     (at your option) any later version.
-*
-*     This program is distributed in the hope that it will be useful,
-*     but WITHOUT ANY WARRANTY; without even the implied warranty of
-*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*     GNU General Public License for more details.
-*
-*     You should have received a copy of the GNU General Public License
-*
-	package user.stat;
-
-	/**
-	* TSIndex
-	* Handles the TemporaryStat indexes for a TwoStateTemporaryStat.
-	*
-	* @author Eric
-	*
-	public enum TSIndex {
-		EnergyCharged(0),
-		DashSpeed(1),
-		DashJump(2),
-		RideVehicle(3),
-		PartyBooster(4),
-		GuidedBullet(5),
-		Undead(6);
-	private final int index;
-	private TSIndex(int index) {
-		this.index = index;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-	}
-
-*/
 
 	// this is not done yet and experimental
 
 	write<signed char>(0); // nDefenseAtt
 	write<signed char>(0); // nDefenseState
 
-	// 1. (index 0) is energy charge
-
+						   // 1. (index 0) is energy charge
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
 	write<short>(0); // dynamic
 
-	// 2. (index 1) is dash speed
-
+					 // 2. (index 1) is dash speed
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
-	//write<short>(0); // dynamic
+	write<short>(0); // dynamic
 
-	// 3. (index 2) is dash jump
-
+					 // 3. (index 2) is dash jump
 	write<int>(0); // n option/value
-	write</*short*/int>(0); // r option/reason
+	write<int>(0); // r option/reason
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
-	//write<short>(0); // dynamic
+	write<short>(0); // dynamic
 
-	// 4. (index 3) is ridevehicle = mount info
-
-	if (player->get_mount_item_id() /*!=*/== 0)
+					 // 4. (index 3) is ridevehicle = mount info
+	if (player->get_mount_item_id() != 0)
 	{
 		write<int>(/*player->get_mount_item_id()*/1902001);
 		write<int>(/*player->get_mount_skill_id()*/1004);
@@ -439,33 +343,28 @@ In lower versions before recent updates after GMS v170, there were only 7 known 
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
 
-	// 5. (index 4) is PartyBooster (Speed Infusion for Buccaneers)
-
+						   // 5. (index 4) is PartyBooster (Speed Infusion for Buccaneers)
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<signed char>(120); // time flag
+	write<signed char>(120); // time flag (This one is tLastUpdated)
 	write<int>(565666546); // time duration
-	write<short>(0); // usexpireterm
+	write<signed char>(120); // time flag (This one is tCurrentTime)
+	write<int>(565666546); // time duration
+	write<short>(0); // usExpireTerm
 
-	// 6. (index 5) is GuidedBullet (Gaviota for Corsairs)
-
+					 // 6. (index 5) is GuidedBullet (Gaviota for Corsairs)
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
 	write<int>(0); // mob id
 
-	// 7. (index 6) is Undead
-
+				   // 7. (index 6) is Undead
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
 	write<signed char>(120); // time flag
 	write<int>(565666546); // time duration
 	write<short>(0); // dynamic
-
-	write<short>(0);
-	write<short>(0);
-	write<signed char>(0);
 
 	// end of TwoStateTemporaryStat area
 
