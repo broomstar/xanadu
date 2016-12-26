@@ -230,6 +230,7 @@ void PacketCreator::ShowPlayer(Player *player)
 {
 	write<short>(send_headers::kSPAWN_PLAYER);
 	write<int>(player->get_id());
+	write<unsigned char>(player->get_level());
 	write<std::string>(player->get_name());
 
 	// guild info
@@ -258,10 +259,10 @@ void PacketCreator::ShowPlayer(Player *player)
 	// buff info
 
 	write<int>(0);
-	write<int>(1);
-	write<signed char>(0); // morph
 	write<short>(0);
-	write<unsigned char>(0xF8);
+	write<unsigned char>(0xFC);
+	write<signed char>(1);
+	write<int>(0); // morph
 
 	long long buff_mask = 0;
 	signed char buff_value = 0;
@@ -301,6 +302,99 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	write<int>(static_cast<int>(buff_mask & 0xffffffffL));
 
+	// TwoStateTemporaryStat area
+
+	/*
+	oPacket.Encode1(nDefenseAtt); 
+oPacket.Encode1(nDefenseState); 
+for (TSIndex enIndex : TSIndex.values()) { 
+    aTemporaryStat.get(enIndex.getIndex()).EncodeForClient(oPacket); 
+}  
+
+public static CharacterTemporaryStat get_CTS_from_TSIndex(int nIdx) {
+switch (nIdx) {
+case 0:
+return CharacterTemporaryStat.EnergyCharged;
+case 1:
+return CharacterTemporaryStat.DashSpeed;
+case 2:
+return CharacterTemporaryStat.DashJump;
+case 3:
+return CharacterTemporaryStat.RideVehicle;
+case 4:
+return CharacterTemporaryStat.PartyBooster;
+case 5:
+return CharacterTemporaryStat.GuidedBullet;
+case 6:
+return CharacterTemporaryStat.Undead;
+default: {
+return null;
+}
+}
+}
+
+public static int get_TSIndex_from_CTS(CharacterTemporaryStat uFlag) {
+for (int i = 0; i < TSIndex.values().length; i++) {
+if (get_CTS_from_TSIndex(i) == uFlag)
+return i;
+}
+return -1;
+}
+
+public static boolean is_valid_TSIndex(CharacterTemporaryStat uFlag) {
+for (int i = 0; i < TSIndex.values().length; i++) {
+if (get_CTS_from_TSIndex(i) == uFlag)
+return true;
+}
+return false;
+}
+
+In lower versions before recent updates after GMS v170, there were only 7 known Two States. Here is the enum for all of them:
+
+/*
+*     This file is part of Development, a MapleStory Emulator Project.
+*     Copyright (C) 2015 Eric Smith <muffinman75013@yahoo.com>
+*
+*     This program is free software: you can redistribute it and/or modify
+*     it under the terms of the GNU General Public License as published by
+*     the Free Software Foundation, either version 3 of the License, or
+*     (at your option) any later version.
+*
+*     This program is distributed in the hope that it will be useful,
+*     but WITHOUT ANY WARRANTY; without even the implied warranty of
+*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*     GNU General Public License for more details.
+*
+*     You should have received a copy of the GNU General Public License
+*
+	package user.stat;
+
+	/**
+	* TSIndex
+	* Handles the TemporaryStat indexes for a TwoStateTemporaryStat.
+	*
+	* @author Eric
+	*
+	public enum TSIndex {
+		EnergyCharged(0),
+		DashSpeed(1),
+		DashJump(2),
+		RideVehicle(3),
+		PartyBooster(4),
+		GuidedBullet(5),
+		Undead(6);
+	private final int index;
+	private TSIndex(int index) {
+		this.index = index;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+	}
+
+*/
+
 	int CHAR_MAGIC_SPAWN = 4562313;
 
 	write<int>(0);
@@ -309,12 +403,15 @@ void PacketCreator::ShowPlayer(Player *player)
 	write<int>(0);
 	write<int>(0);
 	write<short>(0);
+	write<signed char>(0);
 	write<int>(CHAR_MAGIC_SPAWN);
 	write<int>(0);
 	write<int>(0);
 	write<short>(0);
+	write<signed char>(0);
 	write<int>(CHAR_MAGIC_SPAWN);
 	write<short>(0);
+	write<signed char>(0);
 
 	// mount info
 
@@ -330,12 +427,21 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	write<int>(CHAR_MAGIC_SPAWN);
 	write<long long>(0);
+	write<signed char>(0);
+	write<int>(CHAR_MAGIC_SPAWN);
+	write<short>(0);
+	write<int>(0);
+	write<short>(0);
+	write<long long>(0);
 	write<int>(CHAR_MAGIC_SPAWN);
 	write<long long>(0);
 	write<int>(0);
-	write<short>(0);
+	write<signed char>(0);
 	write<int>(CHAR_MAGIC_SPAWN);
-	write<int>(0);
+	write<short>(0);
+	write<signed char>(0);
+
+	// end of TwoStateTemporaryStat area
 
 	// end of buff info
 
@@ -446,6 +552,9 @@ void PacketCreator::ShowPlayer(Player *player)
 	}
 
 	// end of rings info
+
+	write<short>(0);
+	write<signed char>(0);
 
 	/*
 	from lithium v111:
@@ -1124,6 +1233,7 @@ void PacketCreator::ShowPlayerMovement(int player_id, unsigned char *buffer, int
 {
 	write<short>(send_headers::kMOVE_PLAYER);
 	write<int>(player_id);
+	write<int>(0);
 
 	// copy movement data
 	memcpy(buffer_ + length_, buffer, buffer_size);

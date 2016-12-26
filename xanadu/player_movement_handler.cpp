@@ -8,18 +8,19 @@
 
 void Player::handle_player_movement()
 {
-	skip_bytes(1); // portal count
-	skip_bytes(4); // unknown int, probably used in the packet
+	skip_bytes(1); // portal count?
+	skip_bytes(4);
+	skip_bytes(4);
 
 	// only send the packet if there are atleast 2 players in the map
 
 	auto map_players = map_->get_players();
 	if (map_players->size() >= 2)
 	{
-		// send a packet to all players in the map except the player to show the mvoement of the player
+		// send a packet to all players in the map except the player to show the movement of the player
 		// exclude some bytes from being sent as that data is not used for the packet
 
-		constexpr int excluded_bytes = (1 + 2);
+		constexpr int excluded_bytes = (9 + 2);
 		int size = (recv_length_ - excluded_bytes);
 
 		if (size < 1)
