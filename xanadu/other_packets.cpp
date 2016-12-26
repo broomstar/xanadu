@@ -404,24 +404,24 @@ In lower versions before recent updates after GMS v170, there were only 7 known 
 
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	write<short>(0); // dynamic
 
 	// 2. (index 1) is dash speed
 
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	//write<short>(0); // dynamic
 
 	// 3. (index 2) is dash jump
 
 	write<int>(0); // n option/value
 	write</*short*/int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	//write<short>(0); // dynamic
 
 	// 4. (index 3) is ridevehicle = mount info
@@ -436,31 +436,31 @@ In lower versions before recent updates after GMS v170, there were only 7 known 
 		write<int>(0);
 		write<int>(0);
 	}
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 
 	// 5. (index 4) is PartyBooster (Speed Infusion for Buccaneers)
 
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	write<short>(0); // usexpireterm
 
 	// 6. (index 5) is GuidedBullet (Gaviota for Corsairs)
 
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	write<int>(0); // mob id
 
 	// 7. (index 6) is Undead
 
 	write<int>(0); // n option/value
 	write<int>(0); // r option/reason
-	write<int>(565666546); // time part 1
-	write<signed char>(120); // time part 2
+	write<signed char>(120); // time flag
+	write<int>(565666546); // time duration
 	write<short>(0); // dynamic
 
 	write<short>(0);
