@@ -320,6 +320,17 @@ void Player::handle_use_chat()
 			}
 		}
 
+		// for development purposes only
+		else if (command == "posl")
+		{
+			{
+				// packet
+				PacketCreator packet;
+				packet.ShowMonsterRiding(id_, 1902001, 1004);
+				map_->send_packet(&packet, this);
+			}
+		}
+
 		else if (command == "maxskills")
 		{
 			// max skills for 4th jobs

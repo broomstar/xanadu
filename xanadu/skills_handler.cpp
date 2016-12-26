@@ -75,7 +75,7 @@ void Player::handle_cancel_skill_buff()
 	if (skill_id == mount_skill_id_ && mount_skill_id_ != 0)
 	{
 		Values vals;
-		vals.get_values()->push_back(Value(buffstat_constants::kMonsterRiding, 0));
+		vals.get_values()->push_back(Value(buffstat_constants_position_1::kMonsterRiding, 0));
 
 		// send a packet
 		PacketCreator packet2;

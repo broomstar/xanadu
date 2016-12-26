@@ -56,14 +56,15 @@ void PacketCreator::ShowMonsterRiding(int player_id, int item_id, int skill_id)
 		write<short>(send_headers::kGIVE_BUFF);
 	}
 
+	write<long long>(buffstat_constants_position_1::kMonsterRiding);
 	write<long long>(0);
-	write<long long>(buffstat_constants::kMonsterRiding);
 
 	write<short>(0);
 	write<int>(item_id);
 	write<int>(skill_id);
 	write<int>(0);
 	write<short>(0);
+	write<signed char>(0);
 }
 
 void PacketCreator::ShowForeignEffect(int player_id, signed char effect)

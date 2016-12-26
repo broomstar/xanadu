@@ -2,6 +2,11 @@
 
 #pragma once
 
+namespace buffstat_constants_position_1
+{
+	constexpr unsigned long long kMonsterRiding = 0x20000000000000;
+}
+
 namespace buffstat_constants
 {
 	constexpr unsigned long long kMorph = 0x2;
@@ -18,7 +23,6 @@ namespace buffstat_constants
 	constexpr unsigned long long kConcentrate = 0x2000;
 	constexpr unsigned long long kEchoOfHero = 0x8000;
 	constexpr unsigned long long kGhostMorph = 0x20000;
-	constexpr unsigned long long kMonsterRiding = 0x40000000;
 	constexpr unsigned long long kWatk = 0x100000000;
 	constexpr unsigned long long kWdef = 0x200000000;
 	constexpr unsigned long long kMatk = 0x400000000;
