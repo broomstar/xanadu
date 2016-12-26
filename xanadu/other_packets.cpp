@@ -262,7 +262,7 @@ void PacketCreator::ShowPlayer(Player *player)
 	write<short>(0);
 	write<unsigned char>(0xFC);
 	write<signed char>(1);
-	write<int>(0); // 2 = morph, 0 = not morph?
+	write<int>(0); // 2 = morph, 0 = not morph ?
 
 	long long buff_mask = 0;
 	signed char buff_value = 0;
@@ -286,10 +286,10 @@ void PacketCreator::ShowPlayer(Player *player)
 		buff_mask |= buffstat_constants::kDarksight;
 	}
 
-	if (player->get_mount_item_id() != 0)
+	/*if (player->get_mount_item_id() != 0)
 	{
 		buff_mask |= buffstat_constants_position_1::kMonsterRiding;
-	}
+	}*/
 
 	write<int>(static_cast<int>((buff_mask >> 32) & 0xffffffffL));
 
