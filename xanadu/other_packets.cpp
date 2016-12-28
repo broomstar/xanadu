@@ -116,18 +116,18 @@ void PacketCreator::cpq_show_game_result(signed char result)
 
 // start of other packets
 
-// kSHOW_STATUS_INFO
-// CWvsContext::OnMessage
-// not confirmed yet, but probably correct:
-// 0 = droppickup
-// 1 = questrecord
-// 2 = cashitemexpire
-// 3 = increase exp
-// 4 = increase sp
-// 5 = increase fame
+// info for SHOW_STATUS_INFO:
+// it has the following modes:
 
+// 0 = droppickup
+// 3 = increase exp
+// 4 = increase fame
 // 5 = increase money
 
+// unconfirmed:
+// 1 = questrecord
+// 2 = cashitemexpire
+// 4 = increase sp
 // 7 = increase guild points
 // 8 = give buff message
 // 9 = OnGeneralItemExpireMessage
