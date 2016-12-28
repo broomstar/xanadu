@@ -128,5 +128,4 @@ void PacketCreator::KillMob(int mob_object_id)
 
 	write<int>(mob_object_id);
 	write<signed char>(1); // animation
-	write<signed char>(1); // animation
 }
