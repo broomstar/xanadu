@@ -120,22 +120,12 @@ void PacketCreator::cpq_show_game_result(signed char result)
 // it has the following modes:
 
 // 0 = droppickup
+// 1 = questrecord
 // 3 = increase exp
 // 4 = increase fame
 // 5 = increase money
-
-// unconfirmed:
-// 1 = questrecord
-// 2 = cashitemexpire
-// 4 = increase sp
-// 7 = increase guild points
-// 8 = give buff message
-// 9 = OnGeneralItemExpireMessage
-// 10 = OnSystemMessage
-// 11 = OnQuestRecordExMessage
-// 12 = OnItemProtectExpireMessage
-// 13 = OnItemExpireReplaceMessage
-// 14 = OnSkillExpireMessage
+// 6 = increase guild points
+// 9 = System Message
 
 void PacketCreator::GainItem(int itemid, short amount)
 {
