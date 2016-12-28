@@ -143,10 +143,18 @@ void PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus)
 	write<int>(exp); // amount of exp
 	write<bool>(in_chat); // in chat or on screen
 	write<int>(0); // Bonus Event EXP (+value)
-	write<signed char>(0); // A bonus EXP value% is awarded for every 3rd monster defeated.
-	write<signed char>(static_cast<signed char>(party_bonus)); // party bonus EXP
+	write<signed char>(0);
+	write<signed char>(0);
 	write<int>(0); // Bonus Wedding EXP (+value)
-	write<short>(0);
+	if (in_chat)
+	{
+		write<signed char>(0);
+	}
+	write<signed char>(0); // 0 = enable Bonus EXP for PARTY (+value), 1 = enable Bonus Event Party EXP (+value) x0
+	write<int>(party_bonus); // Bonus EXP for PARTY (+value)
+	write<int>(0); // Equip Item Bonus EXP (+value)
+	write<int>(0); // Internet Cafe EXP Bonus (+value)
+	write<int>(0); // Rainbow Week Bonus EXP (+value)
 }
 
 void PacketCreator::GainItem(int itemid, short amount)
@@ -962,28 +970,28 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
   LOBYTE(v103) = 1;
   if ( v96 )
   {
-    v3 = CInPacket::DecodeStr(&v102);
-    LOBYTE(v103) = 2;
-    ZXString_char_::operator_(v3);
-    LOBYTE(v103) = 1;
-    if ( v102 )
-      sub_434E38((volatile LONG *)(v102 - 12));
-    if ( v96 > 0 )
-    {
-      v101 = v96;
-      do
-      {
-        CInPacket::DecodeStr(&v102);
-        LOBYTE(v103) = 3;
-        sub_4655D4(-1);
-        ZXString_char_::operator_(&v102);
-        LOBYTE(v103) = 1;
-        if ( v102 )
-          sub_434E38((volatile LONG *)(v102 - 12));
-        --v101;
-      }
-      while ( v101 );
-    }
+	v3 = CInPacket::DecodeStr(&v102);
+	LOBYTE(v103) = 2;
+	ZXString_char_::operator_(v3);
+	LOBYTE(v103) = 1;
+	if ( v102 )
+	  sub_434E38((volatile LONG *)(v102 - 12));
+	if ( v96 > 0 )
+	{
+	  v101 = v96;
+	  do
+	  {
+		CInPacket::DecodeStr(&v102);
+		LOBYTE(v103) = 3;
+		sub_4655D4(-1);
+		ZXString_char_::operator_(&v102);
+		LOBYTE(v103) = 1;
+		if ( v102 )
+		  sub_434E38((volatile LONG *)(v102 - 12));
+		--v101;
+	  }
+	  while ( v101 );
+	}
   }*/
 
 	if (is_connect_packet)
@@ -1284,7 +1292,7 @@ void PacketCreator::ShowInfo(Player *player)
 		auto medal = inventory->get_item_by_slot(kItemConstantsEquippedSlotsMedal);
 		write<int>(medal ? medal->get_item_id() : 0);
 	}
-	
+
 	// collected medals info
 	write<short>(0); // size
 	// to-do write collected medals info here

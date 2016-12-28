@@ -50,6 +50,8 @@ void Player::handle_use_attack(signed char attack_type)
 		break;
 	}
 
+	skip_bytes(8);
+	signed char display = read<signed char>();
 	attack.direction_ = read<signed char>();
 	attack.stance_ = read<signed char>();
 
