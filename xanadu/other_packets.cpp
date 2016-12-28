@@ -125,7 +125,9 @@ void PacketCreator::cpq_show_game_result(signed char result)
 // 3 = increase exp
 // 4 = increase sp
 // 5 = increase fame
-// 6 = increase money
+
+// 5 = increase money
+
 // 7 = increase guild points
 // 8 = give buff message
 // 9 = OnGeneralItemExpireMessage
@@ -221,7 +223,6 @@ void PacketCreator::MesosGainChat(int amount)
 	write<short>(send_headers::kSHOW_STATUS_INFO);
 	write<signed char>(5); // 5 = increase mesos, there are also much other types
 	write<int>(amount);
-	write<short>(0);
 }
 
 void PacketCreator::ShowAvatarMega(Player *player, unsigned char ear, int item_id, std::string message, std::string message2, std::string message3, std::string message4)
