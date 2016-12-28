@@ -23,7 +23,7 @@ one of the following:
 windows 7 64 bit (untested)
 windows 8 64 bit (untested)
 windows 8.1 64 bit (used and tested by the developer)
-windows 10 64 bit (untested)
+windows 10 64 bit (Tested by ImbaWind)
 
 file extensions
 
