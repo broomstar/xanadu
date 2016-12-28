@@ -135,6 +135,58 @@ void PacketCreator::cpq_show_game_result(signed char result)
 // 13 = OnItemExpireReplaceMessage
 // 14 = OnSkillExpireMessage
 
+void PacketCreator::GainItem(int itemid, short amount)
+{
+	write<short>(send_headers::kSHOW_STATUS_INFO);
+	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
+	write<signed char>(0); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+	write<int>(itemid);
+	write<int>(amount);
+}
+
+void PacketCreator::GainMesos(int amount)
+{
+	write<short>(send_headers::kSHOW_STATUS_INFO);
+	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
+	write<signed char>(1); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+	write<signed char>(0);
+	write<int>(amount);
+	write<short>(0);
+}
+
+/*
+* mode can be as follows:
+* 0xFF = "You can't get anymore items."
+* 0xFE = "This item is unavailable for the pick-up."
+*/
+void PacketCreator::CantGetAnymoreItems()
+{
+	write<short>(send_headers::kSHOW_STATUS_INFO);
+	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
+	write<unsigned char>(0xFF); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+}
+
+void PacketCreator::UpdateQuestInfo(signed char mode, Quest *quest)
+{
+	write<short>(send_headers::kSHOW_STATUS_INFO);
+	write<signed char>(1); // 1 = quest message, there are also much other types
+	write<short>(quest->get_id());
+	write<signed char>(mode); // 0 = forfeit, 1 = update, 2 = completed
+
+	switch (mode)
+	{
+	case 0:
+		write<signed char>(0);
+		break;
+	case 1:
+		write<std::string>(quest->get_killed_mobs1());
+		break;
+	case 2:
+		write<long long>(quest->get_completion_time());
+		break;
+	}
+}
+
 void PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
@@ -157,20 +209,17 @@ void PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus)
 	write<int>(0); // Rainbow Week Bonus EXP (+value)
 }
 
-void PacketCreator::GainItem(int itemid, short amount)
+void PacketCreator::FameGainChat(int amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // 0 = drop pickup, there are also much other types
-	write<signed char>(0); // 0 = item, 1 = mesos
-	write<int>(itemid);
+	write<signed char>(4); // 4 = increase fame, there are also much other types
 	write<int>(amount);
 }
 
-void PacketCreator::GainMesos(int amount)
+void PacketCreator::MesosGainChat(int amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // 0 = drop pickup, there are also much other types
-	write<signed char>(1); // 0 = item, 1 = mesos
+	write<signed char>(5); // 5 = increase mesos, there are also much other types
 	write<int>(amount);
 	write<short>(0);
 }
@@ -603,55 +652,6 @@ void PacketCreator::UpdateQuest(Quest *quest, int npc_id)
 	write<int>(npc_id);
 	write<short>(0);
 	write<signed char>(0);
-}
-
-void PacketCreator::UpdateQuestInfo(signed char mode, Quest *quest)
-{
-	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(1); // 1 = quest message, there are also much other types
-	write<short>(quest->get_id());
-	write<signed char>(mode); // 0 = forfeit, 1 = update, 2 = completed
-
-	switch (mode)
-	{
-	case 0:
-		write<signed char>(0);
-		break;
-	case 1:
-		write<std::string>(quest->get_killed_mobs1());
-		break;
-	case 2:
-		write<long long>(quest->get_completion_time());
-		break;
-	}
-}
-
-void PacketCreator::ItemGainChat(int itemid, int amount, signed char items_size)
-{
-	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
-	write<signed char>(3); // 3 = gain item, there are also much other types
-	write<signed char>(items_size);
-
-	for (signed char i = 0; i < items_size; ++i)
-	{
-		write<int>(itemid);
-		write<int>(amount);
-	}
-}
-
-void PacketCreator::MesosGainChat(int amount)
-{
-	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(5); // 5 = increase mesos, there are also much other types
-	write<int>(amount);
-	write<short>(0);
-}
-
-void PacketCreator::FameGainChat(int amount)
-{
-	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(4); // 4 = increase fame, there are also much other types
-	write<int>(amount);
 }
 
 void PacketCreator::AddCharStats(Player *player)
@@ -1371,21 +1371,22 @@ void PacketCreator::UpdateStatInt(int stat, int value)
 	write<int>(value);
 }
 
+void PacketCreator::ItemGainChat(int itemid, int amount, signed char items_size)
+{
+	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
+	write<signed char>(3); // 3 = gain item, there are also much other types
+	write<signed char>(items_size);
+
+	for (signed char i = 0; i < items_size; ++i)
+	{
+		write<int>(itemid);
+		write<int>(amount);
+	}
+}
+
 void PacketCreator::get_inventory_full()
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
 	write<signed char>(1);
 	write<signed char>(0);
-}
-
-/*
-* mode can be as follows:
-* 0xFF = "You can't get anymore items."
-* 0xFE = "This item is unavailable for the pick-up."
-*/
-void PacketCreator::CantGetAnymoreItems()
-{
-	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // 0 = drop pickup, there are also much other types
-	write<unsigned char>(0xFF); // mode
 }
