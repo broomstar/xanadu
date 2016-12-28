@@ -106,7 +106,7 @@ void PacketCreator::ShowBossHp(int mob_id, int hp, int max_hp, signed char color
 {
 	write<short>(send_headers::kMAP_EFFECT);
 
-	write<signed char>(5);
+	write<signed char>(5); // mode: 5 = boss hp, there are also others
 	write<int>(mob_id);
 	write<int>(hp);
 	write<int>(max_hp);
