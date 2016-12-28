@@ -15,9 +15,11 @@ void PacketCreator::ControlMob(Mob *mob, signed char spawn_type)
 	write<signed char>(mob_constants::kControlStatusControlNormal);
 	write<int>(mob->get_monster_id());
 
+	// start of mob status
 	write_null(15);
 	write<unsigned char>(0x88);
 	write_null(6);
+	// end of mob status
 
 	write<short>(mob->get_position_x());
 	write<short>(mob->get_position_y());
@@ -26,7 +28,7 @@ void PacketCreator::ControlMob(Mob *mob, signed char spawn_type)
 	write<short>(mob->get_original_foothold());
 	write<signed char>(spawn_type);
 
-	write<signed char>(-1);
+	write<signed char>(-1); // monster carnival team
 	write<int>(0);
 }
 
@@ -46,9 +48,11 @@ void PacketCreator::SpawnMonster(Mob *mob, signed char spawn_type, int from)
 	write<signed char>(mob_constants::kControlStatusControlNormal);
 	write<int>(mob->get_monster_id());
 
+	// start of mob status
 	write_null(15);
 	write<unsigned char>(0x88);
 	write_null(6);
+	// end of mob status
 
 	write<short>(mob->get_position_x());
 	write<short>(mob->get_position_y());
@@ -63,7 +67,7 @@ void PacketCreator::SpawnMonster(Mob *mob, signed char spawn_type, int from)
 		write<int>(from);
 	}
 
-	write<signed char>(-1);
+	write<signed char>(-1); // monster carnival team
 	write<int>(0);
 }
 

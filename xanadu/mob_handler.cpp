@@ -24,7 +24,7 @@ void Player::handle_mob_movement()
 	signed char skill_level = read<signed char>();
 	short option = read<short>();
 
-	skip_bytes(5);
+	skip_bytes(13);
 
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
@@ -120,7 +120,7 @@ void Player::handle_mob_movement()
 		// send a packet to all players in the map except the player to show the movement of the mob
 		// exclude some bytes from being sent as that data is not used for the packet
 
-		const int excluded_bytes = (21 + 2);
+		const int excluded_bytes = (29 + 2);
 		PacketCreator packet2;
 		packet2.MoveMob(monster_object_id, next_movement_could_be_skill, action, skill_id, skill_level, option, start_position_x, start_position_y, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
 		map_->send_packet(&packet2, this);
