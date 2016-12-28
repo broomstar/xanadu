@@ -595,6 +595,7 @@ void PacketCreator::PlayerAttack(signed char attack_type, PlayerAttackInfo &atta
 
 	write<int>(attack.player_id_);
 	write<signed char>(attack.info_byte_);
+	write<signed char>(0x5B);
 	write<signed char>(attack.skill_level_);
 
 	if (attack.skill_id_ > 0)
@@ -602,6 +603,7 @@ void PacketCreator::PlayerAttack(signed char attack_type, PlayerAttackInfo &atta
 		write<int>(attack.skill_id_);
 	}
 
+	write<signed char>(0); // display
 	write<signed char>(attack.direction_);
 	write<signed char>(attack.stance_);
 	write<signed char>(attack.weapon_speed_);
