@@ -161,8 +161,6 @@ void PacketCreator::GetFredrickStorage(std::unordered_map<signed char, std::shar
 /*
 action is for example:
 
-unconfirmed:
-
 9 = take out
 10/0x0A = Error: Inventory is full
 11/0x0B = Error: You do not have enough mesos
