@@ -164,9 +164,9 @@ action is for example:
 unconfirmed:
 
 9 = take out
-10/0x0A = Error: Inv full
+10/0x0A = Error: Inventory is full
 11/0x0B = Error: You do not have enough mesos
-12/0x0C = Error: One-Of-A-Kind
+12/0x0C = Error: Item couldn't be retrieved because it's One-Of-A-Kind and player has it already
 13/0x0D = store items
 19/0x13 = store mesos
 22/0x16 = open storage/show what's in it
