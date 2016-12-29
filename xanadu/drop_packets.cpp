@@ -52,7 +52,7 @@ void PacketCreator::ShowDrop(signed char type, std::shared_ptr<Drop> drop, short
 		write<long long>(kNoExpirationTime);
 	}
 
-	write<signed char>(1); // 1 = pet pickup enabled (for mob drops), 0 = pet pickup disabled (for player drops)
+	write<bool>(true); // 1/true = pet pickup enabled (for mob drops), 0/false = pet pickup disabled (for player drops)
 }
 
 void PacketCreator::RemoveDrop(int drop_id, signed char animation, int player_id, signed char pet_slot)
