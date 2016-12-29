@@ -303,7 +303,7 @@ void Player::handle_item_transportation()
 			}
 			break;
 		}
-	case 0x0E: // Add item to trade
+	case 0x0F: // Add item to trade
 		{
 			// check if the trade partner is valid
 			if (!trade_partner_ || trade_partner_->get_trade_partner() != this || trade_partner_->get_map() != map_)
@@ -362,7 +362,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 0x0F: // add mesos to trade
+	case 0x10: // add mesos to trade
 		{
 			int mesos = read<int>();
 			if (!trade_partner_ || mesos < 1 || mesos > mesos_)
@@ -382,7 +382,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 0x10: // confirm the trade
+	case 0x11: // confirm the trade
 		{
 			// check if the trade partner is valid
 			if (!trade_partner_ || trade_partner_->get_trade_partner() != this || trade_partner_->get_map() != map_)
@@ -434,7 +434,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 21: // Hired Merchant Maintenance
+	case 20: // Hired Merchant Maintenance
 		{
 			if (merchant_)
 			{
@@ -457,7 +457,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 31: // Add item into Merchant
+	case 0x21: // Add item into Merchant
 		{
 			std::shared_ptr<HiredMerchant> merchant = get_hired_merchant();
 
@@ -507,7 +507,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 32: // Buy item in Merchant
+	case 0x22: // Buy item in Merchant
 		{
 			signed char slot = read<signed char>();
 			short amount = read<short>();
@@ -519,7 +519,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 36: // Remove item from Merchant
+	case 0x26: // Remove item from Merchant
 		{
 			skip_bytes(1);
 			short slot = read<short>();
@@ -537,7 +537,7 @@ void Player::handle_item_transportation()
 
 			break;
 		}
-	case 37: // End of maintenance (owner goes out of store)
+	case 0x27: // End of maintenance (owner goes out of store)
 	{
 		// packet
 		PacketCreator packet55;
@@ -546,7 +546,7 @@ void Player::handle_item_transportation()
 
 		break;
 	}
-	case 38: // Tidy up (retrieves earned mesos and removes sold items from list)
+	case 0x28: // Tidy up (retrieves earned mesos and removes sold items from list)
 	{
 		// TO-DO code this action
 
@@ -557,7 +557,7 @@ void Player::handle_item_transportation()
 
 		break;
 	}
-	case 39: // Close Merchant
+	case 0x29: // Close Merchant
 		{
 			if (merchant_ && merchant_->is_owner(id_))
 			{

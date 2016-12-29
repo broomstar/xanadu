@@ -24,7 +24,7 @@ void PacketCreator::ShowNpc(Npc *npc)
 	write<short>(npc->get_foothold());
 	write<short>(npc->get_rx0());
 	write<short>(npc->get_rx1());
-	write<signed char>(1); // boolean wether npc is shown or not (1 = show, 0 = hide)
+	write<bool>(true); // sets wether the npc is shown or not (1/true = show, 0/false = hide)
 }
 
 void PacketCreator::Bought(signed char code)
@@ -158,10 +158,25 @@ void PacketCreator::GetFredrickStorage(std::unordered_map<signed char, std::shar
 	write<signed char>(0);
 }
 
+/*
+action is for example:
+
+unconfirmed:
+
+9 = take out
+10/0x0A = Error: Inv full
+11/0x0B = Error: You do not have enough mesos
+12/0x0C = Error: One-Of-A-Kind
+13/0x0D = store items
+19/0x13 = store mesos
+22/0x16 = open storage/show what's in it
+
+*/
+
 void PacketCreator::GetStorage(int npc_id, signed char slots, std::vector<std::shared_ptr<Item>> items, int mesos)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x15); // action
+	write<signed char>(0x16); // action
 	write<int>(npc_id);
 	write<signed char>(slots);
 	write<signed char>(0x7E);
@@ -185,13 +200,13 @@ void PacketCreator::GetStorage(int npc_id, signed char slots, std::vector<std::s
 void PacketCreator::GetStorageFull()
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x10); // action
+	write<signed char>(0x0A); // action
 }
 
 void PacketCreator::MesoStorage(signed char slots, int mesos)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x12); // action
+	write<signed char>(0x13); // action
 	write<signed char>(slots);
 	write<short>(2);
 	write<short>(0);
@@ -202,7 +217,7 @@ void PacketCreator::MesoStorage(signed char slots, int mesos)
 void PacketCreator::StoreStorage(signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x0C); // action
+	write<signed char>(0x0D); // action
 	write<signed char>(slots);
 	write<short>(static_cast<short>((2 << inventory_id)));
 	write<short>(0);

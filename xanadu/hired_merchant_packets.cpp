@@ -37,7 +37,7 @@ void PacketCreator::GetHiredMerchant(Player *player, std::shared_ptr<HiredMercha
 		}
 	}
 
-	write<signed char>(-1);
+	write<signed char>(-1); // maybe end of visitor slots?
 
 	write<short>(0); // messages
 	
@@ -66,6 +66,11 @@ void PacketCreator::GetHiredMerchant(Player *player, std::shared_ptr<HiredMercha
 	write<int>(player->get_mesos());
 	write<signed char>(static_cast<unsigned char>(merchant->get_num_items()));
 
+	if (merchant->get_num_items() == 0)
+	{
+		write<signed char>(0);
+	}
+
 	for (size_t i = 0; i < merchant->get_num_items(); ++i)
 	{
 		std::shared_ptr<HiredMerchantItem> sellItem = merchant->get_item(static_cast<short>(i));
@@ -77,28 +82,10 @@ void PacketCreator::GetHiredMerchant(Player *player, std::shared_ptr<HiredMercha
 	}
 }
 
-// this packet is from v0.62 xiuzsource
-// it is for updating the hired merchant on the map
-// basically only to show if it's full, under maintenance or free to be entered
-/*
-public static MaplePacket updateHiredMerchant(HiredMerchant shop) {
-MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-mplew.writeShort(SendPacketOpcode.UPDATE_HIRED_MERCHANT.getValue());
-mplew.writeInt(shop.getOwnerId());
-mplew.write(0x05);
-mplew.writeInt(shop.getObjectId());
-mplew.writeMapleAsciiString(shop.getDescription());
-mplew.write(shop.getItemType());
-mplew.write(shop.getFreeSlot() > -1 ? 3 : 2);
-mplew.write(0x04);
-return mplew.getPacket();
-}
-*/
-
 void PacketCreator::UpdateHiredMerchant(HiredMerchant *hired_merchant)
 {
 	write<short>(send_headers::kPLAYER_INTERACTION);
-	write<signed char>(23); // action
+	write<signed char>(0x19); // action
 	write<int>(hired_merchant->get_merchant_mesos());
 	write<signed char>(static_cast<unsigned char>(hired_merchant->get_num_items()));
 
@@ -144,7 +131,7 @@ void PacketCreator::HiredMerchantVisitorAdd(Player *player, signed char slot)
 void PacketCreator::CloseMerchantStoreResponse()
 {
 	write<short>(send_headers::kPLAYER_INTERACTION);
-	write<signed char>(40); // action
+	write<signed char>(0x2A); // action
 	write<signed char>(1); // mode
 }
 
@@ -173,7 +160,7 @@ void PacketCreator::SpawnHiredMerchant(std::shared_ptr<HiredMerchant> merchant)
 	write<std::string>(merchant->get_description());
 	write<signed char>(merchant->get_item_id() % 10);
 	write<signed char>(1);
-	write<signed char>(7);
+	write<signed char>(4);
 }
 
 void PacketCreator::DestroyHiredMerchant(int id)
