@@ -2959,20 +2959,7 @@ void Player::set_crusader_combo_value(signed char value)
 	crusader_combo_value_ = value;
 }
 
-void Player::send_npc(int npc_id)
-{
-	if (npc_->id_ == npc_id && npc_->state_ == 0)
-	{
-		return;
-	}
-	npc_->id_ = npc_id;
-	npc_->set_selected(-1);
-	npc_->set_state(0);
-
-	send_npc_final();
-}
-
-void Player::send_npc_final()
+void Player::send_npc()
 {
 	switch (npc_->id_)
 	{

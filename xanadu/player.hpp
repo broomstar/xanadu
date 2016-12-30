@@ -239,8 +239,7 @@ public:
 	signed char get_crusader_combo_value();
 	void set_crusader_combo_value(signed char value);
 
-	void send_npc(int npc_id);
-	void send_npc_final();
+	void send_npc();
 
 	// npc script handlers
 	void handle_npc_sera();

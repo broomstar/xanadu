@@ -43,7 +43,7 @@ void Player::handle_request_npc()
 	npc_->set_selected(-1);
 	npc_->set_state(0);
 
-	send_npc_final();
+	send_npc();
 }
 
 void Player::handle_npc_chat()
@@ -101,7 +101,7 @@ void Player::handle_npc_chat()
 		return;
 	}
 
-	send_npc_final();
+	send_npc();
 }
 
 void Player::handle_npc_shop()
