@@ -35,12 +35,12 @@ void PacketCreator::CancelSkillEffect(int player_id, int skill_id)
 
 void PacketCreator::UpdateSkills(Player *player)
 {
-	auto skills = player->get_skills();
-	short amount = static_cast<short>(skills->size());
-
 	write<short>(send_headers::kUPDATE_SKILLS);
 	write<signed char>(1);
-	write<short>(amount);
+
+	auto skills = player->get_skills();
+
+	write<short>(static_cast<short>(skills->size()));
 
 	for (auto it : *skills)
 	{
@@ -52,6 +52,7 @@ void PacketCreator::UpdateSkills(Player *player)
 		write<int>(skill_id);
 		write<int>(skill_level);
 		write<int>(master_level);
+		write<long long>(kNoExpirationTime);
 	}
 
 	write<signed char>(1);
@@ -64,11 +65,12 @@ void PacketCreator::UpdateSkill(int skill_id, int skill_level, int master_level)
 
 	write<short>(1); // amount of data elements
 
-	// for each data element, this data is written in a loop
+	// for each data element, this data is written (in a loop when not writing single data like in this function)
 
 	write<int>(skill_id);
 	write<int>(skill_level);
 	write<int>(master_level);
+	write<long long>(kNoExpirationTime);
 
 	write<signed char>(1);
 }

@@ -843,8 +843,8 @@ void PacketCreator::AddInventoryInfo(Player *player)
 void PacketCreator::AddSkillInfo(Player *player)
 {
 	auto skills = player->get_skills();
-	short amount = static_cast<short>(skills->size());
-	write<short>(amount);
+
+	write<short>(static_cast<short>(skills->size()));
 
 	for (auto it : *skills)
 	{
@@ -853,7 +853,7 @@ void PacketCreator::AddSkillInfo(Player *player)
 
 		write<int>(skill_id);
 		write<int>(skill.level_);
-		write<long long>(kNoExpirationTime); // expiration time
+		write<long long>(kNoExpirationTime);
 
 		if (tools::is_fourth_job_skill(skill_id))
 		{
