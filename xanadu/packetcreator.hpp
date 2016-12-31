@@ -225,7 +225,7 @@ public:
 	void ShowMonsterRiding(int player_id, int item_id, int skill_id);
 	void ShowForeignEffect(int player_id, signed char effect);
 	void ShowBuffEffect(int player_id, signed char effect_id, int skill_id, signed char skill_level);
-	void writeBuffMask(Values *values);
+	void WriteBuffMask(Values *values);
 	void ShowPlayerBuff(Values *values, int skill_id, int time);
 	void CancelPlayerBuff(Values *values);
 	void ShowMapBuff(int player_id, Values *values);

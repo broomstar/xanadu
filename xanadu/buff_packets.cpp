@@ -97,7 +97,7 @@ void PacketCreator::ShowPlayerBuff(Values *values, int skill_id, int time)
 
 	values->sort();
 
-	writeBuffMask(values);
+	WriteBuffMask(values);
 
 	auto values2 = values->get_values();
 
@@ -118,7 +118,7 @@ void PacketCreator::CancelPlayerBuff(Values *values)
 {
 	write<short>(send_headers::kCANCEL_BUFF);
 
-	writeBuffMask(values);
+	WriteBuffMask(values);
 
 	write<signed char>(1);
 }
@@ -130,7 +130,7 @@ void PacketCreator::ShowMapBuff(int player_id, Values *values)
 
 	values->sort();
 
-	writeBuffMask(values);
+	WriteBuffMask(values);
 
 	auto values2 = values->get_values();
 
@@ -149,10 +149,10 @@ void PacketCreator::CancelMapBuff(int player_id, Values *values)
 	write<short>(send_headers::kCANCEL_FOREIGN_BUFF);
 	write<int>(player_id);
 
-	writeBuffMask(values);
+	WriteBuffMask(values);
 }
 
-void PacketCreator::writeBuffMask(Values *values)
+void PacketCreator::WriteBuffMask(Values *values)
 {
 	unsigned long long mask = 0;
 	auto values2 = values->get_values();
