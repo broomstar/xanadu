@@ -8,11 +8,11 @@
 /*
 MTS enter packet probably like this:
 
-got it from v0.95 GMS, but verified that it's very likely the same for v0.62 GMS
+got it from v0.95 GMS, but verified that it's very likely the same for v0.83 GMS
 
 opcode
 writeCharacterData(player);
-write<std::string>("test"); // ID name
+write<std::string>(player->get_user_name());
 write<int>(0); // m_nRegisterFeeMeso
 write<int>(0); // m_nCommissionRate
 write<int>(0); // m_nCommissionBase
@@ -419,15 +419,6 @@ void PacketCreator::EnterCashShop(Player *player)
 
 	write<bool>(false); // m_bEventOn
 	write<int>(150); // m_nHighestCharacterLevelInThisAccount
-
-	/*
-	from v0.95 GMS
-	at the end of the cashshop enter packet:
-
-	CCashShop::LoadData(v2, iPacket);
-	v2->m_bEventOn = (unsigned __int8)CInPacket::Decode1(v6);
-	v2->m_nHighestCharacterLevelInThisAccount = CInPacket::Decode4(v6);
-	*/
 }
 
 void PacketCreator::ShowCashPoints(int nx_credit)
