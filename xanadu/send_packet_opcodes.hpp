@@ -117,4 +117,5 @@ namespace send_headers
 	constexpr short kSHOW_CASH = 0x144;
 	constexpr short kCASHSHOP_OPERATION = 0x145;
 	constexpr short kKEYMAP = 0x14F;
+	constexpr short kMTS_SHOW_CASH = 0x15B;
 }

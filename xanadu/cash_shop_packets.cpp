@@ -394,9 +394,9 @@ void PacketCreator::EnterCashShop(Player *player)
 void PacketCreator::ShowCashPoints(int nx_credit)
 {
 	write<short>(send_headers::kSHOW_CASH);
-	write<int>(nx_credit); // nx cash
+	write<int>(nx_credit); // nx credit
 	write<int>(0); // maple point
-	write<int>(0); // prepaid
+	write<int>(0); // nx prepaid
 }
 
 void PacketCreator::GetCashShopInventory(std::vector<std::shared_ptr<Item>> items, int account_id, short storage_slots, short character_slots)

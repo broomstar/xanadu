@@ -47,3 +47,10 @@ void PacketCreator::EnterMTS(Player *player)
 	write<int>(0); // m_nAuctionDurationMax
 	write<long long>(0); // time
 }
+
+void PacketCreator::ShowMTSCash()
+{
+	write<short>(send_headers::kMTS_SHOW_CASH);
+	write<int>(0); // nx
+	write<int>(0); // maple point
+}

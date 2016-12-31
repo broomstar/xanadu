@@ -16,6 +16,13 @@ void Player::handle_enter_mts()
 		send_packet(&packet);
 	}
 
+	{
+		// send a packet
+		PacketCreator packet;
+		packet.ShowMTSCash();
+		send_packet(&packet);
+	}
+
 	// warp the player to the free market
 	//set_map(910000000);
 }
