@@ -39,6 +39,7 @@ namespace send_headers
 	constexpr short kSERVERMESSAGE = 0x44;
 	constexpr short kSHOW_AVATAR_MEGA = 0x6F;
 	constexpr short kWARP_TO_MAP = 0x7D;
+	constexpr short kSET_MTS = 0x7E;
 	constexpr short kOPEN_CASHSHOP = 0x7F;
 	constexpr short kMULTICHAT = 0x86;
 	constexpr short kWHISPER = 0x87;

@@ -41,12 +41,12 @@ void Player::handle_chat_command()
 		}
 		if (receiver_player->get_channel_id() == channel_id_)
 		{
-			if (receiver_player->get_is_in_cash_shop())
+			if (receiver_player->get_is_in_cash_shop() || receiver_player->get_is_in_mts())
 			{
 				{
 					// packet
 					PacketCreator packet;
-					packet.FindPlayerCashShop(receiver_player->get_name());
+					packet.FindPlayerCashShopOrMTS(receiver_player->get_name());
 					send_packet(&packet);
 				}
 			}

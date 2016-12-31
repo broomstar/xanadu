@@ -75,7 +75,7 @@ public:
 	void BuddyListInvite(Player *player);
 	void UpdateBuddyChannel(int player_id, int channel_id);
 	void UpdateBuddyListCapacity(Player *player);
-	// cash
+	// cash shop
 	void EnterCashShop(Player *player);
 	void ShowCashPoints(int nx_credit);
 	void GetCashShopInventory(std::vector<std::shared_ptr<Item>> items, int account_id, short storage_slots, short character_slots);
@@ -89,11 +89,13 @@ public:
 	void TransferToCashShopInventory(const std::shared_ptr<Item> &item, int account_id);
 	void CashShopShowBoughtPackage(std::vector<std::shared_ptr<Item>> items, int account_id);
 	void CashShopAddCashItemData(const std::shared_ptr<Item> &item, int account_id);
+	// mts
+	void EnterMTS(Player *player);
 	// chat
 	void ShowChatMessage(Player *player, const std::string &message, bool bubble_only);
 	void ShowMessage(const std::string &message, unsigned char type, unsigned char channel_id = 0, unsigned char whisper = 0, std::shared_ptr<Item> item = nullptr);
 	void FindPlayerReply(const std::string &name, bool success);
-	void FindPlayerCashShop(const std::string &name);
+	void FindPlayerCashShopOrMTS(const std::string &name);
 	void FindPlayerMap(const std::string &name, int mapid);
 	void FindPlayerChannel(const std::string &name, int channel);
 	void WhisperPlayer(Player *player, const std::string &message);

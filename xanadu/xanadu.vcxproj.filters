@@ -457,6 +457,12 @@
     <ClCompile Include="npc scripts\handle_npc_spinel.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
+    <ClCompile Include="mts_packets.cpp">
+      <Filter>send_packet_creator</Filter>
+    </ClCompile>
+    <ClCompile Include="mts_handler.cpp">
+      <Filter>receive_packet_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes\aes.h">
