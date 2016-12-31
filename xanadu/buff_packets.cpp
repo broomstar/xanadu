@@ -108,7 +108,10 @@ void PacketCreator::ShowPlayerBuff(Values *values, int skill_id, int time)
 		write<int>(time);
 	}
 
-	write_null(10);
+	write<signed char>(0);
+	write<signed char>(0);
+	write<short>(0);
+	write<long long>(0);
 }
 
 void PacketCreator::CancelPlayerBuff(Values *values)
