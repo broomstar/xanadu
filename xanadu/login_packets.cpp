@@ -6,8 +6,9 @@
 #include "world.hpp"
 #include "tools.hpp"
 #include "send_packet_opcodes.hpp"
-#include "constants.hpp"
+#include "server_constants.hpp"
 #include "game_constants.hpp"
+#include "constants.hpp"
 
 void PacketCreator::get_handshake(unsigned char *iv_recv, unsigned char *iv_send)
 {

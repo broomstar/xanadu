@@ -30,7 +30,7 @@
 #include "map_mob_data.hpp"
 #include "mob_data_provider.hpp"
 #include "drop_constants.hpp"
-#include "constants.hpp"
+#include "server_constants.hpp"
 #include "pq_constants.hpp"
 
 // constructor

@@ -12,6 +12,7 @@
 #include "mob_data.hpp"
 #include "mob_data_provider.hpp"
 #include "buffstat_constants.hpp"
+#include "server_constants.hpp"
 #include "constants.hpp"
 
 // constructor

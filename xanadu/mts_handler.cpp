@@ -4,9 +4,17 @@
 
 #include "map.hpp"
 #include "packetcreator.hpp"
+#include "server_constants.hpp"
 
 void Player::handle_enter_mts()
 {
+	if (!kMTSEnabled)
+	{
+		// warp the player to the free market map
+		set_map(910000000);
+		return;
+	}
+
 	in_mts_ = true;
 	map_->remove_player(this);
 
@@ -22,9 +30,6 @@ void Player::handle_enter_mts()
 		packet.ShowMTSCash();
 		send_packet(&packet);
 	}
-
-	// warp the player to the free market
-	//set_map(910000000);
 }
 
 void Player::handle_leave_mts()

@@ -744,5 +744,8 @@
     <ClInclude Include="guild_constants.hpp">
       <Filter>constants</Filter>
     </ClInclude>
+    <ClInclude Include="server_constants.hpp">
+      <Filter>constants</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

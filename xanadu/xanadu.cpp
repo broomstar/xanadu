@@ -25,7 +25,7 @@
 
 #include <thread>
 
-#include "constants.hpp"
+#include "server_constants.hpp"
 #include "session.hpp"
 #include "world.hpp"
 

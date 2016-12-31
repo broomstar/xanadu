@@ -7,8 +7,9 @@
 #include "session.hpp"
 #include "valid_char_data_provider.hpp"
 #include "packetcreator.hpp"
-#include "constants.hpp"
+#include "server_constants.hpp"
 #include "job_constants.hpp"
+#include "constants.hpp"
 
 #include "Poco\Data\RecordSet.h"
 

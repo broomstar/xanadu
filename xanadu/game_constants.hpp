@@ -8,7 +8,6 @@ constexpr std::size_t kPacketHandshakeServerLength = 13; // the size of the hand
 constexpr short kGameVersion = 83; // mayor game version
 const std::string kGameMinorVersion = "1"; // minor game version, if 0, then the string is empty
 
-
 namespace GameLocales
 {
 	const signed char kGlobalMapleStory = 8;

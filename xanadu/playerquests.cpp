@@ -8,7 +8,7 @@
 #include "quest_reward_data.hpp"
 #include "packetcreator.hpp"
 #include "world.hpp"
-#include "constants.hpp"
+#include "server_constants.hpp"
 
 void Player::give_quest(int quest_id)
 {

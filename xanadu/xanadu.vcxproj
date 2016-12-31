@@ -312,6 +312,7 @@
     <ClInclude Include="playernpc.hpp" />
     <ClInclude Include="pq_constants.hpp" />
     <ClInclude Include="quest_data_provider.hpp" />
+    <ClInclude Include="server_constants.hpp" />
     <ClInclude Include="shop_data_provider.hpp" />
     <ClInclude Include="skill.hpp" />
     <ClInclude Include="skill_data.hpp" />

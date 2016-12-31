@@ -25,6 +25,7 @@
 #include "pet_data_provider.hpp"
 #include "quest_data_provider.hpp"
 #include "map_data_provider.hpp"
+#include "server_constants.hpp"
 #include "wznode.hpp"
 #include "wzmain.hpp"
 
