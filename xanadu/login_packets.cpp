@@ -88,32 +88,16 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 
 	write<int>(user_id);
 	write<signed char>(kGenderConstantsMale); // gender byte 0 = male, 1 = female, number 10/0x0A triggers gender select
+	write<signed char>(0); // nGradeCode (admin byte: bool, true/1 for GMs/admins, false/0 for normal), for GM commands and maybe other stuff
 
 	/*
-	from v0.95 GMS
-	 LOBYTE(nGradeCode) = CInPacket::Decode1(iPacket);
-      v41 = CInPacket::Decode2(iPacket); // used for nSubGradeCode and bTesterAccount, maybe for testserver?
-      LOBYTE(nCountryID) = CInPacket::Decode1(iPacket);
+	info for the byte below:
+	short toWrite = (short) (c.gmLevel() * 32);
+	mplew.write(toWrite > 0x80 ? 0x80 : toWrite);
+	*/
+	write<signed char>(0); // nSubGradeCode (0x80 is admin, 0x20 and 0x40 = subgm), for GM commands and maybe other stuff
 
-	  in v0.83
-	  this part is:
-
-	  LOBYTE(v102) = CInPacket::Decode1(v39);
-	  LOBYTE(v105) = CInPacket::Decode1(v39);
-	  LOBYTE(v101) = CInPacket::Decode1(v39);
-
-	  from v0.83 moopledev:
-
-	  mplew.writeBool(c.gmLevel() > 0); //admin byte
-	  short toWrite = (short) (c.gmLevel() * 32);
-	  //toWrite = toWrite |= 0x100; only in higher versions
-	  mplew.write(toWrite > 0x80 ? 0x80 : toWrite);//0x80 is admin, 0x20 and 0x40 = subgm
-	  mplew.writeBool(c.gmLevel() > 0);
-	  //mplew.writeShort(toWrite > 0x80 ? 0x80 : toWrite); only in higher versions...
-	  */
-	write<signed char>(0);
-	write<signed char>(0);
-	write<signed char>(0);
+	write<signed char>(0); // nCountryID
 
 	write<std::string>(account_name);
 	write<signed char>(0); // nPurchaseExp
@@ -350,7 +334,7 @@ void PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *charact
 		Character *character = it.second;
 		ShowCharacter(character);
 	}
-	
+
 	// enable PIC?
 	// 2 = disable, 1 = need to set one, 0 = enable ?
 	write<signed char>(2);
