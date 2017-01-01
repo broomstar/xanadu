@@ -101,7 +101,6 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	  LOBYTE(v102) = CInPacket::Decode1(v39);
 	  LOBYTE(v105) = CInPacket::Decode1(v39);
 	  LOBYTE(v101) = CInPacket::Decode1(v39);
-	  CinPacket::DecodeStr(v39, (int)&v100);
 
 	  from v0.83 moopledev:
 
