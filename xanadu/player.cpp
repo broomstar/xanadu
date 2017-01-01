@@ -1137,11 +1137,12 @@ void Player::player_connect()
 		rs9.moveNext();
 	}
 
-	// is this needed in version 62?
+	// is this needed in v0.83 GMS?
+	// though keep this comment for now as it might be useful at some time
 	/*{
 		//
 		// - HACK - //
-		// load quests that have "auto_start" to prevent client sending these
+		// "fake-load" quests that have "auto_start" to prevent client sending these
 		//
 
 		initialize_player_quests(7707, true, 0, 0);
@@ -1187,7 +1188,8 @@ void Player::player_connect()
 		rs10.moveNext();
 	}
 
-	// add the monster riding skill to the player
+	// add the monster riding skill to the player by default
+	// this code could be improved: only add it if it's not there already
 
 	Skill monster_riding_skill;
 	int monster_riding_skill_id = 1004;
