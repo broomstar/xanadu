@@ -298,7 +298,7 @@ void PacketCreator::EnterCashShop(Player *player)
 00000008 CS_STOCK        ends
 */
 
-	write<short>(0); // CCashShop::DecodeStock size
+	write<short>(0); // DecodeStock size
 
 	/*
 	from v0.95 GMS
@@ -344,7 +344,7 @@ void PacketCreator::EnterCashShop(Player *player)
 
 */
 
-	write<short>(0); // CCashShop::DecodeLimitGoods size
+	write<short>(0); // DecodeLimitGoods size
 
 					 // -------------------------------------------------------------------------------
 
@@ -383,7 +383,7 @@ void PacketCreator::EnterCashShop(Player *player)
 		+					 }
 		+					 */
 
-	write<short>(0); // probably DecodeZeroGoods size
+	write<short>(0); // DecodeZeroGoods size
 
 					 // -------------------------------------------------------------------------------
 
