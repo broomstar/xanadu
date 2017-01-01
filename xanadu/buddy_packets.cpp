@@ -33,7 +33,7 @@ void PacketCreator::BuddyList(Player *player)
 		write_string(buddy->get_player_name(), 13);
 		write<signed char>(buddy->get_opposite_status());
 		write<int>(buddy->get_channel_id());
-		write_string("test group", 17); // group name
+		write_string("Default Group", 17); // group name
 	}
 
 	/*
@@ -67,8 +67,12 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write_string(player->get_name(), 13);
 	write<signed char>(Buddylist::kOppositeStatusRequested);
 	write<int>(1); // channel_id?
-	write_string("Group Unknown", 17); // group name
+	write_string("Default Group", 17); // group name
 
+	/*
+	v4 = ZArray<int>::InsertBefore(&v2->m_aInShop, -1);
+	*v4 = (unsigned __int8)CInPacket::Decode1(iPacket);
+	*/
 	write<signed char>(0);
 }
 
