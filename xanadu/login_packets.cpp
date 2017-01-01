@@ -122,15 +122,6 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	write<long long>(0); // register date
 	write<int>(8); // nNumOfCharacter
 	write<signed char>(2); // PIN?
-
-	/*
-	info the byte below:
-
-	like above, it's apparently something for admin shop
-
-	sMsg._m_pStr[432] = CInPacket::Decode1(iPacket);
-	*/
-
 	write<signed char>(0);
 }
 
