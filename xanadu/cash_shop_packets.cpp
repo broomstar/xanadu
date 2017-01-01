@@ -491,20 +491,11 @@ void PacketCreator::CashShopShowBoughtPackage(std::vector<std::shared_ptr<Item>>
 
 /*
 
-When declairing global variables, you can do the following
-
-labelname db 0 ; define byte
-labelname dw 0 ; define word
-labelname dd 0  ; define double word
-labelname dq 0 ; define quad word
-
 from GMS v0.95 data:
 
 CInPacket::DecodeBuffer(iPacket, v6, 0x37u);
 
 0x37 = 55
-
-void __thiscall CCashShop::OnCashItemResMoveStoLDone(CCashShop *this, CInPacket *iPacket)
 
 DD = DWORD? DWORD = unsinged long = 4 bytes
 DW = WORD? = unsigned short
@@ -540,12 +531,12 @@ void PacketCreator::CashShopAddCashItemData(const std::shared_ptr<Item> &item, i
 {
 	write<long long>(item->get_unique_id());
 	write<int>(account_id);
-	write<int>(0); // character id? dwCharacterID
+	write<int>(0); // dwCharacterID
 	write<int>(item->get_item_id());
 	write<int>(item->get_commodity_id_sn());
 	write<short>(item->get_amount());
 	write_string("", 13); // character name? (who made the gift?)
 	write<long long>(item->get_expiration_time());
-	write<int>(0); // nPaybackRate
-	write<int>(0); // nDiscountRate
+	write<int>(0); // PaybackRate
+	write<int>(0); // DiscountRate
 }

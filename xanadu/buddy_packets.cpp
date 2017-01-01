@@ -16,16 +16,6 @@ void PacketCreator::BuddyList(Player *player)
 	write<signed char>(BuddylistSendPacketActions::kUpdate);
 	write<signed char>(buddylist_size);
 
-	/*
-	00000000 GW_Friend       struc ; (sizeof=0x27, copyof_1725)
-00000000 dwFriendID      dd ?
-00000004 sFriendName     db 13 dup(?)
-00000011 nFlag           db ?
-00000012 nChannelID      dd ?
-00000016 sFriendGroup    db 17 dup(?)
-00000027 GW_Friend       ends
-*/
-
 	for (auto &it : *buddylist)
 	{
 		auto buddy = it.second;
@@ -52,16 +42,6 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write<signed char>(BuddylistSendPacketActions::kInvite);
 	write<int>(player->get_id());
 	write<std::string>(player->get_name());
-
-	/*
-	00000000 GW_Friend       struc ; (sizeof=0x27, copyof_1725)
-	00000000 dwFriendID      dd ?
-	00000004 sFriendName     db 13 dup(?)
-	00000011 nFlag           db ?
-	00000012 nChannelID      dd ?
-	00000016 sFriendGroup    db 17 dup(?)
-	00000027 GW_Friend       ends
-	*/
 
 	write<int>(player->get_id());
 	write_string(player->get_name(), 13);
