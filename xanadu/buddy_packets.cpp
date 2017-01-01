@@ -16,6 +16,16 @@ void PacketCreator::BuddyList(Player *player)
 	write<signed char>(BuddylistSendPacketActions::kUpdate);
 	write<signed char>(buddylist_size);
 
+	/*
+	00000000 GW_Friend       struc ; (sizeof=0x27, copyof_1725)
+00000000 dwFriendID      dd ?
+00000004 sFriendName     db 13 dup(?)
+00000011 nFlag           db ?
+00000012 nChannelID      dd ?
+00000016 sFriendGroup    db 17 dup(?)
+00000027 GW_Friend       ends
+*/
+
 	for (auto &it : *buddylist)
 	{
 		auto buddy = it.second;
@@ -23,13 +33,16 @@ void PacketCreator::BuddyList(Player *player)
 		write_string(buddy->get_player_name(), 13);
 		write<signed char>(buddy->get_opposite_status());
 		write<int>(buddy->get_channel_id());
-		write_string("test group", 13); // group name
-		write<int>(0); // map id?
+		write_string("test group", 17); // group name
 	}
 
+	/*
+	CInPacket::DecodeBuffer(v2, v3->m_aInShop.a, 4 * v4);
+	it's an array of 4 byte int's, no clue what m_aInShop is supposed to mean/do
+	*/
 	for (signed char i = 0; i < buddylist_size; ++i)
 	{
-		write<int>(0); // map id?
+		write<int>(0);
 	}
 }
 
@@ -39,12 +52,23 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write<signed char>(BuddylistSendPacketActions::kInvite);
 	write<int>(player->get_id());
 	write<std::string>(player->get_name());
+
+	/*
+	00000000 GW_Friend       struc ; (sizeof=0x27, copyof_1725)
+	00000000 dwFriendID      dd ?
+	00000004 sFriendName     db 13 dup(?)
+	00000011 nFlag           db ?
+	00000012 nChannelID      dd ?
+	00000016 sFriendGroup    db 17 dup(?)
+	00000027 GW_Friend       ends
+	*/
+
 	write<int>(player->get_id());
 	write_string(player->get_name(), 13);
 	write<signed char>(Buddylist::kOppositeStatusRequested);
-	write<int>(1);
-	write_string("Group Unknown", 16);
-	write<signed char>(0x1C);
+	write<int>(1); // channel_id?
+	write_string("Group Unknown", 17); // group name
+
 	write<signed char>(0);
 }
 
