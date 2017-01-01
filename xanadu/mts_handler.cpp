@@ -25,7 +25,6 @@ void Player::handle_enter_mts()
 	}
 
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.ShowMTSCash();
 		send_packet(&packet);
@@ -37,7 +36,6 @@ void Player::handle_leave_mts()
 	in_mts_ = false;
 
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.change_map(this, true);
 		send_packet(&packet);

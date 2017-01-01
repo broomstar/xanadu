@@ -16,37 +16,27 @@ void Player::handle_cash_shop_enter()
 {
 	in_cash_shop_ = true;
 	map_->remove_player(this);
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.EnterCashShop(this);
 		send_packet(&packet);
 	}
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.GetCashShopInventory(cashshop_storage_items_, user_id_, storage_slots_, character_slots_);
 		send_packet(&packet);
 	}
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.CashShopShowGifts();
 		send_packet(&packet);
 	}
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.CashShopShowWishlist();
 		send_packet(&packet);
 	}
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.ShowCashPoints(nx_cash_credit_);
 		send_packet(&packet);
@@ -56,21 +46,17 @@ void Player::handle_cash_shop_enter()
 void Player::handle_leave_cash_shop()
 {
 	in_cash_shop_ = false;
-
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.change_map(this, true);
 		send_packet(&packet);
 	}
-
 	map_->add_player(this);
 }
 
 void Player::handle_update_cash_shop()
 {
 	{
-		// send a packet
 		PacketCreator packet;
 		packet.ShowCashPoints(nx_cash_credit_);
 		send_packet(&packet);
@@ -117,19 +103,15 @@ void Player::handle_cash_shop_action()
 		nx_cash_credit_ -= price;
 
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowCashPoints(nx_cash_credit_);
 			send_packet(&packet);
 		}
-
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowBoughtCashItem(item, user_id_);
 			send_packet(&packet);
 		}
-
 		break;
 	}
 	case CashShopReceivePacketActions::kBuyInventorySlots:
@@ -157,21 +139,16 @@ void Player::handle_cash_shop_action()
 
 		nx_cash_credit_ -= 4000;
 		inventory->add_slots(4);
-
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowCashPoints(nx_cash_credit_);
 			send_packet(&packet);
 		}
-
-		// send a packet
 		{
 			PacketCreator packet;
 			packet.IncreaseInventorySlots(inventory_id, inventory->get_slots());
 			send_packet(&packet);
 		}
-
 		break;
 	}
 	case CashShopReceivePacketActions::kBuyStorageSlots:
@@ -192,21 +169,16 @@ void Player::handle_cash_shop_action()
 
 		nx_cash_credit_ -= 4000;
 		storage_slots_ += 4;
-
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowCashPoints(nx_cash_credit_);
 			send_packet(&packet);
 		}
-
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.IncreaseStorageSlots(storage_slots_);
 			send_packet(&packet);
 		}
-
 		break;
 	}
 	case CashShopReceivePacketActions::kBuyCharacterSlot:
@@ -219,15 +191,12 @@ void Player::handle_cash_shop_action()
 		{
 			nx_cash_credit_ -= 6900;
 			character_slots_ += 1;
-
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.CashShopIncreaseCharacterSlots(character_slots_);
 				send_packet(&packet);
 			}
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.ShowCashPoints(nx_cash_credit_);
 				send_packet(&packet);
@@ -255,16 +224,12 @@ void Player::handle_cash_shop_action()
 				if (!inventory->add_item_find_slot(it))
 				{
 					// to-do send the cashshop error packet instead of those packets down there
-
 					{
-						// send a packet
 						PacketCreator packet;
 						packet.ShowCashPoints(nx_cash_credit_);
 						send_packet(&packet);
 					}
-
 					{
-						// send a packet
 						PacketCreator packet;
 						packet.EnableAction();
 						send_packet(&packet);
@@ -273,7 +238,6 @@ void Player::handle_cash_shop_action()
 					continue;
 				}
 				{
-					// send a packet
 					PacketCreator packet;
 					packet.TakeOutFromCashShopInventory(it.get(), 1);
 					send_packet(&packet);
@@ -302,7 +266,6 @@ void Player::handle_cash_shop_action()
 
 			cashshop_storage_items_.push_back(it.second);
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.TransferToCashShopInventory(it.second, user_id_);
 				send_packet(&packet);
@@ -326,7 +289,6 @@ void Player::handle_cash_shop_action()
 
 				cashshop_storage_items_.push_back(it.second);
 				{
-					// send a packet
 					PacketCreator packet;
 					packet.TransferToCashShopInventory(it.second, user_id_);
 					send_packet(&packet);
@@ -389,13 +351,11 @@ void Player::handle_cash_shop_action()
 			nx_cash_credit_ -= price;
 		}
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.CashShopShowBoughtPackage(items, user_id_);
 			send_packet(&packet);
 		}
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowCashPoints(nx_cash_credit_);
 			send_packet(&packet);
