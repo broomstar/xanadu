@@ -78,18 +78,7 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 {
 	write<short>(send_headers_login::kLoginStatus);
 	write<signed char>(success_or_failure_reason);
-
-	/*
-	info for the following 1 byte:
-
-	// sMsg._m_pStr[500] = CInPacket::Decode1(iPacket);
-	
-	; XREF: CAdminShopDlg::DrawNPCItem
-	apparently used for the admin shop
-	maybe number/id for a specific message?
-	*/
 	write<signed char>(0);
-
 	write<int>(0);
 
 	if (success_or_failure_reason != 0)
@@ -128,9 +117,9 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	write<signed char>(0);
 
 	write<std::string>(account_name);
-	write<signed char>(0); // LOBYTE(nPurchaseExp) = CInPacket::Decode1(iPacket); ?
-	write<signed char>(0); // quiet ban/chat block) reason
-	write<long long>(0); // quiet ban/chat block time/date
+	write<signed char>(0); // nPurchaseExp
+	write<signed char>(0); // quiet ban/chat block reason
+	write<long long>(0); // quiet ban/chat unblock time/date
 	write<long long>(0); // register date
 	write<int>(8); // nNumOfCharacter
 	write<signed char>(2); // PIN?
