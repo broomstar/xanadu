@@ -349,39 +349,61 @@ void PacketCreator::EnterCashShop(Player *player)
 					 // -------------------------------------------------------------------------------
 
 					 /*
-		+					 from v0.95 GMS
+		from v0.95 GMS
 		+
-		+					 CCashShop::DecodeZeroGoods(v53, v54);
-		+					 v79 = -1;
-		+					 if ( pBase.m_pInterface )
-		+					 pBase.m_pInterface->vfptr->Release((IUnknown *)pBase.m_pInterface);
-		+					 }
+		CCashShop::DecodeZeroGoods(v53, v54);
+		v79 = -1;
+		if ( pBase.m_pInterface )
+		pBase.m_pInterface->vfptr->Release((IUnknown *)pBase.m_pInterface);
+		}
 		+
-		+					 int __thiscall CCashShop::DecodeZeroGoods(CCashShop *this, CInPacket *iPacket)
-		+					 {
-		+					 CInPacket *v2; // ebx@1
-		+					 CCashShop *v3; // edi@1
-		+					 signed int v4; // esi@1
-		+					 int result; // eax@2
-		+					 ZArray<CS_ZEROGOODS> *v6; // edi@3
+		int __thiscall CCashShop::DecodeZeroGoods(CCashShop *this, CInPacket *iPacket)
+		{
+		CInPacket *v2; // ebx@1
+		CCashShop *v3; // edi@1
+		signed int v4; // esi@1
+		int result; // eax@2
+		ZArray<CS_ZEROGOODS> *v6; // edi@3
 		+
-		+					 v2 = iPacket;
-		+					 v3 = this;
-		+					 v4 = CInPacket::Decode2(iPacket);
-		+					 if ( v4 > 0 )
-		+					 {
-		+					 v6 = &v3->m_aZeroGoods;
-		+					 ZArray<CS_ZEROGOODS>::_Realloc(v6, v4, 1, (ZAllocHelper *)&iPacket);
-		+					 CInPacket::DecodeBuffer(v2, v6->a, 68 * v4);
-		+					 result = 1;
-		+					 }
-		+					 else
-		+					 {
-		+					 result = 0;
-		+					 }
-		+					 return result;
-		+					 }
-		+					 */
+		v2 = iPacket;
+		v3 = this;
+		v4 = CInPacket::Decode2(iPacket);
+		if ( v4 > 0 )
+		{
+		v6 = &v3->m_aZeroGoods;
+		ZArray<CS_ZEROGOODS>::_Realloc(v6, v4, 1, (ZAllocHelper *)&iPacket);
+		CInPacket::DecodeBuffer(v2, v6->a, 68 * v4);
+		result = 1;
+		}
+		else
+		{
+		result = 0;
+		}
+		return result;
+		}
+
+		00000000 CS_ZEROGOODS    struc ; (sizeof=0x44, align=0x4, copyof_3071)
+		00000000 nStartSN        dd ?
+		00000004 nEndSN          dd ?
+		00000008 nGoodsCount     dd ?
+		0000000C nEventSN        dd ?
+		00000010 nExpireDays     dd ?
+		00000014 dwConditionFlag dd ?
+		00000018 nDateStart      dd ?
+		0000001C nDateEnd        dd ?
+		00000020 nHourStart      dd ?
+		00000024 nHourEnd        dd ?
+		00000028 abWeek          dd 7 dup(?)
+		00000044 CS_ZEROGOODS    ends
+
+	from onbuy function for cashshop:
+
+	    nEventSN = CCashShop::IsZeroGoods(v2, v3);
+    if ( nEventSN )
+    {
+
+	maybe has to-do with the event bool below?
+	*/
 
 	write<short>(0); // DecodeZeroGoods size
 
