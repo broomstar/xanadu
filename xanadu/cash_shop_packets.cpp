@@ -387,8 +387,8 @@ void PacketCreator::EnterCashShop(Player *player)
 
 					 // -------------------------------------------------------------------------------
 
-	write<bool>(false); // m_bEventOn
-	write<int>(150); // m_nHighestCharacterLevelInThisAccount
+	write<bool>(false); // bool Event On
+	write<int>(150); // Highest Character Level In This Account
 }
 
 void PacketCreator::ShowCashPoints(int nx_credit)
@@ -489,54 +489,16 @@ void PacketCreator::CashShopShowBoughtPackage(std::vector<std::shared_ptr<Item>>
 	write<short>(0);
 }
 
-/*
-
-from GMS v0.95 data:
-
-CInPacket::DecodeBuffer(iPacket, v6, 0x37u);
-
-0x37 = 55
-
-DD = DWORD? DWORD = unsinged long = 4 bytes
-DW = WORD? = unsigned short
-_LARGE_INTEGER = struct of long and unsigned long = 4 + 4 bytes = 8 bytes
-
-8
-4
-4
-4
-4
-2
-13
-8
-4
-4
-
-00000000 GW_CashItemInfo struc ; (sizeof=0x37, copyof_3069)
-00000000 liSN            _LARGE_INTEGER ?
-00000008 dwAccountID     dd ?
-0000000C dwCharacterID   dd ?
-00000010 nItemID         dd ?
-00000014 nCommodityID    dd ?
-00000018 nNumber         dw ?
-0000001A sBuyCharacterID db 13 dup(?)
-00000027 dateExpire      _FILETIME ?
-0000002F nPaybackRate    dd ?
-00000033 nDiscountRate   dd ?
-00000037 GW_CashItemInfo ends
-00000037
-*/
-
 void PacketCreator::CashShopAddCashItemData(const std::shared_ptr<Item> &item, int account_id)
 {
 	write<long long>(item->get_unique_id());
 	write<int>(account_id);
-	write<int>(0); // dwCharacterID
+	write<int>(0); // Character ID
 	write<int>(item->get_item_id());
 	write<int>(item->get_commodity_id_sn());
 	write<short>(item->get_amount());
-	write_string("", 13); // character name? (who made the gift?)
-	write<long long>(item->get_expiration_time());
-	write<int>(0); // PaybackRate
-	write<int>(0); // DiscountRate
+	write_string("", 13); // character name? (who made the gift?) sBuyCharacterID db 13 dup(?)
+	write<long long>(item->get_expiration_time()); // dateExpire      _FILETIME ?
+	write<int>(0); // Payback Rate
+	write<int>(0); // Discount Rate
 }

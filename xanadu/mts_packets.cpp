@@ -10,11 +10,11 @@ void PacketCreator::EnterMTS(Player *player)
 	write<short>(send_headers::kSET_MTS);
 	writeCharacterData(player);
 	write<std::string>(player->get_user_name());
-	write<int>(0); // RegisterFeeMeso
-	write<int>(0); // CommissionRate
-	write<int>(0); // CommissionBase
-	write<int>(0); // AuctionDurationMin
-	write<int>(0); // AuctionDurationMax
+	write<int>(0); // Register Fee Meso
+	write<int>(0); // Commission Rate
+	write<int>(0); // Commission Base
+	write<int>(0); // Auction Duration Min
+	write<int>(0); // Auction Duration Max
 
 	/*
 	SystemTimeToFileTime(&st, (_FILETIME *)((char *)&ftSecond + 4));
