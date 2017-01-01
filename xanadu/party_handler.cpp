@@ -33,26 +33,29 @@ void Player::handle_party_action()
 		}
 		if (party_->get_leader() == id_)
 		{
-			// send a packet
-			PacketCreator packet;
-			packet.LeaveParty(party_, id_, false, std::string(""), false);
-			party_->send_packet(&packet);
+			{
+				PacketCreator packet;
+				packet.LeaveParty(party_, id_, false, std::string(""), false);
+				party_->send_packet(&packet);
+			}
 
 			World::get_instance()->delete_party(party_->get_id());
 		}
 		else
 		{
-			// send a packet
-			PacketCreator packet1;
-			packet1.LeaveParty(party_, id_, true, name_, false);
-			party_->send_packet(&packet1);
+			{
+				PacketCreator packet;
+				packet.LeaveParty(party_, id_, true, name_, false);
+				party_->send_packet(&packet);
+			}
 
 			party_->delete_member(id_);
 
-			// send a packet
-			PacketCreator packet2;
-			packet2.UpdateParty(party_);
-			party_->send_packet(&packet2);
+			{
+				PacketCreator packet;
+				packet.UpdateParty(party_);
+				party_->send_packet(&packet);
+			}
 
 			party_ = nullptr;
 		}
@@ -87,10 +90,11 @@ void Player::handle_party_action()
 		{
 			// add the player to the party
 			party->add_member(this);
-			// send a packet
-			PacketCreator packet;
-			packet.JoinParty(this);
-			party->send_packet(&packet);
+			{
+				PacketCreator packet;
+				packet.JoinParty(this);
+				party->send_packet(&packet);
+			}
 		}
 		{
 			// display party hp bar to all members
@@ -100,12 +104,16 @@ void Player::handle_party_action()
 				Player *target = it.second;
 				if (target != this && target->get_map() == map_)
 				{
-					PacketCreator packet1;
-					PacketCreator packet2;
-					packet1.UpdatePartyHp(this);
-					packet2.UpdatePartyHp(target);
-					target->send_packet(&packet1);
-					send_packet(&packet2);
+					{
+						PacketCreator packet;
+						packet.UpdatePartyHp(this);
+						target->send_packet(&packet);
+					}
+					{
+						PacketCreator packet;
+						packet.UpdatePartyHp(target);
+						send_packet(&packet);
+					}
 				}
 			}
 		}
@@ -129,10 +137,11 @@ void Player::handle_party_action()
 		}
 		invited->set_party_invitation(party_->get_id());
 
-		// send a packet
-		PacketCreator packet;
-		packet.InviteParty(this);
-		invited->send_packet(&packet);
+		{
+			PacketCreator packet;
+			packet.InviteParty(this);
+			invited->send_packet(&packet);
+		}
 
 		break;
 	}
@@ -149,18 +158,19 @@ void Player::handle_party_action()
 			return;
 		}
 
-		// send a packet
-		PacketCreator packet1;
-		packet1.LeaveParty(party_, target_player_id, true, member->get_player_name(), true);
-		party_->send_packet(&packet1);
-
+		{
+			PacketCreator packet;
+			packet.LeaveParty(party_, target_player_id, true, member->get_player_name(), true);
+			party_->send_packet(&packet);
+		}
 
 		party_->delete_member(target_player_id);
 
-		// send a packet
-		PacketCreator packet2;
-		packet2.UpdateParty(party_);
-		party_->send_packet(&packet2);
+		{
+			PacketCreator packet;
+			packet.UpdateParty(party_);
+			party_->send_packet(&packet);
+		}
 
 		Player *expelled = World::get_instance()->GetPlayerById(target_player_id);
 		if (expelled)
@@ -208,4 +218,3 @@ void Player::handle_party_invitation()
 	}
 	}
 }
-
