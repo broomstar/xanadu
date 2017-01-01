@@ -106,15 +106,6 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
       v41 = CInPacket::Decode2(iPacket); // used for nSubGradeCode and bTesterAccount, maybe for testserver?
       LOBYTE(nCountryID) = CInPacket::Decode1(iPacket);
 
-	  has to-do with these, 2 bytes were added in later versions
-
-	  in v0.62
-	  this part is:
-
-	  LOBYTE(v104) = CInPacket::Decode1(v41);
-	  LOBYTE(v103) = CInPacket::Decode1(v41);
-	  CInPacket::DecodeStr(&v99);
-
 	  in v0.83
 	  this part is:
 
