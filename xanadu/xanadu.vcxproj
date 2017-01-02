@@ -57,7 +57,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
       <TreatWarningAsError>true</TreatWarningAsError>
       <BufferSecurityCheck>false</BufferSecurityCheck>

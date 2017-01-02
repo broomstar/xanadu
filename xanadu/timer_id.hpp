@@ -31,10 +31,8 @@ namespace timer
 }
 
 // hash_combine function invented by boost.functional library,
-// this is a workaround to avoid needing wohle boost library at the moment
+// this is a workaround to avoid needing whole boost library at the moment
 // the code used here is not indentical to the original and not guaranteed to work,
-// so using original boost might be better, maybe along with switching to using asio from boost collection
-// instead of standalone
 
 template <typename T, typename... Rest>
 inline void hash_combine(std::size_t& seed, const T& v)
