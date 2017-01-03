@@ -632,7 +632,7 @@ void Player::handle_packet_in_login()
 		case receive_headers_login::kBACK_TO_WORLD:
 			handle_world_list_request();
 			break;
-		case receive_headers_login::kCHAR_SELECT:
+		case receive_headers_login::kSELECT_CHARACTER_WITH_PIC:
 			handle_connect_game();
 			break;
 		case receive_headers_login::kPLAYER_LOGGEDIN:

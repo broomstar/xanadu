@@ -40,10 +40,11 @@ void Player::handle_login_request()
 	statement1 << "SELECT id FROM users WHERE username = '" << user_name_ << "'", Poco::Data::Keywords::into(user_id_);
 	if (statement1.execute() == 0)
 	{
-		// send a packet
-		PacketCreator packet1;
-		packet1.LoginRequest(5, 0, "");
-		send_packet(&packet1);
+		{
+			PacketCreator packet;
+			packet.LoginRequest(5, 0, "");
+			send_packet(&packet);
+		}
 		return;
 	}
 
@@ -52,10 +53,11 @@ void Player::handle_login_request()
 	statement2 << "SELECT id FROM users WHERE username = '" << user_name_ << "' AND password = '" << password << "'";
 	if (statement2.execute() == 0)
 	{
-		// send a packet
-		PacketCreator packet2;
-		packet2.LoginRequest(4, 0, "");
-		send_packet(&packet2);
+		{
+			PacketCreator packet;
+			packet.LoginRequest(4, 0, "");
+			send_packet(&packet);
+		}
 		return;
 	}
 
@@ -67,20 +69,22 @@ void Player::handle_login_request()
 	// ban check
 	if (world->is_account_banned(user_id_))
 	{
-		// send a packet
-		PacketCreator packet3;
-		packet3.LoginRequest(3, 0, "");
-		send_packet(&packet3);
+		{
+			PacketCreator packet;
+			packet.LoginRequest(3, 0, "");
+			send_packet(&packet);
+		}
 		return;
 	}
 
 	// online check
 	if (world->is_online_user(user_name_))
 	{
-		// send a packet
-		PacketCreator packet4;
-		packet4.LoginRequest(7, 0, "");
-		send_packet(&packet4);
+		{
+			PacketCreator packet;
+			packet.LoginRequest(7, 0, "");
+			send_packet(&packet);
+		}
 		return;
 	}
 
@@ -138,19 +142,20 @@ void Player::handle_login_request()
 
 		characters_[id] = character;
 	}
-
-	// send a packet
-	PacketCreator packet5;
-	packet5.LoginRequest(0, user_id_, user_name_);
-	send_packet(&packet5);
+	{
+		PacketCreator packet;
+		packet.LoginRequest(0, user_id_, user_name_);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_pin_operation()
 {
-	// send a packet
-	PacketCreator packet1;
-	packet1.LoginProcess();
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.LoginProcess();
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_channel_selection()
@@ -167,51 +172,56 @@ void Player::handle_channel_selection()
 		// this info, it will know which channel was choosen
 		World *world = World::get_instance();
 		world->store_channel_id_for_user_id(channel_id_, user_id_);
-
-		// send a packet
-		PacketCreator packet1;
-		packet1.ShowCharacters(&characters_, character_slots_);
-		send_packet(&packet1);
+		{
+			PacketCreator packet;
+			packet.ShowCharacters(&characters_, character_slots_);
+			send_packet(&packet);
+		}
 	}
 }
 
 void Player::handle_world_selection()
 {
-	// send a packet
-	PacketCreator packet1;
-	packet1.ShowChannels();
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.ShowChannels();
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_world_list_request()
 {
-	// send a packet
-	PacketCreator packet1;
-	packet1.ShowWorld();
-	send_packet(&packet1);
-
-	// send a packet
-	PacketCreator packet2;
-	packet2.EndWorlds();
-	send_packet(&packet2);
+	{
+		PacketCreator packet;
+		packet.ShowWorld();
+		send_packet(&packet);
+	}
+	{
+		PacketCreator packet;
+		packet.EndWorlds();
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_relog_request()
 {
-	// send a packet
-	PacketCreator packet1;
-	packet1.RelogResponse();
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.RelogResponse();
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_connect_game()
 {
+	std::string pic = read<std::string>();
 	int player_id = read<int>();
 
-	// send a packet
-	PacketCreator packet1;
-	packet1.ConnectToChannel(player_id);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.ConnectToChannel(player_id);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_character_creation_name_check()
@@ -222,11 +232,11 @@ void Player::handle_character_creation_name_check()
 		return;
 	}
 	bool name_used = World::get_instance()->is_name_used(name);
-	
-	// send a packet
-	PacketCreator packet1;
-	packet1.CheckName(name, name_used);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.CheckName(name, name_used);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_create_character()
@@ -416,16 +426,16 @@ void Player::handle_create_character()
 
 	characters_[id] = character;
 	World::get_instance()->add_name_id(name, id);
-
-	// send a packet
-	PacketCreator packet1;
-	packet1.AddCharacter(character);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.AddCharacter(character);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_delete_character()
 {
-	int date = read<int>();
+	std::string pic = read<std::string>();
 	int player_id = read<int>();
 
 	// remove character data from mysql
@@ -489,8 +499,9 @@ void Player::handle_delete_character()
 	characters_.erase(player_id);
 	delete character;
 
-	// send a packet
-	PacketCreator packet1;
-	packet1.RemoveCharacter(player_id);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.RemoveCharacter(player_id);
+		send_packet(&packet);
+	}
 }

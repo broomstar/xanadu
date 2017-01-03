@@ -105,7 +105,7 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	write<long long>(0); // quiet ban/chat unblock time/date
 	write<long long>(0); // register date
 	write<int>(8); // nNumOfCharacter
-	write<signed char>(2); // PIN?
+	write<signed char>(2); // PIN/PIC? (2 = pic/pin disabled, 1 = pic/pin enabled?)
 	write<signed char>(0);
 }
 
@@ -335,9 +335,7 @@ void PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *charact
 		ShowCharacter(character);
 	}
 
-	// enable PIC?
-	// 2 = disable, 1 = need to set one, 0 = enable ?
-	write<signed char>(2);
+	write<signed char>(1); // PIC modes: 0 = Register PIC | 1 = Ask for PIC | 2 = Disable PIC
 
 	write<int>(character_slots);
 }

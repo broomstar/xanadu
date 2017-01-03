@@ -11,12 +11,12 @@ namespace receive_headers_login
 	constexpr short kHANDLE_LOGIN = 0x09;
 	constexpr short kSHOW_WORLD = 0x0b;
 	constexpr short kBACK_TO_WORLD = 0x0c;
-	constexpr short kCHAR_SELECT = 0x13;
 	constexpr short kPLAYER_LOGGEDIN = 0x14;
 	constexpr short kNAME_CHECK = 0x15;
 	constexpr short kCREATE_CHARACTER = 0x16;
 	constexpr short kDELETE_CHARACTER = 0x17;
 	constexpr short kLOGIN_BACK = 0x1C;
+	constexpr short kSELECT_CHARACTER_WITH_PIC = 0x1E;
 }
 
 namespace receive_headers
