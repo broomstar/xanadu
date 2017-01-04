@@ -55,6 +55,9 @@ void PacketCreator::ShowNpcShop(ShopData *data)
 
 		write<int>(item->id);
 		write<int>(item->price); // amount of mesos needed to buy the item
+		write<int>(0); // perfect pitch?
+		write<int>(0); // can be used x minutes after purchase?
+		write<int>(0);
 
 		if (tools::is_star(item->id))
 		{

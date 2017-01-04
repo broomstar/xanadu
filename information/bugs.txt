@@ -3,7 +3,7 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
-- packets need to be updated to v0.83, it's mostly finished, all packets need to be confirmed
+-
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
 

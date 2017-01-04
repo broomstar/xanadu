@@ -46,6 +46,7 @@ void Player::npc_script_handler()
 	std::string npc_id_string = std::to_string(npc_id);
 
 	// init it
+	// to-do do initialization at server start
 	if (first_npc)
 	{
 		int r;
@@ -91,8 +92,10 @@ void Player::npc_script_handler()
 
 	// START OF LOADING AND BUILDING
 
+	std::string file_name_string = "npc scripts\\" + npc_id_string + ".as";
+
 	// Create a new script module
-	asIScriptModule *mod = engine->GetModule("npc scripts\\1012000.as", asGM_ALWAYS_CREATE);
+	asIScriptModule *mod = engine->GetModule(file_name_string.c_str(), asGM_ALWAYS_CREATE);
 
 	// Load and add the script sections to the module
 	std::string script;
@@ -100,7 +103,7 @@ void Player::npc_script_handler()
 	// Load the entire script file into a string buffer
 
 	// Open the file in binary mode
-	FILE *f = fopen("npc scripts\\1012000.as", "rb");
+	FILE *f = fopen(file_name_string.c_str(), "rb");
 
 	// Determine the size of the file
 	fseek(f, 0, SEEK_END);
@@ -112,7 +115,7 @@ void Player::npc_script_handler()
 	fread(&script[0], len, 1, f);
 
 	fclose(f);
-	mod->AddScriptSection("npc scripts\\1012000.as", script.c_str());
+	mod->AddScriptSection(file_name_string.c_str(), script.c_str());
 
 	// Build the module
 	int r = mod->Build();
@@ -132,7 +135,7 @@ void Player::npc_script_handler()
 	asIScriptContext *ctx = engine->CreateContext();
 	// Obtain the function from the module. This should preferrably  
 	// be cached if the same function is called multiple times.
-	asIScriptFunction *func = engine->GetModule("npc scripts\\1012000.as")->GetFunctionByName("main");
+	asIScriptFunction *func = engine->GetModule(file_name_string.c_str())->GetFunctionByName("main");
 	// Prepare() must be called to allow the context to prepare the stack
 	ctx->Prepare(func);
 	// Set the function arguments

@@ -3016,16 +3016,57 @@ void Player::set_crusader_combo_value(signed char value)
 
 void Player::send_npc()
 {
+	// check if there is a shop for that npc, if so, open that for the player and get out of this function
+	int shop_id = npc_->id_;
+	ShopData *npc_shop = ShopDataProvider::get_instance()->get_shop_data(shop_id);
+	if (npc_shop)
+	{
+		shop_ = npc_shop;
+		{
+			PacketCreator packet;
+			packet.ShowNpcShop(shop_);
+			send_packet(&packet);
+		}
+		return;
+	}
+
 	switch (npc_->id_)
 	{
-	case 1012000: // Regular Cab in Victoria
-	case 1022001:
-	case 1032000:
-	case 1052016:
-		npc_script_handler();
-		break;
+		// Merchant Storage npc
+	case 9030000: // Fredrick
+	{
+		// packet
+		PacketCreator packet20;
+		packet20.GetFredrickStorage(merchant_storage_items_, merchant_storage_mesos_);
+		send_packet(&packet20);
 
-		// custom Free Market npcs
+		break;
+	}
+	// Storage npcs
+	case 1002005: // Mr. Kim
+	case 1012009: // Mr. Lee
+	case 1022005: // Mr. Wang
+	case 1032006: // Mr. Park
+	case 1033000: // Hermes
+	case 1061008: // Mr. Oh
+	case 1091004: // Dondlass
+	case 1100000: // Kirium
+	case 1200000: // Pusla
+	case 1400000: // Cristophe
+	case 2010006: // Trina
+	case 2020004: // Mr. Mohammed
+	case 2041008: // Seppy
+	case 9030100: // Scrooge
+	{
+		// packet
+		PacketCreator packet22;
+		packet22.GetStorage(npc_->id_, storage_slots_, storage_items_, storage_mesos_);
+		send_packet(&packet22);
+
+		break;
+	}
+
+	// custom Free Market npcs
 	case 9100117: // Nautilus Gachapon
 	case 9100100: //Spa (Female)
 	case 9100101: //Ellinia
@@ -3072,40 +3113,7 @@ void Player::send_npc()
 		handle_pirate_job_advancer();
 		break;
 
-		// Storage npcs
-	case 9030000: // Fredrick
-	{
-		// packet
-		PacketCreator packet20;
-		packet20.GetFredrickStorage(merchant_storage_items_, merchant_storage_mesos_);
-		send_packet(&packet20);
-
-		break;
-	}
-	case 1002005: // Mr. Kim
-	case 1012009: // Mr. Lee
-	case 1022005: // Mr. Wang
-	case 1032006: // Mr. Park
-	case 1033000: // Hermes
-	case 1061008: // Mr. Oh
-	case 1091004: // Dondlass
-	case 1100000: // Kirium
-	case 1200000: // Pusla
-	case 1400000: // Cristophe
-	case 2010006: // Trina
-	case 2020004: // Mr. Mohammed
-	case 2041008: // Seppy
-	case 9030100: // Scrooge
-	{
-		// packet
-		PacketCreator packet22;
-		packet22.GetStorage(npc_->id_, storage_slots_, storage_items_, storage_mesos_);
-		send_packet(&packet22);
-
-		break;
-	}
-
-	// PQ Npcs
+		// PQ Npcs
 
 	case 1012112: // Tory, warps into Henesys PQ
 		handle_hpq_tory_npc();
@@ -3167,13 +3175,6 @@ void Player::send_npc()
 		handle_horntail_entrance_npc();
 		break;
 
-		// misc npcs
-	/*case 1012000: // Regular Cab in Victoria
-	case 1022001:
-	case 1032000:
-	case 1052016:
-		handle_regular_cab_npc();
-		break;*/
 	case 9201056: // NLC Taxi
 		handle_nlc_taxi_npc();
 		break;
@@ -3259,18 +3260,7 @@ void Player::send_npc()
 
 	default:
 	{
-		int shop_id = npc_->id_;
-		ShopData *npc_shop = ShopDataProvider::get_instance()->get_shop_data(shop_id);
-
-		if (npc_shop)
-		{
-			shop_ = npc_shop;
-
-			// packet
-			PacketCreator packet22;
-			packet22.ShowNpcShop(shop_);
-			send_packet(&packet22);
-		}
+		npc_script_handler();
 	}
 	}
 }
