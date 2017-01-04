@@ -8,7 +8,7 @@
 #include "scriptstdstring\scriptstdstring.h"
 #include "scriptarray\scriptarray.h"
 
-// Implement a simple message callback function
+// Implement a simple message callback function for as
 void MessageCallback(const asSMessageInfo *msg, void *param)
 {
 	const char *type = "ERR ";
@@ -23,19 +23,21 @@ static bool first_npc = true;
 
 static asIScriptEngine *engine = nullptr;
 
-void function_dummy()
+void as_function_dummy()
 {
 
 }
 
+// constants for as
+
 const int as_YES_CONSTANT = kNpcConstantsYes;
 const int as_NO_CONSTANT = kNpcConstantsNo;
 
-const int asEQUIP = kInventoryConstantsTypesEquip;
-const int asUSE = kInventoryConstantsTypesUse;
-const int asSETUP = kInventoryConstantsTypesSetup;
-const int asETC = kInventoryConstantsTypesEtc;
-const int asCASH = kInventoryConstantsTypesCash;
+const int as_EQUIP = kInventoryConstantsTypesEquip;
+const int as_USE = kInventoryConstantsTypesUse;
+const int as_SETUP = kInventoryConstantsTypesSetup;
+const int as_ETC = kInventoryConstantsTypesEtc;
+const int as_CASH = kInventoryConstantsTypesCash;
 
 void Player::npc_script_handler()
 {
@@ -60,17 +62,17 @@ void Player::npc_script_handler()
 
 		r = engine->RegisterGlobalProperty("const int YES", (void*)&as_YES_CONSTANT); assert(r >= 0);
 		r = engine->RegisterGlobalProperty("const int NO", (void*)&as_NO_CONSTANT); assert(r >= 0);
-		r = engine->RegisterGlobalProperty("const int EQUIP", (void*)&asEQUIP); assert(r >= 0);
-		r = engine->RegisterGlobalProperty("const int USE", (void*)&asUSE); assert(r >= 0);
-		r = engine->RegisterGlobalProperty("const int SETUP", (void*)&asSETUP); assert(r >= 0);
-		r = engine->RegisterGlobalProperty("const int ETC", (void*)&asETC); assert(r >= 0);
-		r = engine->RegisterGlobalProperty("const int CASH", (void*)&asCASH); assert(r >= 0);
+		r = engine->RegisterGlobalProperty("const int EQUIP", (void*)&as_EQUIP); assert(r >= 0);
+		r = engine->RegisterGlobalProperty("const int USE", (void*)&as_USE); assert(r >= 0);
+		r = engine->RegisterGlobalProperty("const int SETUP", (void*)&as_SETUP); assert(r >= 0);
+		r = engine->RegisterGlobalProperty("const int ETC", (void*)&as_ETC); assert(r >= 0);
+		r = engine->RegisterGlobalProperty("const int CASH", (void*)&as_CASH); assert(r >= 0);
 
 		// Player
 		r = engine->RegisterObjectType("Player", sizeof(Player), asOBJ_REF); assert(r >= 0);
 
-		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_ADDREF, "void f()", asFUNCTION(function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
-		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_RELEASE, "void f()", asFUNCTION(function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_ADDREF, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_RELEASE, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
 
 		// The object's position is read-only to the script. The position is updated with the Move method
 		r = engine->RegisterObjectMethod("Player", "int get_selected()", asMETHOD(Player, get_selected), asCALL_THISCALL); assert(r >= 0);
@@ -80,7 +82,7 @@ void Player::npc_script_handler()
 		r = engine->RegisterObjectMethod("Player", "void set_npc_variable(string, int)", asMETHOD(Player, set_npc_variable), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "int get_npc_variable(string)", asMETHOD(Player, get_npc_variable), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "int get_mesos()", asMETHOD(Player, get_mesos), asCALL_THISCALL); assert(r >= 0);
-		//r = engine->RegisterObjectMethod("Player", "bool add_mesos(int)", asMETHOD(Player, add_mesos), asCALL_THISCALL); assert(r >= 0);
+		r = engine->RegisterObjectMethod("Player", "bool add_mesos(int)", asMETHOD(Player, add_mesos), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void set_state(int)", asMETHOD(Player, set_state), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "int get_state()", asMETHOD(Player, get_state), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void send_yes_no(string)", asMETHOD(Player, send_yes_no), asCALL_THISCALL); assert(r >= 0);

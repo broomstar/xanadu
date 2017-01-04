@@ -1,4 +1,6 @@
 
+// regular cab in victoria
+
 void main(Player @player)
 {
 	int [] maps = {104000000, 102000000, 101000000, 103000000, 100000000};
@@ -22,7 +24,7 @@ void main(Player @player)
 			player.set_selected(player.get_npc_variable("city"));
 			if (player.get_mesos() >= prices[player.get_selected()])
 			{
-				//player.add_mesos(-prices[player.get_selected()]);
+				player.add_mesos(-prices[player.get_selected()]);
 				player.set_map(maps[player.get_selected()]);
 			}
 			else
