@@ -34,11 +34,12 @@ file extensions
 
 C++ standard library
 
-C++ asio     library by Christopher M. Kohlhoff
-C++ poco     library by Günter Obiltschnig et al.
-C   windows  library by Microsoft
-C   mysql    library by Oracle (NOTE: this is used indirectly, the poco data library is built on it)
-C   aes      library by Brian Gladman
+C++ asio        library by Christopher M. Kohlhoff
+C++ poco        library by Günter Obiltschnig et al.
+C++ angelscript library by Andreas Jönsson
+C   windows     library by Microsoft
+C   mysql       library by Oracle (NOTE: this is used indirectly, the poco data library is built on it)
+C   aes         library by Brian Gladman
 
 --------------------------------------------------------
 

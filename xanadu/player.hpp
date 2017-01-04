@@ -241,6 +241,7 @@ public:
 	void set_crusader_combo_value(signed char value);
 
 	void send_npc();
+	void npc_script_handler();
 
 	// npc script handlers
 	void handle_npc_sera();
@@ -250,7 +251,6 @@ public:
 	void handle_gachapon_npc();
 	void handle_kin_npc();
 	void handle_nimakin_npc();
-	void handle_regular_cab_npc();
 	void handle_nlc_taxi_npc();
 	void handle_heracle_guild_creator_npc();
 	void handle_lea_guild_emblem_npc();

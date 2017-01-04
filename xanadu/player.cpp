@@ -3018,6 +3018,13 @@ void Player::send_npc()
 {
 	switch (npc_->id_)
 	{
+	case 1012000: // Regular Cab in Victoria
+	case 1022001:
+	case 1032000:
+	case 1052016:
+		npc_script_handler();
+		break;
+
 		// custom Free Market npcs
 	case 9100117: // Nautilus Gachapon
 	case 9100100: //Spa (Female)
@@ -3161,12 +3168,12 @@ void Player::send_npc()
 		break;
 
 		// misc npcs
-	case 1012000: // Regular Cab in Victoria
+	/*case 1012000: // Regular Cab in Victoria
 	case 1022001:
 	case 1032000:
 	case 1052016:
 		handle_regular_cab_npc();
-		break;
+		break;*/
 	case 9201056: // NLC Taxi
 		handle_nlc_taxi_npc();
 		break;

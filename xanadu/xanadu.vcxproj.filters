@@ -40,6 +40,12 @@
     <Filter Include="wz_reader">
       <UniqueIdentifier>{26189180-c8ce-486b-b1b2-4e8fda9f4927}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scriptstdstring">
+      <UniqueIdentifier>{25c254a2-510e-4456-9569-fbd738d7f8d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scriptarray">
+      <UniqueIdentifier>{3dd487db-2f4a-41a9-be49-66889ef19965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="session.cpp">
@@ -397,9 +403,6 @@
     <ClCompile Include="npc scripts\papulatus_npc.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
-    <ClCompile Include="npc scripts\regular_cab_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
     <ClCompile Include="npc scripts\second_eos_rock_npc.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
@@ -462,6 +465,18 @@
     </ClCompile>
     <ClCompile Include="mts_handler.cpp">
       <Filter>receive_packet_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_script_handler.cpp">
+      <Filter>game_server</Filter>
+    </ClCompile>
+    <ClCompile Include="scriptstdstring\scriptstdstring.cpp">
+      <Filter>scriptstdstring</Filter>
+    </ClCompile>
+    <ClCompile Include="scriptstdstring\scriptstdstring_utils.cpp">
+      <Filter>scriptstdstring</Filter>
+    </ClCompile>
+    <ClCompile Include="scriptarray\scriptarray.cpp">
+      <Filter>scriptarray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -746,6 +761,12 @@
     </ClInclude>
     <ClInclude Include="server_constants.hpp">
       <Filter>constants</Filter>
+    </ClInclude>
+    <ClInclude Include="scriptstdstring\scriptstdstring.h">
+      <Filter>scriptstdstring</Filter>
+    </ClInclude>
+    <ClInclude Include="scriptarray\scriptarray.h">
+      <Filter>scriptarray</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
-- packets need to be updated to v0.83
+- packets need to be updated to v0.83, it's mostly finished, all packets need to be confirmed
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
 
@@ -148,6 +148,8 @@ need to work out the details of these features first
 - to-do fix inventory item merging and sorting, make it properly work (at the moment it's only item sorting)
 
 -------------------- other --------------------
+
+- improve angelscript related code (seperate initialization from, initialize it at startup, maybe save bytecode, maybe do other caching, and more)
 
 - to-do maybe use multiple worker threads for asynchronous operations (requires code to be correct for multithreading, for example by using locks and atoms and designing it that way)
 

@@ -28,6 +28,8 @@ how to set up the source:
 5. in the Data\\MySQL folder, open MySQL_x64_vs140.sln, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
 important Note: when getting compilation errors related to mysql.h file, abort compilation and replace <mysql.h> where the error is with C:\Program Files\MySQL\MySQL Server 5.7\include and compile again/re-compile it
 
+* NOTE: angelscript library is also needed, to-do describe it here, in short: get it, compile it with special settings MD and MDd
+
 * open xanadu.sln and compile the source (for testing and developing: in Debug mode, for other purposes: in Release mode)
 in visual studio do the following:
 for testing and developing: use the start debugging button or press F5 to start and debug the server

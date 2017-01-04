@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -64,11 +64,11 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libmysql.lib</AdditionalDependencies>
+      <AdditionalDependencies>libmysql.lib;angelscript64d.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -94,11 +94,11 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libmysql.lib</AdditionalDependencies>
+      <AdditionalDependencies>libmysql.lib;angelscript64.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -154,10 +154,10 @@
     <ClCompile Include="npc scripts\npcs_ship_plane_subway.cpp" />
     <ClCompile Include="npc scripts\orbis_magic_spot_npc.cpp" />
     <ClCompile Include="npc scripts\papulatus_npc.cpp" />
-    <ClCompile Include="npc scripts\regular_cab_npc.cpp" />
     <ClCompile Include="npc scripts\second_eos_rock_npc.cpp" />
     <ClCompile Include="npc scripts\taxi_npc_nlc.cpp" />
     <ClCompile Include="npc scripts\third_eos_rock_npc.cpp" />
+    <ClCompile Include="npc_script_handler.cpp" />
     <ClCompile Include="packetcreator.cpp" />
     <ClCompile Include="pet_data.cpp" />
     <ClCompile Include="pet_data_provider.cpp" />
@@ -203,6 +203,9 @@
     <ClCompile Include="quest_data_provider.cpp" />
     <ClCompile Include="reactor_handler.cpp" />
     <ClCompile Include="reactor_packets.cpp" />
+    <ClCompile Include="scriptarray\scriptarray.cpp" />
+    <ClCompile Include="scriptstdstring\scriptstdstring.cpp" />
+    <ClCompile Include="scriptstdstring\scriptstdstring_utils.cpp" />
     <ClCompile Include="shop_data.cpp" />
     <ClCompile Include="shop_data_provider.cpp" />
     <ClCompile Include="skill_data.cpp" />
@@ -312,6 +315,8 @@
     <ClInclude Include="playernpc.hpp" />
     <ClInclude Include="pq_constants.hpp" />
     <ClInclude Include="quest_data_provider.hpp" />
+    <ClInclude Include="scriptarray\scriptarray.h" />
+    <ClInclude Include="scriptstdstring\scriptstdstring.h" />
     <ClInclude Include="server_constants.hpp" />
     <ClInclude Include="shop_data_provider.hpp" />
     <ClInclude Include="skill.hpp" />
