@@ -243,10 +243,9 @@ public:
 	void send_npc();
 	void npc_script_handler();
 
-	// npc script handlers
+	// npc script handlers DEPRECATED
 	void handle_npc_sera();
 	void handle_npc_spinel();
-	void handle_donator_npc();
 	void handle_maple_leaf_exchanger_npc();
 	void handle_gachapon_npc();
 	void handle_kin_npc();
@@ -278,14 +277,10 @@ public:
 	void handle_hpq_tommy_npc();
 	void handle_hpq_growlie_npc();
 	void handle_lpq_red_sign_npc();
-	void handle_npc_opq_wonky();
-	void handle_npc_ppq_guon();
-	void handle_npc_ppq_guon2();
 	void handle_npc_lmpq_rolly();
 	void handle_npc_lmpq_rolly2();
 	void handle_npc_lmpq_rolly3();
 	void handle_npc_lmpq_pietri();
-	void handle_npc_cpq_spiegelmann();
 
 	// packet handlers
 	void handle_packet(unsigned short bytes_amount);

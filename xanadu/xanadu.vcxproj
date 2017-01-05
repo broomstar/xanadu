@@ -124,7 +124,6 @@
     <ClCompile Include="mob_drops_data_provider.cpp" />
     <ClCompile Include="mts_handler.cpp" />
     <ClCompile Include="mts_packets.cpp" />
-    <ClCompile Include="npc scripts\donator_npc.cpp" />
     <ClCompile Include="npc scripts\el_nath_magic_spot_npc.cpp" />
     <ClCompile Include="npc scripts\female_stylist_nimakin.cpp" />
     <ClCompile Include="npc scripts\first_eos_rock_npc.cpp" />
@@ -144,13 +143,10 @@
     <ClCompile Include="npc scripts\jeff_elnath_npc.cpp" />
     <ClCompile Include="npc scripts\male_stylist_kin.cpp" />
     <ClCompile Include="npc scripts\maple_leaf_exchanger_npc.cpp" />
-    <ClCompile Include="npc scripts\npcs_pq_carnival.cpp" />
     <ClCompile Include="npc scripts\npcs_pq_henesys.cpp" />
     <ClCompile Include="npc scripts\npcs_pq_kerning.cpp" />
     <ClCompile Include="npc scripts\npcs_pq_ludibrium.cpp" />
     <ClCompile Include="npc scripts\npcs_pq_ludi_maze.cpp" />
-    <ClCompile Include="npc scripts\npcs_pq_orbis.cpp" />
-    <ClCompile Include="npc scripts\npcs_pq_pirate.cpp" />
     <ClCompile Include="npc scripts\npcs_ship_plane_subway.cpp" />
     <ClCompile Include="npc scripts\orbis_magic_spot_npc.cpp" />
     <ClCompile Include="npc scripts\papulatus_npc.cpp" />

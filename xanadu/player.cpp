@@ -3080,7 +3080,6 @@ void Player::send_npc()
 	case 9100110: //Henesys
 	case 9100111: //Singapore
 	case 9100112: //EXP Gachapon
-	//get these gachapon IDs in V62 npc wz, but not sure where they located
 	case 9100108:
 	case 9110011:
 	case 9110012:
@@ -3088,9 +3087,6 @@ void Player::send_npc()
 	case 9110014:
 	case 9270043:
 		handle_gachapon_npc();
-		break;
-	case 9001000: // Donator Npc
-		handle_donator_npc();
 		break;
 	case 9001001: // Maple Leaf Exchanger
 		handle_maple_leaf_exchanger_npc();
@@ -3136,15 +3132,6 @@ void Player::send_npc()
 	case 2040034: // Red Sign, brings party into Ludibrium PQ
 		handle_lpq_red_sign_npc();
 		break;
-	case 2013000: // Wonky the fairy, brings party into Orbis PQ
-		handle_npc_opq_wonky();
-		break;
-	case 2094000: // Guon, brings party into Pirate PQ
-		handle_npc_ppq_guon();
-		break;
-	case 2094002: // Guon2, handles pirate pq inside
-		handle_npc_ppq_guon2();
-		break;
 	case 9103000: // Pietri, at Ludibrium Maze PQ room 16
 		handle_npc_lmpq_pietri();
 		break;
@@ -3156,9 +3143,6 @@ void Player::send_npc()
 		break;
 	case 9103003: // Rolly3, warps out of Ludi Maze PQ and gives rewards
 		handle_npc_lmpq_rolly3();
-		break;
-	case 2042000: // Spiegelmann, warps into Carnival PQ
-		handle_npc_cpq_spiegelmann();
 		break;
 
 		// boss npcs

@@ -319,9 +319,6 @@
     <ClCompile Include="party_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
-    <ClCompile Include="npc scripts\donator_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
     <ClCompile Include="npc scripts\el_nath_magic_spot_npc.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
@@ -373,9 +370,6 @@
     <ClCompile Include="npc scripts\maple_leaf_exchanger_npc.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_carnival.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
     <ClCompile Include="npc scripts\npcs_pq_henesys.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
@@ -386,12 +380,6 @@
       <Filter>npc scripts</Filter>
     </ClCompile>
     <ClCompile Include="npc scripts\npcs_pq_ludibrium.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_orbis.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_pirate.cpp">
       <Filter>npc scripts</Filter>
     </ClCompile>
     <ClCompile Include="npc scripts\npcs_ship_plane_subway.cpp">
