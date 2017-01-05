@@ -27,16 +27,8 @@ to-do features:
 
 - maybe implement MTS
 
+- maybe implement party quests (for example mcpq, ludipq, kerningpq)
+
+- maybe implement autoban for obvious stuff like very high damage, better warning system
+
 - ping/pong functionality? maybe needs to be implemented
-
-- maybe implement party quests
-
-* monster carnival pq
-
-* ludibrium pq
-
-* kerning pq
-
-* and maybe others
-
-* maybe implement autoban for obvious stuff like very high damage, better warning system
