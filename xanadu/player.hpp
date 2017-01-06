@@ -243,44 +243,6 @@ public:
 	void send_npc();
 	void npc_script_handler();
 
-	// npc script handlers DEPRECATED
-	void handle_npc_sera();
-	void handle_npc_spinel();
-	void handle_maple_leaf_exchanger_npc();
-	void handle_gachapon_npc();
-	void handle_kin_npc();
-	void handle_nimakin_npc();
-	void handle_heracle_guild_creator_npc();
-	void handle_lea_guild_emblem_npc();
-	void handle_orbis_magic_spot_npc();
-	void handle_el_nath_magic_spot_npc();
-	void handle_jeff_npc();
-	void handle_amon_zakum_npc();
-	void handle_adobis_zakum_npc();
-	void handle_first_eos_rock_npc();
-	void handle_second_eos_rock_npc();
-	void handle_third_eos_rock_npc();
-	void handle_fourth_eos_rock_npc();
-	void handle_papulatus_npc();
-	void handle_horntail_entrance_npc();
-	void handle_mage_job_advancer();
-	void handle_thief_job_advancer();
-	void handle_bowman_job_advancer();
-	void handle_warrior_job_advancer();
-	void handle_pirate_job_advancer();
-	void handle_orbis_platform_usher();
-	void handle_kpq_lakelis_npc();
-	void handle_kpq_cloto_npc();
-	void handle_kpq_nella_npc();
-	void handle_hpq_tory_npc();
-	void handle_hpq_tommy_npc();
-	void handle_hpq_growlie_npc();
-	void handle_lpq_red_sign_npc();
-	void handle_npc_lmpq_rolly();
-	void handle_npc_lmpq_rolly2();
-	void handle_npc_lmpq_rolly3();
-	void handle_npc_lmpq_pietri();
-
 	// packet handlers
 	void handle_packet(unsigned short bytes_amount);
 	void handle_packet_in_cashshop();

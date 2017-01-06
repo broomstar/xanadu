@@ -34,9 +34,6 @@
     <Filter Include="aes">
       <UniqueIdentifier>{fcfb763d-e09c-4598-9059-2cb2f0d3a9b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="npc scripts">
-      <UniqueIdentifier>{55a4a366-2974-46ce-a61e-8584e0f80a93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="wz_reader">
       <UniqueIdentifier>{26189180-c8ce-486b-b1b2-4e8fda9f4927}</UniqueIdentifier>
     </Filter>
@@ -319,84 +316,6 @@
     <ClCompile Include="party_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
-    <ClCompile Include="npc scripts\el_nath_magic_spot_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\female_stylist_nimakin.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\first_eos_rock_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\fourth_eos_rock_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\gachapon_npc_handler.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\guild_creator_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\guild_emblem_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_bowman_job_advancer.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_mage_job_advancer.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_pirate_job_advancer.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_thief_job_advancer.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_warrior_job_advancer.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_zakum_npcs.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\horntail_entrance_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\jeff_elnath_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\male_stylist_kin.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\maple_leaf_exchanger_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_henesys.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_kerning.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_ludi_maze.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_pq_ludibrium.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\npcs_ship_plane_subway.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\orbis_magic_spot_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\papulatus_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\second_eos_rock_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\third_eos_rock_npc.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
     <ClCompile Include="wzfile.cpp">
       <Filter>wz_reader</Filter>
     </ClCompile>
@@ -438,12 +357,6 @@
     </ClCompile>
     <ClCompile Include="logger.cpp">
       <Filter>utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_npc_sera.cpp">
-      <Filter>npc scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="npc scripts\handle_npc_spinel.cpp">
-      <Filter>npc scripts</Filter>
     </ClCompile>
     <ClCompile Include="mts_packets.cpp">
       <Filter>send_packet_creator</Filter>
