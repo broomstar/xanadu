@@ -250,7 +250,6 @@ public:
 	void handle_gachapon_npc();
 	void handle_kin_npc();
 	void handle_nimakin_npc();
-	void handle_nlc_taxi_npc();
 	void handle_heracle_guild_creator_npc();
 	void handle_lea_guild_emblem_npc();
 	void handle_orbis_magic_spot_npc();

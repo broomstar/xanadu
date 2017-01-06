@@ -1,5 +1,6 @@
 
 #include "player.hpp"
+#include "map.hpp"
 #include "playernpc.hpp"
 #include "session.hpp"
 #include "constants.hpp"
@@ -75,7 +76,13 @@ void Player::npc_script_handler()
 		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_ADDREF, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
 		r = engine->RegisterObjectBehaviour("Player", asBEHAVE_RELEASE, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
 
-		// The object's position is read-only to the script. The position is updated with the Move method
+		// Map
+		r = engine->RegisterObjectType("Map", sizeof(Map), asOBJ_REF); assert(r >= 0);
+
+		r = engine->RegisterObjectBehaviour("Map", asBEHAVE_ADDREF, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = engine->RegisterObjectBehaviour("Map", asBEHAVE_RELEASE, "void f()", asFUNCTION(as_function_dummy), asCALL_CDECL_OBJLAST); assert(r >= 0);
+
+		// functions
 		r = engine->RegisterObjectMethod("Player", "int get_selected()", asMETHOD(Player, get_selected), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void set_selected(int)", asMETHOD(Player, set_selected), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void send_simple(string)", asMETHOD(Player, send_simple), asCALL_THISCALL); assert(r >= 0);
@@ -88,22 +95,29 @@ void Player::npc_script_handler()
 		r = engine->RegisterObjectMethod("Player", "int get_state()", asMETHOD(Player, get_state), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void send_yes_no(string)", asMETHOD(Player, send_yes_no), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Player", "void set_map(int)", asMETHOD(Player, set_map), asCALL_THISCALL); assert(r >= 0);
+		r = engine->RegisterObjectMethod("Player", "Map @get_map()", asMETHOD(Player, get_map), asCALL_THISCALL); assert(r >= 0);
+		r = engine->RegisterObjectMethod("Map", "int get_id()", asMETHOD(Map, get_id), asCALL_THISCALL); assert(r >= 0);
 	}
 
 	// START OF LOADING AND BUILDING
 
 	std::string file_name_string = "npc scripts\\" + npc_id_string + ".as";
 
+	// Load the entire script file into a string buffer
+
+	// Open the file in binary mode
+	FILE *f = fopen(file_name_string.c_str(), "rb");
+
+	if (!f)
+	{
+		return;
+	}
+
 	// Create a new script module
 	asIScriptModule *mod = engine->GetModule(file_name_string.c_str(), asGM_ALWAYS_CREATE);
 
 	// Load and add the script sections to the module
 	std::string script;
-
-	// Load the entire script file into a string buffer
-
-	// Open the file in binary mode
-	FILE *f = fopen(file_name_string.c_str(), "rb");
 
 	// Determine the size of the file
 	fseek(f, 0, SEEK_END);

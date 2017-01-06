@@ -3159,9 +3159,6 @@ void Player::send_npc()
 		handle_horntail_entrance_npc();
 		break;
 
-	case 9201056: // NLC Taxi
-		handle_nlc_taxi_npc();
-		break;
 	case 2012014: // Orbis Magic Spot
 		handle_orbis_magic_spot_npc();
 		break;

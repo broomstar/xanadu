@@ -151,7 +151,6 @@
     <ClCompile Include="npc scripts\orbis_magic_spot_npc.cpp" />
     <ClCompile Include="npc scripts\papulatus_npc.cpp" />
     <ClCompile Include="npc scripts\second_eos_rock_npc.cpp" />
-    <ClCompile Include="npc scripts\taxi_npc_nlc.cpp" />
     <ClCompile Include="npc scripts\third_eos_rock_npc.cpp" />
     <ClCompile Include="npc_script_handler.cpp" />
     <ClCompile Include="packetcreator.cpp" />
