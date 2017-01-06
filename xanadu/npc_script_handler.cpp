@@ -113,22 +113,22 @@ void Player::npc_script_handler()
 		return;
 	}
 
-	// Create a new script module
-	asIScriptModule *mod = engine->GetModule(file_name_string.c_str(), asGM_ALWAYS_CREATE);
-
-	// Load and add the script sections to the module
-	std::string script;
-
 	// Determine the size of the file
 	fseek(f, 0, SEEK_END);
 	int len = ftell(f);
 	fseek(f, 0, SEEK_SET);
+
+	// Load and add the script sections to the module
+	std::string script;
 
 	// Load the entire file in one call
 	script.resize(len);
 	fread(&script[0], len, 1, f);
 
 	fclose(f);
+
+	// Create a new script module
+	asIScriptModule *mod = engine->GetModule(file_name_string.c_str(), asGM_ALWAYS_CREATE);
 	mod->AddScriptSection(file_name_string.c_str(), script.c_str());
 
 	// Build the module
