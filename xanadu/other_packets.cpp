@@ -504,6 +504,10 @@ void PacketCreator::ShowPlayer(Player *player)
 	if (has_couple_ring)
 	{
 		// to-do write couple ring data
+		// structure:
+		// 8 bytes long long - ring id
+		// 8 bytes long long - partner ring id
+		// 4 bytes int - ring item id
 	}
 
 	bool has_friendship_ring = false; // to-do if check it has it actually
@@ -513,6 +517,10 @@ void PacketCreator::ShowPlayer(Player *player)
 	if (has_friendship_ring)
 	{
 		// to-do write friendship ring data
+		// structure:
+		// 8 bytes long long - ring id
+		// 8 bytes long long - partner ring id
+		// 4 bytes int - ring item id
 	}
 
 	bool has_marriage_ring = false; // to-do if check it has it actually
@@ -522,6 +530,10 @@ void PacketCreator::ShowPlayer(Player *player)
 	if (has_marriage_ring)
 	{
 		// to-do write marriage ring data
+		// structure:
+		// 4 bytes int - character id
+		// 4 bytes int - partner character id
+		// 4 bytes int - ring (item?) id
 	}
 
 	// end of rings info
