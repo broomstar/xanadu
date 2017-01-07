@@ -466,7 +466,7 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	bool has_minigame = false;
 
-	write<bool>(has_minigame);
+	write<bool>(has_minigame); // bool or miniroomtype?
 
 	if (has_minigame)
 	{
@@ -497,31 +497,31 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	// rings info
 
-	bool has_couple_ring = false;
+	bool has_couple_ring = false; // to-do if check it has it actually
 
 	write<bool>(has_couple_ring); // couple ring
 
 	if (has_couple_ring)
 	{
-		// to-do
+		// to-do write couple ring data
 	}
 
-	bool has_friendship_ring = false;
+	bool has_friendship_ring = false; // to-do if check it has it actually
 
 	write<bool>(has_friendship_ring); // friendship ring
 
 	if (has_friendship_ring)
 	{
-		// to-do
+		// to-do write friendship ring data
 	}
 
-	bool has_marriage_ring = false;
+	bool has_marriage_ring = false; // to-do if check it has it actually
 
 	write<bool>(has_marriage_ring); // marriage ring
 
 	if (has_marriage_ring)
 	{
-		// to-do
+		// to-do write marriage ring data
 	}
 
 	// end of rings info
