@@ -538,27 +538,21 @@ void PacketCreator::ShowPlayer(Player *player)
 
 	// end of rings info
 
-	write<short>(0);
+	bool has_new_year_info = false;
+	write<bool>(has_new_year_info);
+
+	if (has_new_year_info)
+	{
+		// to-do write new year info data
+		// structure:
+		// 4 bytes int - amount/size
+		// loop based on amount/size determined in the 4 bytes before, with the following data:
+		// 4 bytes int - SN 
+	}
+	
+	write<signed char>(0); // berserk skill darkforce effect - 1 or 0 probably (skillid: 1320006, job: dark knight - which is an explorer and warrior)
+
 	write<signed char>(0);
-
-	/*
-	from lithium v111:
-
-			mplew.write(chr.getStat().Berserk ? 1 : 0); // 0x1 = dark force, 0x2 = dragon, 0x4 = swallow (wild hunter?), for (0x8, 0x10 and 0x20, extra int)
-		mplew.writeInt(0);
-		mplew.write(0); // new year cards boolean
-
-		mplew.writeInt(0); //no clue
-		final boolean pvp = chr.inPVP();
-		if (pvp) {
-			mplew.write(Integer.parseInt(chr.getEventInstance().getProperty("type")));
-		}
-		if (chr.getCarnivalParty() != null) {
-			mplew.write(chr.getCarnivalParty().getTeam());
-		} else if (GameConstants.isTeamMap(chr.getMapId())) {
-			mplew.write(chr.getTeam() + (pvp ? 1 : 0)); //is it 0/1 or is it 1/2?
-		}
-		*/
 
 	write<signed char>(0); // carnival party quest team for some fields maybe?
 }
