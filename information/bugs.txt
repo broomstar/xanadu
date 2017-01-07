@@ -17,8 +17,6 @@ buglist
 
 - fix party exp (Mob::give_exp function at the bottom, check the formula)
 
-- to-do prevent loading or displaying of maple tv's and turkey mobs
-
 - to-do time-mobs (mobs/bosses that spawn in specific maps in specific times, for example hourly spawn of orange mushroom in it's map)
 
 - fix other players dont see damage taken from character
