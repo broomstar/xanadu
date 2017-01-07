@@ -160,6 +160,7 @@ void Player::handle_pin_operation()
 
 void Player::handle_channel_selection()
 {
+	skip_bytes(1);
 	signed char world_id = read<signed char>();
 	channel_id_ = read<unsigned char>();
 
