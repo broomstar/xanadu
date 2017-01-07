@@ -376,6 +376,9 @@
     <ClCompile Include="scriptarray\scriptarray.cpp">
       <Filter>scriptarray</Filter>
     </ClCompile>
+    <ClCompile Include="quest_handler.cpp">
+      <Filter>receive_packet_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes\aes.h">

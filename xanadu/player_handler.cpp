@@ -83,32 +83,6 @@ void Player::handle_hp_mp_recovering()
 	}
 }
 
-void Player::handle_quest_action()
-{
-	signed char action = read<signed char>();
-	int quest_id = read<unsigned short>();
-
-	switch (action)
-	{
-	case 1: // Start Quest
-		give_quest(quest_id);
-		break;
-	case 2: // Complete Quest
-	{
-		int npc_id = read<int>();
-		complete_quest(quest_id, npc_id);
-		break;
-	}
-	case 3: // Forfeit Quest
-		remove_quest(quest_id);
-		break;
-	case 4: // Scripted Start Quest
-		break;
-	case 5: // Scripted End Quest
-		break;
-	}
-}
-
 void Player::handle_key_map_changes()
 {
 	int mode = read<int>();

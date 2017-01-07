@@ -168,6 +168,7 @@
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="quest_data.cpp" />
     <ClCompile Include="quest_data_provider.cpp" />
+    <ClCompile Include="quest_handler.cpp" />
     <ClCompile Include="reactor_handler.cpp" />
     <ClCompile Include="reactor_packets.cpp" />
     <ClCompile Include="scriptarray\scriptarray.cpp" />
