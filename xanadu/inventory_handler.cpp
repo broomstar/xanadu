@@ -38,10 +38,11 @@ void Player::handle_player_use_chair()
 
 	if (map_->get_players()->size() > 1)
 	{
-		// packet
-		PacketCreator packet1;
-		packet1.ShowChair(id_, item_id);
-		map_->send_packet(&packet1, this);
+		{
+			PacketCreator packet;
+			packet.ShowChair(id_, item_id);
+			map_->send_packet(&packet, this);
+		}
 	}
 }
 
@@ -56,10 +57,11 @@ void Player::handle_player_cancel_chair()
 
 	if (map_->get_players()->size() > 1)
 	{
-		// packet
-		PacketCreator packet2;
-		packet2.ShowChair(id_, 0);
-		map_->send_packet(&packet2, this);
+		{
+			PacketCreator packet;
+			packet.ShowChair(id_, 0);
+			map_->send_packet(&packet, this);
+		}
 	}
 }
 
@@ -84,21 +86,22 @@ void Player::handle_use_item_effect()
 
 	if (map_->get_players()->size() > 1)
 	{
-		// packet
-		PacketCreator packet1;
-		packet1.UseItemEffect(id_, item_id);
-		map_->send_packet(&packet1, this);
+		{
+			PacketCreator packet;
+			packet.UseItemEffect(id_, item_id);
+			map_->send_packet(&packet, this);
+		}
 	}
 }
 
 void Player::handle_close_chalkboard()
 {
 	chalk_board_text_ = "";
-
-	// packet
-	PacketCreator packet1;
-	packet1.HandleCloseChalkboard(id_);
-	map_->send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.HandleCloseChalkboard(id_);
+		map_->send_packet(&packet);
+	}
 }
 
 void Player::handle_cancel_item_buff()
@@ -135,12 +138,11 @@ void Player::handle_use_cash_item()
 	case 5071000: // Megaphone
 	{
 		std::string message = (name_ + " : " + read<std::string>());
-
-		// packet
-		PacketCreator packet16;
-		packet16.ShowMessage(message, 2);
-		map_->send_packet(&packet16);
-
+		{
+			PacketCreator packet;
+			packet.ShowMessage(message, 2);
+			map_->send_packet(&packet);
+		}
 		cash_inventory->remove_item(item_id, 1);
 
 		break;
@@ -149,12 +151,11 @@ void Player::handle_use_cash_item()
 	{
 		std::string message = (name_ + " : " + read<std::string>());
 		signed char whisper = read<signed char>();
-
-		// packet
-		PacketCreator packet21;
-		packet21.ShowMessage(message, 3, channel_id_, whisper);
-		World::get_instance()->send_packet(&packet21);
-
+		{
+			PacketCreator packet;
+			packet.ShowMessage(message, 3, channel_id_, whisper);
+			World::get_instance()->send_packet(&packet);
+		}
 		cash_inventory->remove_item(item_id, 1);
 		break;
 	}
@@ -183,12 +184,11 @@ void Player::handle_use_cash_item()
 				return;
 			}
 		}
-
-		// packet
-		PacketCreator packet1;
-		packet1.ShowMessage(message, 8, channel_id_, whisper, item);
-		World::get_instance()->send_packet(&packet1);
-
+		{
+			PacketCreator packet;
+			packet.ShowMessage(message, 8, channel_id_, whisper, item);
+			World::get_instance()->send_packet(&packet);
+		}
 		cash_inventory->remove_item(item_id, 1);
 
 		break;
@@ -215,10 +215,11 @@ void Player::handle_use_cash_item()
 
 		for (unsigned char x = 0; x < lines; ++x)
 		{
-			// packet
-			PacketCreator packet64;
-			packet64.ShowMessage(text[x], 3, channel_id_, whisper);
-			World::get_instance()->send_packet(&packet64);
+			{
+				PacketCreator packet;
+				packet.ShowMessage(text[x], 3, channel_id_, whisper);
+				World::get_instance()->send_packet(&packet);
+			}
 		}
 
 		cash_inventory->remove_item(item_id, 1);
@@ -230,11 +231,11 @@ void Player::handle_use_cash_item()
 		int gain = tools::random_int(10000, 5000000);
 		if (!add_mesos(gain))
 		{
-			// packet
-			PacketCreator packet75;
-			packet75.ShowMessage("Failed to receive mesos.", 1);
-			send_packet(&packet75);
-
+			{
+				PacketCreator packet;
+				packet.ShowMessage("Failed to receive mesos.", 1);
+				send_packet(&packet);
+			}
 			return;
 		}
 		cash_inventory->remove_item(item_id, 1);
@@ -245,11 +246,11 @@ void Player::handle_use_cash_item()
 		int gain = tools::random_int(1000000, 7000000);
 		if (!add_mesos(gain))
 		{
-			// packet
-			PacketCreator packet76;
-			packet76.ShowMessage("Failed to receive mesos.", 1);
-			send_packet(&packet76);
-
+			{
+				PacketCreator packet;
+				packet.ShowMessage("Failed to receive mesos.", 1);
+				send_packet(&packet);
+			}
 			return;
 		}
 		cash_inventory->remove_item(item_id, 1);
@@ -260,11 +261,11 @@ void Player::handle_use_cash_item()
 		int gain = tools::random_int(1000000, 20000000);
 		if (!add_mesos(gain))
 		{
-			// packet
-			PacketCreator packet77;
-			packet77.ShowMessage("Failed to receive mesos.", 1);
-			send_packet(&packet77);
-
+			{
+				PacketCreator packet;
+				packet.ShowMessage("Failed to receive mesos.", 1);
+				send_packet(&packet);
+			}
 			return;
 		}
 		cash_inventory->remove_item(item_id, 1);
@@ -273,17 +274,16 @@ void Player::handle_use_cash_item()
 	case 5370000: // Chalk Board
 	{
 		chalk_board_text_ = read<std::string>();
-
-		// packet
-		PacketCreator packet31;
-		packet31.UseChalkBoard(id_, chalk_board_text_);
-		map_->send_packet(&packet31);
-
-		// packet
-		PacketCreator packet33;
-		packet33.EnableAction();
-		send_packet(&packet33);
-
+		{
+			PacketCreator packet;
+			packet.UseChalkBoard(id_, chalk_board_text_);
+			map_->send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.EnableAction();
+			send_packet(&packet);
+		}
 		break;
 	}
 	case 5390000: // DiabloMessenger
@@ -296,15 +296,77 @@ void Player::handle_use_cash_item()
 		std::string msg4 = read<std::string>();
 		signed char whisper = read<signed char>();
 
-		// send a packet
-		PacketCreator packet20;
-		packet20.ShowAvatarMega(this, whisper, item_id, msg, msg2, msg3, msg4);
-		World *world = World::get_instance();
-		world->send_packet(&packet20);
-		//
+		{
+			PacketCreator packet;
+			packet.ShowAvatarMega(this, whisper, item_id, msg, msg2, msg3, msg4);
+			World *world = World::get_instance();
+			world->send_packet(&packet);
+		}
 		cash_inventory->remove_item(item_id, 1);
 		break;
 	}
+	// to-do scissors of karma
+	/*
+		case 5520000: // Scissors of Karma
+	case 5520001: // Platinum Scissors of Karma
+		{
+			int inventory_id = read_int32();
+			Inventory* inventory = get_inventory(inventory_id);
+			if (!inventory)
+			{
+				return;
+			}
+			int slot = read_int32();
+			std::shared_ptr<Item> item = inventory->getItemBySlot(slot);
+			if (!item)
+			{
+				return;
+			}
+			if (inventory_id == inventory_constants::types::Equip)
+			{
+				item->set_flag(item->get_flag() | item_constants::flags::Karma_Equip);
+			}
+			else
+			{
+				item->set_flag(item->get_flag() | item_constants::flags::Karma_Use);
+			}
+			send_packet(PacketCreator().newItem(item, false));
+
+			cash_inventory->removeItem(item_id, 1);
+			break;
+		}
+		*/
+		// to-do vicious hammer
+		/*case 5570000: // ViciousHammer
+			{
+				int inventory_id = read_int32();
+				int equip_slot = read_int32();
+				Inventory * inventory = get_inventory(inventory_id);
+				if (!inventory)
+				{
+					return;
+				}
+
+				std::shared_ptr<Item> equip = inventory->getItemBySlot(equip_slot);
+				if (!equip)
+				{
+					return;
+				}
+				if (equip->get_hammers_used() == 2)
+				{
+					return;
+				}
+
+				equip->set_hammers_used(equip->get_hammers_used() + 1);
+				equip->set_free_slots(equip->get_free_slots() + 1);
+				send_packet(PacketCreator().sendHammerData(equip->get_hammers_used()));
+				send_packet(PacketCreator().hammerItem(equip));
+				cash_inventory->removeItem(item_id, 1);
+				changeMap(map_);
+
+				break;
+			}
+			*/
 	}
 }
 
@@ -361,23 +423,23 @@ void Player::handle_move_item()
 
 			item1->set_amount(item1->get_amount() - amount);
 
-			// packet
-			PacketCreator packet13;
-			packet13.UpdateSlot(item1);
-			send_packet(&packet13);
-
+			{
+				PacketCreator packet;
+				packet.UpdateSlot(item1);
+				send_packet(&packet);
+			}
 			map_->drop_from_player(item, this);
 		}
 		else
 		{
 			inventory1->remove_item(slot1, true, false);
 
-			// packet
-			PacketCreator packet15;
-			packet15.MoveItem((inventory_id1 == kInventoryConstantsTypesEquipped
-				|| inventory_id2 == kInventoryConstantsTypesEquipped) ? kInventoryConstantsTypesEquip : inventory_id1, slot1, slot2);
-			send_packet(&packet15);
-
+			{
+				PacketCreator packet;
+				packet.MoveItem((inventory_id1 == kInventoryConstantsTypesEquipped
+					|| inventory_id2 == kInventoryConstantsTypesEquipped) ? kInventoryConstantsTypesEquip : inventory_id1, slot1, slot2);
+				send_packet(&packet);
+			}
 			map_->drop_from_player(item1, this);
 		}
 	}
@@ -398,11 +460,11 @@ void Player::handle_move_item()
 			item1->set_slot(slot2);
 			inventory1->remove_item(slot1, false, false);
 			inventory2->add_item_no_find_slot(item1, false);
-
-			// send a packet
-			PacketCreator packet30;
-			packet30.MoveItem((inventory_id1 == 0 || inventory_id2 == 0) ? 1 : inventory_id1, slot1, slot2);
-			send_packet(&packet30);
+			{
+				PacketCreator packet;
+				packet.MoveItem((inventory_id1 == 0 || inventory_id2 == 0) ? 1 : inventory_id1, slot1, slot2);
+				send_packet(&packet);
+			}
 		}
 
 		// switch positions
@@ -419,12 +481,12 @@ void Player::handle_move_item()
 			inventory2->remove_item(slot2, false, false);
 			inventory2->add_item_no_find_slot(item1, false);
 			inventory1->add_item_no_find_slot(item2, false);
-
-			// send a packet
-			PacketCreator packet31;
-			packet31.MoveItem((inventory_id1 == kInventoryConstantsTypesEquipped
-				|| inventory_id2 == kInventoryConstantsTypesEquipped) ? kInventoryConstantsTypesEquip : inventory_id1, slot1, slot2);
-			send_packet(&packet31);
+			{
+				PacketCreator packet;
+				packet.MoveItem((inventory_id1 == kInventoryConstantsTypesEquipped
+					|| inventory_id2 == kInventoryConstantsTypesEquipped) ? kInventoryConstantsTypesEquip : inventory_id1, slot1, slot2);
+				send_packet(&packet);
+			}
 		}
 		else
 		{
@@ -441,12 +503,11 @@ void Player::handle_move_item()
 			if (item1->get_amount() + item2->get_amount() <= max_per_slot)
 			{
 				item2->set_amount(item1->get_amount() + item2->get_amount());
-
-				// packet
-				PacketCreator packet26;
-				packet26.MoveItemMerge(inventory_id2, slot1, slot2, item2->get_amount());
-				send_packet(&packet26);
-
+				{
+					PacketCreator packet;
+					packet.MoveItemMerge(inventory_id2, slot1, slot2, item2->get_amount());
+					send_packet(&packet);
+				}
 				inventory1->remove_item(slot1, true, false);
 			}
 			else
@@ -454,11 +515,11 @@ void Player::handle_move_item()
 				short change = max_per_slot - item2->get_amount();
 				item2->set_amount(max_per_slot);
 				item1->set_amount(item1->get_amount() - change);
-
-				// packet
-				PacketCreator packet28;
-				packet28.MoveItemMergeTwo(inventory_id1, slot1, item1->get_amount(), slot2, item2->get_amount());
-				send_packet(&packet28);
+				{
+					PacketCreator packet;
+					packet.MoveItemMergeTwo(inventory_id1, slot1, item1->get_amount(), slot2, item2->get_amount());
+					send_packet(&packet);
+				}
 			}
 		}
 	}
@@ -876,17 +937,16 @@ void Player::handle_use_scroll()
 	{
 		equip->set_free_slots(equip->get_free_slots() - 1);
 	}
-
-	// packet
-	PacketCreator packet40;
-	packet40.ScrolledItem(scroll, equip, cursed);
-	send_packet(&packet40);
-
-	// packet
-	PacketCreator packet41;
-	packet41.UseScroll(get_id(), success, cursed, legendary_spirit);
-	map_->send_packet(&packet41);
-
+	{
+		PacketCreator packet;
+		packet.ScrolledItem(scroll, equip, cursed);
+		send_packet(&packet);
+	}
+	{
+		PacketCreator packet;
+		packet.UseScroll(get_id(), success, cursed, legendary_spirit);
+		map_->send_packet(&packet);
+	}
 	get_inventory(kInventoryConstantsTypesUse)->remove_item_by_slot(scroll_slot, 1, false);
 
 	if (cursed)
@@ -900,8 +960,7 @@ void Player::handle_inventory_sort()
 	skip_bytes(4);
 	signed char inventory_id = read<signed char>();
 
-	Inventory * inventory = get_inventory(inventory_id);
-
+	Inventory *inventory = get_inventory(inventory_id);
 	if (!inventory)
 	{
 		return;
@@ -942,15 +1001,15 @@ void Player::handle_inventory_sort()
 			inventory->remove_item(slot1, false, false);
 			inventory->add_item_no_find_slot(item1, false);
 		}
-
-		// packet
-		PacketCreator packet46;
-		packet46.MoveItem(inventory_id, slot1, slot2);
-		send_packet(&packet46);
+		{
+			PacketCreator packet;
+			packet.MoveItem(inventory_id, slot1, slot2);
+			send_packet(&packet);
+		}
 	}
-
-	// packet
-	PacketCreator packet48;
-	packet48.EnableAction();
-	send_packet(&packet48);
+	{
+		PacketCreator packet;
+		packet.EnableAction();
+		send_packet(&packet);
+	}
 }
