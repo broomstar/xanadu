@@ -86,7 +86,6 @@ Player::Player(Session *session) :
 	face_(0),
 	fame_(0),
 	character_slots_(0),
-	donation_points_(0),
 	hp_(0),
 	max_hp_(0),
 	mp_(0),
@@ -870,7 +869,6 @@ void Player::player_connect()
 
 	is_gm_ = rs2["gm"];
 	character_slots_ = rs2["character_slots"];
-	donation_points_ = rs2["donation_points"];
 	storage_mesos_ = rs2["storage_mesos"];
 	nx_cash_credit_ = rs2["nxcash_credit"];
 	storage_slots_ = 36;
@@ -2092,7 +2090,6 @@ void Player::save_account()
 	Poco::Data::Statement statement1(mysql_session);
 
 	statement1 << "UPDATE users SET character_slots = '" << character_slots_
-		<< "', donation_points = '" << donation_points_
 		<< "', storage_mesos = '" << storage_mesos_
 		<< "', nxcash_credit = '" << nx_cash_credit_
 		<< "' WHERE id = " << user_id_;
@@ -2987,11 +2984,6 @@ int Player::get_mount_item_id()
 void Player::set_mount_item_id(int mount_item_id)
 {
 	mount_item_id_ = mount_item_id;
-}
-
-void Player::add_donation_points(int amount)
-{
-	donation_points_ += amount;
 }
 
 std::unordered_map<signed char, std::shared_ptr<Item>>* Player::get_merchant_storage_items()

@@ -234,7 +234,6 @@ public:
 	void set_mount_skill_id(int mount_skill_id);
 	std::unordered_map<timer::Id, std::shared_ptr<Timer>> *get_timers();
 	void apply_attack_skill_costs(int skillId, signed char skillLevel);
-	void add_donation_points(int amount);
 	std::unordered_map<signed char, std::shared_ptr<Item>> *get_merchant_storage_items();
 	void add_merchant_storage_mesos(int amount);
 	signed char get_crusader_combo_value();
@@ -416,7 +415,6 @@ private:
 	short max_mp_;
 	short hyperbody_max_mp_;
 	int id_;
-	int donation_points_;
 	int energy_bar_;
 	int mount_skill_id_;
 	int mount_item_id_;

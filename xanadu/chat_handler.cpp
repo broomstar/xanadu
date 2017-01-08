@@ -822,7 +822,6 @@ void Player::handle_use_chat()
 				if (player->get_is_gm())
 				{
 					{
-						// packet
 						PacketCreator packet;
 						packet.ShowMessage("[HELP CALL] player: " + name_ + " message: " + text, 6);
 						player->send_packet(&packet);
@@ -831,7 +830,6 @@ void Player::handle_use_chat()
 			}
 
 			{
-				// packet
 				PacketCreator packet;
 				packet.ShowMessage("A staff member will get to you as soon as possible.", 0);
 				send_packet(&packet);
@@ -846,16 +844,8 @@ void Player::handle_use_chat()
 		else if (command == "check")
 		{
 			{
-				// packet
 				PacketCreator packet;
 				packet.ShowMessage("NX Cash: " + std::to_string(nx_cash_credit_), 5);
-				send_packet(&packet);
-			}
-
-			{
-				// packet
-				PacketCreator packet;
-				packet.ShowMessage("Donation Points: " + std::to_string(donation_points_), 5);
 				send_packet(&packet);
 			}
 		}
