@@ -27,10 +27,11 @@ void Player::handle_summon_movement()
 	{
 		{
 			// exclude header
-			// send a packet
-			PacketCreator packet;
-			packet.MoveSummon(id_, session_->get_receive_buffer() + 2, recv_length_ - 2);
-			map_->send_packet(&packet, this);
+			{
+				PacketCreator packet;
+				packet.MoveSummon(id_, session_->get_receive_buffer() + 2, recv_length_ - 2);
+				map_->send_packet(&packet, this);
+			}
 		}
 	}
 }
@@ -102,11 +103,11 @@ void Player::handle_puppet_damage()
 	int mob_id = read<int>();
 
 	summon->hp_ = (summon->hp_ - damage);
-	// send a packet
-	PacketCreator packet1;
-	packet1.DamageSummon(id_, summon->skill_id_, damage, unk, mob_id);
-	map_->send_packet(&packet1);
-
+	{
+		PacketCreator packet;
+		packet.DamageSummon(id_, summon->skill_id_, damage, unk, mob_id);
+		map_->send_packet(&packet);
+	}
 	if (summon->hp_ <= 0)
 	{
 		cancel_buff(summon->skill_id_, false);

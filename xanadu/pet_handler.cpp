@@ -29,11 +29,11 @@ void Player::handle_use_pet()
 		{
 			if (pets_[i] == pet)
 			{
-				// packet
-				PacketCreator packet4;
-				packet4.ShowPet(id_, pet, false);
-				map_->send_packet(&packet4);
-
+				{
+					PacketCreator packet;
+					packet.ShowPet(id_, pet, false);
+					map_->send_packet(&packet);
+				}
 				pet->set_pet_slot(-1);
 				pets_.erase(pets_.begin() + i);
 
@@ -45,11 +45,11 @@ void Player::handle_use_pet()
 		{
 			pets_[i]->set_pet_slot(static_cast<signed char>(i));
 		}
-
-		// packet
-		PacketCreator packet118;
-		packet118.EnableAction();
-		send_packet(&packet118);
+		{
+			PacketCreator packet;
+			packet.EnableAction();
+			send_packet(&packet);
+		}
 	}
 	else
 	{
@@ -70,15 +70,16 @@ void Player::handle_use_pet()
 		
 		pet->set_position(position_x_, position_y_, 0);
 
-		// packet
-		PacketCreator packet7;
-		packet7.ShowPet(id_, pet, true);
-		map_->send_packet(&packet7);
-
-		// packet
-		PacketCreator packet8;
-		packet8.PetStatUpdate(this);
-		send_packet(&packet8);
+		{
+			PacketCreator packet;
+			packet.ShowPet(id_, pet, true);
+			map_->send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.PetStatUpdate(this);
+			send_packet(&packet);
+		}
 	}
 }
 
@@ -103,11 +104,12 @@ void Player::handle_pet_movement()
 	// only send if there are other players in the map
 	if (map_->get_players()->size() > 1)
 	{
-		// packet
-		PacketCreator packet1;
-		// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
-		packet1.MovePet(id_, pet->get_pet_slot(), pet_object_id, session_->get_receive_buffer() + 14, recv_length_ - 14);
-		map_->send_packet(&packet1, this);
+		{
+			PacketCreator packet;
+			// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
+			packet.MovePet(id_, pet->get_pet_slot(), pet_object_id, session_->get_receive_buffer() + 14, recv_length_ - 14);
+			map_->send_packet(&packet, this);
+		}
 	}
 }
 
@@ -124,11 +126,11 @@ void Player::handle_pet_command()
 	skip_bytes(5);
 	signed char command = read<signed char>();
 	pet->set_closeness(pet->get_pet_closeness() + 1, this);
-
-	// packet
-	PacketCreator packet1;
-	packet1.PetCommandReplay(id_, pet, command);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.PetCommandReplay(id_, pet, command);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_pet_chat()
@@ -144,11 +146,11 @@ void Player::handle_pet_chat()
 	skip_bytes(5);
 	signed char act = read<signed char>();
 	std::string message = read<std::string>();
-
-	// packet
-	PacketCreator packet1;
-	packet1.ShowPetChat(id_, pet, act, message);
-	map_->send_packet(&packet1, this);
+	{
+		PacketCreator packet;
+		packet.ShowPetChat(id_, pet, act, message);
+		map_->send_packet(&packet, this);
+	}
 }
 
 void Player::handle_pet_loot()
@@ -171,9 +173,9 @@ void Player::handle_pet_loot()
 	{
 		map_->loot_drop(this, drop, pet->get_pet_slot());
 	}
-
-	// packet
-	PacketCreator packet118;
-	packet118.EnableAction();
-	send_packet(&packet118);
+	{
+		PacketCreator packet;
+		packet.EnableAction();
+		send_packet(&packet);
+	}
 }

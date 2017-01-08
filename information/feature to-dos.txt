@@ -1,15 +1,25 @@
 
-to-do features:
+to-do implement features:
+
+- implement auto ap
 
 - implement guild alliances
 
 - maybe implement cashshop wishlist
+
+- maybe implement time-mobs (mobs/bosses that spawn in specific maps in specific times, for example hourly spawn of orange mushroom in it's map)
+
+- maybe implement debuffing/monster/boss skills/statusses
+NOTES:
+need to work out the details of these features first
 
 - maybe implement view all characters on login
 
 - maybe implement pet food
 
 - maybe implement pet fullness
+
+- maybe implement MTS fully (entering it is partially done)
 
 - maybe implement rings
 
@@ -24,8 +34,6 @@ to-do features:
 - maybe implement skill macros (saving on logout-login)
 
 - maybe implement cooldown saving on logout-login
-
-- maybe implement MTS
 
 - maybe implement party quests (for example mcpq, ludipq, kerningpq)
 

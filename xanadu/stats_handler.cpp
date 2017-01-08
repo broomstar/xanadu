@@ -33,9 +33,9 @@ void Player::handle_add_stat()
 	}
 
 	--ap_;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateApStats(str_, dex_, int_, luk_, ap_);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateApStats(str_, dex_, int_, luk_, ap_);
+		send_packet(&packet);
+	}
 }

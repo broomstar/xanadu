@@ -122,10 +122,11 @@ void Player::handle_use_attack(signed char attack_type)
 				Player *player = it.second;
 				if (player->get_is_gm())
 				{
-					// packet
-					PacketCreator packet24;
-					packet24.ShowMessage(text, 6);
-					player->send_packet(&packet24);
+					{
+						PacketCreator packet;
+						packet.ShowMessage(text, 6);
+						player->send_packet(&packet);
+					}
 				}
 			}
 		}
@@ -276,14 +277,16 @@ void Player::handle_use_attack(signed char attack_type)
 			Values m;
 			auto vals = m.get_values();
 			vals->push_back(Value(buffstat_constants::kCombo, crusader_combo_value_));
-			// send a packet
-			PacketCreator packet12;
-			packet12.ShowPlayerBuff(&m, combo_skill_id, combo_time);
-			send_packet(&packet12);
-			// send a packet
-			PacketCreator packet14;
-			packet14.ShowMapBuff(id_, &m);
-			map_->send_packet(&packet14, this);
+			{
+				PacketCreator packet;
+				packet.ShowPlayerBuff(&m, combo_skill_id, combo_time);
+				send_packet(&packet);
+			}
+			{
+				PacketCreator packet;
+				packet.ShowMapBuff(id_, &m);
+				map_->send_packet(&packet, this);
+			}
 		}
 
 		if (crusader_combo_value_ < max_orb_count)
@@ -293,16 +296,16 @@ void Player::handle_use_attack(signed char attack_type)
 			Values m;
 			auto vals = m.get_values();
 			vals->push_back(Value(buffstat_constants::kCombo, crusader_combo_value_));
-			
-			// send a packet
-			PacketCreator packet13;
-			packet13.ShowPlayerBuff(&m, combo_skill_id, combo_time);
-			send_packet(&packet13);
-			
-			// send a packet
-			PacketCreator packet14;
-			packet14.ShowMapBuff(id_, &m);
-			map_->send_packet(&packet14, this);
+			{
+				PacketCreator packet;
+				packet.ShowPlayerBuff(&m, combo_skill_id, combo_time);
+				send_packet(&packet);
+			}
+			{
+				PacketCreator packet;
+				packet.ShowMapBuff(id_, &m);
+				map_->send_packet(&packet, this);
+			}
 		}
 	}
 
@@ -315,10 +318,11 @@ void Player::handle_use_attack(signed char attack_type)
 
 	if (map_->get_players()->size() > 1)
 	{
-		// packet
-		PacketCreator packet1;
-		packet1.PlayerAttack(attack_type, attack);
-		map_->send_packet(&packet1, this);
+		{
+			PacketCreator packet;
+			packet.PlayerAttack(attack_type, attack);
+			map_->send_packet(&packet, this);
+		}
 	}
 
 	mob_object_id = 0;

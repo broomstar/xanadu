@@ -2,43 +2,36 @@
 
 #include "player.hpp"
 
+#include "quest_constants.hpp"
+
 void Player::handle_quest_action()
 {
-	enum k_quest_actions
-	{
-		kStart = 1,
-		kComplete,
-		kForfeit,
-		kStartScripted,
-		kEndScripted
-	};
-
 	signed char action = read<signed char>();
 	int quest_id = read<unsigned short>();
 
 	switch (action)
 	{
-	case kStart:
+	case QuestReceivePacketActions::kStart:
 	{
 		give_quest(quest_id);
 		break;
 	}
-	case kComplete:
+	case QuestReceivePacketActions::kComplete:
 	{
 		int npc_id = read<int>();
 		complete_quest(quest_id, npc_id);
 		break;
 	}
-	case kForfeit:
+	case QuestReceivePacketActions::kForfeit:
 	{
 		remove_quest(quest_id);
 		break;
 	}
-	case kStartScripted:
+	case QuestReceivePacketActions::kStartScripted:
 	{
 		break;
 	}
-	case kEndScripted:
+	case QuestReceivePacketActions::kEndScripted:
 	{
 		break;
 	}

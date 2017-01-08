@@ -669,5 +669,8 @@
     <ClInclude Include="scriptarray\scriptarray.h">
       <Filter>scriptarray</Filter>
     </ClInclude>
+    <ClInclude Include="quest_constants.hpp">
+      <Filter>constants</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

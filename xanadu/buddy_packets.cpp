@@ -26,10 +26,6 @@ void PacketCreator::BuddyList(Player *player)
 		write_string("Default Group", 17); // group name
 	}
 
-	/*
-	CInPacket::DecodeBuffer(v2, v3->m_aInShop.a, 4 * v4);
-	it's an array of 4 byte int's, no clue what m_aInShop is supposed to mean/do
-	*/
 	for (signed char i = 0; i < buddylist_size; ++i)
 	{
 		write<int>(0);
@@ -49,10 +45,6 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write<int>(1); // channel_id?
 	write_string("Default Group", 17); // group name
 
-	/*
-	v4 = ZArray<int>::InsertBefore(&v2->m_aInShop, -1);
-	*v4 = (unsigned __int8)CInPacket::Decode1(iPacket);
-	*/
 	write<signed char>(0);
 }
 

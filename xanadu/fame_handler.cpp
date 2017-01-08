@@ -24,21 +24,16 @@ void Player::handle_faming()
 	{
 		signed char type = (read<signed char>() == 1 ? 1 : -1); // increase if type = 1, otherwise decrease
 		target_player->set_fame(target_player->get_fame() + type);
-		
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.SendFame(name_, type);
 			target_player->send_packet(&packet);
 		}
-		
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.SendFamee(target_player->get_name(), type, target_player->get_fame());
 			send_packet(&packet);
 		}
-
 		world->add_fame(id_);
 	}
 }

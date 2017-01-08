@@ -59,11 +59,11 @@ void Player::handle_face_expression()
 			return;
 		}
 	}
-
-	// create and send the packet
-	PacketCreator packet1;
-	packet1.FaceExpression(id_, emote);
-	map_->send_packet(&packet1, this);
+	{
+		PacketCreator packet;
+		packet.FaceExpression(id_, emote);
+		map_->send_packet(&packet, this);
+	}
 }
 
 void Player::handle_hp_mp_recovering()
@@ -181,16 +181,16 @@ void Player::handle_change_map()
 
 		if (portal->get_type() == 5 && !map_->is_portal_enabled(portal->get_from_protal()))
 		{
-			// packet
-			PacketCreator packet3;
-			packet3.ShowMessage("You cannot enter this portal yet.", 0);
-			send_packet(&packet3);
-
-			// packet
-			PacketCreator packet4;
-			packet4.EnableAction();
-			send_packet(&packet4);
-
+			{
+				PacketCreator packet;
+				packet.ShowMessage("You cannot enter this portal yet.", 0);
+				send_packet(&packet);
+			}
+			{
+				PacketCreator packet;
+				packet.EnableAction();
+				send_packet(&packet);
+			}
 			return;
 		}
 
@@ -229,17 +229,16 @@ void Player::handle_get_player_info()
 	skip_bytes(4);
 	int target_player_id = read<int>();
 	Player *target_player = World::get_instance()->GetPlayerById(target_player_id);
-
-	// send a packet
-	PacketCreator packet;
-	if (target_player)
 	{
-		packet.ShowInfo(target_player);
+		PacketCreator packet;
+		if (target_player)
+		{
+			packet.ShowInfo(target_player);
+		}
+		else
+		{
+			packet.EnableAction();
+		}
+		send_packet(&packet);
 	}
-	else
-	{
-		packet.EnableAction();
-	}
-
-	send_packet(&packet);
 }

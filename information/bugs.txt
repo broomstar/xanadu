@@ -17,17 +17,11 @@ buglist
 
 - fix party exp (Mob::give_exp function at the bottom, check the formula)
 
-- to-do time-mobs (mobs/bosses that spawn in specific maps in specific times, for example hourly spawn of orange mushroom in it's map)
-
 - fix other players dont see damage taken from character
 
 - fix other players can loot drops immidiatly when monster killed by other without being in a party
 
 - fix pet mesos/equip pickup: need to make a difference between drops by mobs (lootable by pet) and players (not lootable by pet) in the packet
-
-- to-do debuffing/monster/boss skills? statusses need to be implemented
-NOTES:
-need to work out the details of these features first
 
 -------------------- skills --------------------
 
