@@ -116,8 +116,8 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 		write<std::string>(item->get_owner_name());
 		write<short>(item->get_flag());
 		write<signed char>(0); // item level up type? (from v0.95 GMS: _ZtlSecureTear_nLevelUpType_CS)
-		write<signed char>(120); // item level (usually starts with 120) - only has relevance for timeless equips
-		write<int>(17000000); // item exp (like this ?: 0 * 100000; // 10000000 = 100% ? - apparently not entirely correct) - only has relevance for timeless equips
+		write<signed char>(0); // item level (usually starts with 120) - only has relevance for timeless equips
+		write<int>(0); // item exp (like this ?: 0 * 100000; // 10000000 = 100% ? - apparently not entirely correct) - only has relevance for timeless equips
 		write<int>(0); // vicous hammer (to-do get_hammers_used)
 
 		if (!is_cash)
@@ -125,8 +125,8 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 			write<long long>(0); // might be -1
 		}
 
-		write<long long>(kZeroTime); // from v0.95 GMS: ftEquipped
-		write<int>(-1); // from v0.95 GMS: nPrevBonusExpRate
+		write<long long>(kZeroTime);
+		write<int>(-1);
 
 		break;
 	}
