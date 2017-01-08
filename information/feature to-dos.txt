@@ -7,6 +7,8 @@ to-do implement features:
 
 - maybe implement cashshop wishlist
 
+- maybe implement timeless equips level and exp system
+
 - maybe implement time-mobs (mobs/bosses that spawn in specific maps in specific times, for example hourly spawn of orange mushroom in it's map)
 
 - maybe implement debuffing/monster/boss skills/statusses
