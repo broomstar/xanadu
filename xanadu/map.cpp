@@ -291,7 +291,8 @@ void Map::add_player(Player *player)
 	}
 
 	// fm npcs
-	/*if (id == 910000000)
+	/*
+	if (id == 910000000)
 	{
 	short position_x = 300;
 	short position_y = 34;
@@ -301,7 +302,7 @@ void Map::add_player(Player *player)
 	int npc_id = 9100117; // Gachapon
 	bool flip = false;
 
-	Npc * npc1 = new Npc(flip, position_x, position_y, rx0, rx1, foothold, npc_id, get_npc_object_id());
+	Npc *npc1 = new Npc(flip, position_x, position_y, rx0, rx1, foothold, npc_id, get_npc_object_id());
 	npcs_.push_back(npc1);
 
 	position_x = 600;
@@ -309,23 +310,13 @@ void Map::add_player(Player *player)
 	rx0 = 0;
 	rx1 = 700;
 	foothold = 0;
-	npc_id = 9001000; // Donator Npc
-	flip = false;
-
-	Npc * npc2 = new Npc(flip, position_x, position_y, rx0, rx1, foothold, npc_id, get_npc_object_id());
-	npcs_.push_back(npc2);
-
-	position_x = 760;
-	position_y = 34;
-	rx0 = 0;
-	rx1 = 860;
-	foothold = 0;
 	npc_id = 9001001; // Maple Leaf Exchanger
 	flip = false;
 
-	Npc * npc3 = new Npc(flip, position_x, position_y, rx0, rx1, foothold, npc_id, get_npc_object_id());
-	npcs_.push_back(npc3);
-	}*/
+	Npc *npc2 = new Npc(flip, position_x, position_y, rx0, rx1, foothold, npc_id, get_npc_object_id());
+	npcs_.push_back(npc2);
+	}
+	*/
 
 	if (!cleanup_timer_running_)
 	{
