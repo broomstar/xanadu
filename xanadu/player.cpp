@@ -862,7 +862,7 @@ void Player::player_connect()
 
 	// account data
 	Poco::Data::Statement statement4(mysql_session);
-	statement4 << "SELECT gm, character_slots, donation_points, storage_mesos, nxcash_credit FROM users WHERE id = " << user_id_;
+	statement4 << "SELECT gm, character_slots, storage_mesos, nxcash_credit FROM users WHERE id = " << user_id_;
 	statement4.execute();
 
 	Poco::Data::RecordSet rs2(statement4);
