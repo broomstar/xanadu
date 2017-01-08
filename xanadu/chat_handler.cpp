@@ -731,61 +731,6 @@ void Player::handle_use_chat()
 			std::string player_name = message.substr(message.find(" ") + 1);
 			world->unban_account(player_name);
 		}
-
-		else if (command == "donationpoints")
-		{
-			size_t p = message.find(" ");
-			if (p == std::string::npos)
-			{
-				return;
-			}
-			size_t ap = message.substr(p + 1).find(" ");
-			if (ap == std::string::npos)
-			{
-				return;
-			}
-			int user_id;
-			int point_amount = stoi(message.substr(p + 1, ap));
-			std::string user_name = message.substr(ap + p + 2);
-
-			// username check
-			Poco::Data::Session &mysql_session = World::get_instance()->get_mysql_session();
-			Poco::Data::Statement statement1(mysql_session);
-			statement1 << "SELECT id FROM users WHERE username = '" << user_name << "'", Poco::Data::Keywords::into(user_id);
-			if (statement1.execute() == 0)
-			{
-				return;
-			}
-
-			std::vector<int> ids;
-			Poco::Data::Statement statement2(mysql_session);
-			statement2 << "SELECT id FROM characters WHERE user_id = " << user_id, Poco::Data::Keywords::into(ids);
-			statement2.execute();
-
-			for (int id : ids)
-			{
-				Player *target_player = World::get_instance()->GetPlayerById(id);
-				if (target_player)
-				{
-					target_player->add_donation_points(point_amount);
-
-					{
-						// packet
-						PacketCreator packet;
-						packet.ShowMessage("You have just gained " + std::to_string(point_amount) + " donation points. Visit Donator Npc Mos in FM.", 1);
-						target_player->send_packet(&packet);
-					}
-
-					return;
-				}
-			}
-
-			// update donationpoints
-
-			Poco::Data::Statement statement3(mysql_session);
-			statement3 << "UPDATE users SET donation_points = donation_points + " << point_amount << " WHERE username = '" << user_name << "'";
-			statement3.execute();
-		}
 	}
 
 	else if (message.substr(0, 1) == "@")
