@@ -25,6 +25,8 @@
 
 #include <thread>
 
+
+#include "script_handler.h"
 #include "server_constants.hpp"
 #include "session.hpp"
 #include "world.hpp"
@@ -83,6 +85,10 @@ int main(int argc, char *argv[])
 
 	time_t time_value = time(nullptr);
 	srand(static_cast<unsigned int>(time_value));
+
+	// initialize the scripting engine
+
+	script_engine::initialize_angelscript_engine();
 
 	// create and initialize world
 

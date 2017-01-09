@@ -1,4 +1,6 @@
 
+#include "script_handler.h"
+
 #include "player.hpp"
 #include "map.hpp"
 #include "playernpc.hpp"
@@ -20,10 +22,6 @@ void MessageCallback(const asSMessageInfo *msg, void *param)
 	printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
 }
 
-static bool first_npc = true;
-
-static asIScriptEngine *engine = nullptr;
-
 void as_function_dummy()
 {
 
@@ -40,15 +38,11 @@ const int as_SETUP = kInventoryConstantsTypesSetup;
 const int as_ETC = kInventoryConstantsTypesEtc;
 const int as_CASH = kInventoryConstantsTypesCash;
 
-void Player::npc_script_handler()
+static asIScriptEngine *engine = nullptr;
+
+namespace script_engine
 {
-	int npc_id = npc_->id_;
-
-	std::string npc_id_string = std::to_string(npc_id);
-
-	// init it
-	// to-do do initialization at server start
-	if (first_npc)
+	void initialize_angelscript_engine()
 	{
 		int r;
 
@@ -98,10 +92,17 @@ void Player::npc_script_handler()
 		r = engine->RegisterObjectMethod("Player", "Map @get_map()", asMETHOD(Player, get_map), asCALL_THISCALL); assert(r >= 0);
 		r = engine->RegisterObjectMethod("Map", "int get_id()", asMETHOD(Map, get_id), asCALL_THISCALL); assert(r >= 0);
 	}
+}
+
+void Player::npc_script_handler()
+{
+	int npc_id = npc_->id_;
+
+	std::string npc_id_string = std::to_string(npc_id);
 
 	// START OF LOADING AND BUILDING
 
-	std::string file_name_string = "npc scripts\\" + npc_id_string + ".as";
+	std::string file_name_string = "scripts\\npcs\\" + npc_id_string + ".as";
 
 	// Load the entire script file into a string buffer
 

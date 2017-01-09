@@ -37,10 +37,13 @@
     <Filter Include="wz_reader">
       <UniqueIdentifier>{26189180-c8ce-486b-b1b2-4e8fda9f4927}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scriptstdstring">
+    <Filter Include="script engine">
+      <UniqueIdentifier>{4db7b314-48d8-41dc-8931-35908c91d67b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script engine\scriptstdstring">
       <UniqueIdentifier>{25c254a2-510e-4456-9569-fbd738d7f8d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scriptarray">
+    <Filter Include="script engine\scriptarray">
       <UniqueIdentifier>{3dd487db-2f4a-41a9-be49-66889ef19965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -364,20 +367,20 @@
     <ClCompile Include="mts_handler.cpp">
       <Filter>receive_packet_handler</Filter>
     </ClCompile>
-    <ClCompile Include="npc_script_handler.cpp">
-      <Filter>game_server</Filter>
-    </ClCompile>
     <ClCompile Include="scriptstdstring\scriptstdstring.cpp">
-      <Filter>scriptstdstring</Filter>
+      <Filter>script engine\scriptstdstring</Filter>
     </ClCompile>
     <ClCompile Include="scriptstdstring\scriptstdstring_utils.cpp">
-      <Filter>scriptstdstring</Filter>
+      <Filter>script engine\scriptstdstring</Filter>
     </ClCompile>
     <ClCompile Include="scriptarray\scriptarray.cpp">
-      <Filter>scriptarray</Filter>
+      <Filter>script engine\scriptarray</Filter>
     </ClCompile>
     <ClCompile Include="quest_handler.cpp">
       <Filter>receive_packet_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="script_handler.cpp">
+      <Filter>script engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,13 +667,16 @@
       <Filter>constants</Filter>
     </ClInclude>
     <ClInclude Include="scriptstdstring\scriptstdstring.h">
-      <Filter>scriptstdstring</Filter>
+      <Filter>script engine\scriptstdstring</Filter>
     </ClInclude>
     <ClInclude Include="scriptarray\scriptarray.h">
-      <Filter>scriptarray</Filter>
+      <Filter>script engine\scriptarray</Filter>
     </ClInclude>
     <ClInclude Include="quest_constants.hpp">
       <Filter>constants</Filter>
+    </ClInclude>
+    <ClInclude Include="script_handler.h">
+      <Filter>script engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

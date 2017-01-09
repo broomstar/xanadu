@@ -141,7 +141,7 @@ buglist
 
 -------------------- other --------------------
 
-- improve angelscript related code (seperate initialization from, initialize it at startup, maybe save bytecode, maybe do other caching, and more)
+- improve angelscript related code (maybe save bytecode, maybe do other caching, and more)
 
 - to-do maybe use multiple worker threads for asynchronous operations (requires code to be correct for multithreading, for example by using locks and atoms and designing it that way)
 

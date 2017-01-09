@@ -124,7 +124,7 @@
     <ClCompile Include="mob_drops_data_provider.cpp" />
     <ClCompile Include="mts_handler.cpp" />
     <ClCompile Include="mts_packets.cpp" />
-    <ClCompile Include="npc_script_handler.cpp" />
+    <ClCompile Include="script_handler.cpp" />
     <ClCompile Include="packetcreator.cpp" />
     <ClCompile Include="pet_data.cpp" />
     <ClCompile Include="pet_data_provider.cpp" />
@@ -286,6 +286,7 @@
     <ClInclude Include="quest_data_provider.hpp" />
     <ClInclude Include="scriptarray\scriptarray.h" />
     <ClInclude Include="scriptstdstring\scriptstdstring.h" />
+    <ClInclude Include="script_handler.h" />
     <ClInclude Include="server_constants.hpp" />
     <ClInclude Include="shop_data_provider.hpp" />
     <ClInclude Include="skill.hpp" />
