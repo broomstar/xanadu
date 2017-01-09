@@ -45,7 +45,7 @@
 			   
 
 @gm {message}    Contact the staff, a message can be added; it's sent to all online staff members
-@pq              Opens the warper npc that warps to PQs
+@fm              Warps to the free market entrance.
 @check           Displays donor points and NX Cash.
 @str [amount]    Adds str.
 @dex [amount]    Adds dex.

@@ -781,9 +781,9 @@ void Player::handle_use_chat()
 			}
 		}
 
-		else if (command == "pq")
+		else if (command == "fm")
 		{
-			set_map(10000);
+			set_map(910000000);
 		}
 
 		else if (command == "check")
