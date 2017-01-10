@@ -98,7 +98,7 @@ public:
 	void FindPlayerReply(const std::string &name, bool success);
 	void FindPlayer(const std::string &name, signed char mode2, int map_id_or_channel_id);
 	void WhisperPlayer(Player *player, const std::string &message);
-	void ShowSpecialChat(unsigned char type, const std::string &name, const std::string &message);
+	void ShowGroupChat(unsigned char type, const std::string &name, const std::string &message);
 	// drops
 	void ShowDrop(signed char type, std::shared_ptr<Drop> drop, short pos_x, short pos_y);
 	void RemoveDrop(int drop_id, signed char animation, int player_id, signed char pet_slot);

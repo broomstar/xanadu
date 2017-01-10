@@ -91,10 +91,10 @@ void PacketCreator::WhisperPlayer(Player *player, const std::string &message)
 	write<std::string>(message);
 }
 
-void PacketCreator::ShowSpecialChat(unsigned char type, const std::string &name, const std::string &message)
+void PacketCreator::ShowGroupChat(unsigned char type, const std::string &name, const std::string &message)
 {
-	write<short>(send_headers::kMULTICHAT);
-	write<signed char>(type); // 0 = buddy chat, 1 = party chat, 2 = guild chat
+	write<short>(send_headers::kGROUP_CHAT);
+	write<signed char>(type);
 	write<std::string>(name);
 	write<std::string>(message);
 }

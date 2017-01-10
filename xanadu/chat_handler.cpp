@@ -31,7 +31,6 @@ void Player::handle_chat_command()
 		if (!receiver_player || receiver_player->get_is_gm() && !get_is_gm())
 		{
 			{
-				// packet
 				PacketCreator packet;
 				packet.FindPlayerReply(name, false);
 				send_packet(&packet);
@@ -44,7 +43,6 @@ void Player::handle_chat_command()
 			if (receiver_player->get_is_in_cash_shop() || receiver_player->get_is_in_mts())
 			{
 				{
-					// packet
 					PacketCreator packet;
 					packet.FindPlayer(receiver_player->get_name(), receiver_player->get_is_in_cash_shop() ? find_player_packet_mode2_constants::kCashshop : find_player_packet_mode2_constants::kMts, -1);
 					send_packet(&packet);
@@ -53,7 +51,6 @@ void Player::handle_chat_command()
 			else
 			{
 				{
-					// packet
 					PacketCreator packet;
 					packet.FindPlayer(receiver_player->get_name(), find_player_packet_mode2_constants::kMap, receiver_player->get_map()->get_id());
 					send_packet(&packet);
@@ -63,7 +60,6 @@ void Player::handle_chat_command()
 		else
 		{
 			{
-				// packet
 				PacketCreator packet;
 				packet.FindPlayer(receiver_player->get_name(), find_player_packet_mode2_constants::kChannel, receiver_player->get_channel_id());
 				send_packet(&packet);
@@ -87,14 +83,12 @@ void Player::handle_chat_command()
 			}
 
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.WhisperPlayer(this, message);
 				receiver_player->send_packet(&packet);
 			}
 
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.FindPlayerReply(receiver_player->get_name(), true);
 				send_packet(&packet);
@@ -103,7 +97,6 @@ void Player::handle_chat_command()
 		else
 		{
 			{
-				// send a packet
 				PacketCreator packet;
 				packet.FindPlayerReply(name, false);
 				send_packet(&packet);
@@ -218,7 +211,7 @@ void Player::handle_use_chat()
 				signed char skill_level = 10;
 				int mist_position_width = 300;
 				int mist_position_height = 300;
-				PacketCreator packet;				
+				PacketCreator packet;
 				packet.SpawnMist(object_id, id_, skill_id, position_x_, position_y_, mist_position_width, mist_position_height, skill_level);
 				send_packet(&packet);
 			}
@@ -855,7 +848,6 @@ void Player::handle_use_chat()
 	else
 	{
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowChatMessage(this, message, bubble_only);
 			map_->send_packet(&packet);
@@ -869,6 +861,17 @@ void Player::handle_use_group_chat()
 	World *world = World::get_instance();
 
 	signed char type = read<signed char>();
+
+	switch (type)
+	{
+	case group_chat_handler_and_packet_type_constants::kBuddy:
+	case group_chat_handler_and_packet_type_constants::kParty:
+	case group_chat_handler_and_packet_type_constants::kGuild:
+		break;
+	default:
+		return;
+	}
+
 	signed char count = read<signed char>();
 
 	for (signed char i = 0; i < count; ++i)
@@ -897,11 +900,9 @@ void Player::handle_use_group_chat()
 	for (auto it : players)
 	{
 		Player *target_player = it.second;
-
 		{
-			// packet
 			PacketCreator packet;
-			packet.ShowSpecialChat(type, name_, message);
+			packet.ShowGroupChat(type, name_, message);
 			target_player->send_packet(&packet);
 		}
 	}

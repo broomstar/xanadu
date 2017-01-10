@@ -41,7 +41,7 @@ namespace send_headers
 	constexpr short kWARP_TO_MAP = 0x7D;
 	constexpr short kSET_MTS = 0x7E;
 	constexpr short kOPEN_CASHSHOP = 0x7F;
-	constexpr short kMULTICHAT = 0x86;
+	constexpr short kGROUP_CHAT = 0x86;
 	constexpr short kWHISPER = 0x87;
 	constexpr short kMAP_EFFECT = 0x8A;
 	constexpr short kCLOCK = 0x93;

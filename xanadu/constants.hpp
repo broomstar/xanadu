@@ -62,6 +62,16 @@ namespace find_player_packet_mode2_constants
 	};
 }
 
+namespace group_chat_handler_and_packet_type_constants
+{
+	enum
+	{
+		kBuddy,
+		kParty,
+		kGuild
+	};
+}
+
 namespace attack_type_constants
 {
 	enum : signed char
