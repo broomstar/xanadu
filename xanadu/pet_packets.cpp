@@ -8,24 +8,6 @@
 #include "item.hpp"
 #include "constants.hpp"
 
-void PacketCreator::PetStatUpdate(Player *player)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(kCharacterStatsPet);
-
-	auto pets = *player->get_pets();
-
-	write<int>(pets.size() > 0 ? pets[0]->get_unique_id() : 0);
-	write<int>(0);
-	write<int>(pets.size() > 1 ? pets[1]->get_unique_id() : 0);
-	write<int>(0);
-	write<int>(pets.size() > 2 ? pets[2]->get_unique_id() : 0);
-	write<int>(0);
-
-	write<signed char>(0);
-}
-
 void PacketCreator::ShowOwnPetLevelUp(signed char pet_slot)
 {
 	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
@@ -69,13 +51,13 @@ void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool
 	{
 		write<int>(pet->get_item_id());
 		write<std::string>(pet->get_name());
-		write<int>(pet->get_unique_id());
-		write<int>(0);
+		write<long long>(pet->get_unique_id());
 		write<short>(pet->get_position_x());
 		write<short>(pet->get_position_y());
 		write<signed char>(pet->get_stance());
 		write<short>(0); // foothold
-		write<short>(0);
+		write<signed char>(0); // name tag?
+		write<signed char>(0); // chat balloon?
 	}
 }
 

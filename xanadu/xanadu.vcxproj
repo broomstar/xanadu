@@ -180,6 +180,7 @@
     <ClCompile Include="skill_data_provider.cpp" />
     <ClCompile Include="skill_packets.cpp" />
     <ClCompile Include="stats_handler.cpp" />
+    <ClCompile Include="stat_packets.cpp" />
     <ClCompile Include="storage_handler.cpp" />
     <ClCompile Include="summon.cpp" />
     <ClCompile Include="summon_handler.cpp" />

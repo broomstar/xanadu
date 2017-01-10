@@ -445,13 +445,13 @@ void PacketCreator::ShowPlayer(Player *player)
 		write<signed char>(kStartPetInfo);
 		write<int>(pet->get_item_id());
 		write<std::string>(pet->get_name());
-		write<int>(pet->get_unique_id());
-		write<int>(0);
+		write<long long>(pet->get_unique_id());
 		write<short>(pet->get_position_x());
 		write<short>(pet->get_position_y());
 		write<signed char>(pet->get_stance());
 		write<short>(0); // foothold
-		write<short>(0);
+		write<signed char>(0); // name tag?
+		write<signed char>(0); // chat balloon?
 	}
 
 	write<signed char>(kEndPetInfo);
@@ -1313,61 +1313,6 @@ void PacketCreator::SendFamee(std::string name2, signed char type, int newFame)
 	write<std::string>(name2);
 	write<signed char>(type);
 	write<int>(newFame);
-}
-
-void PacketCreator::EnableAction(bool unstuck)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(unstuck); // 1 / true = fix client lock
-	write<int>(0); // stat
-}
-
-void PacketCreator::UpdateLevel(unsigned char level)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(kCharacterStatsLevel);
-	write<unsigned char>(level);
-}
-
-void PacketCreator::UpdateSp(Player * player, short value)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(kCharacterStatsSp);
-	write<short>(value); // remaining sp
-}
-
-void PacketCreator::UpdateApStats(short str, short dex, short intt, short luk, short ap)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(kCharacterStatsStr | kCharacterStatsDex | kCharacterStatsInt | kCharacterStatsLuk | kCharacterStatsAp); // update mask
-
-	// values
-	write<short>(str);
-	write<short>(dex);
-	write<short>(intt);
-	write<short>(luk);
-	write<short>(ap);
-}
-
-// skin, job, str, dex, int, luk, ap, sp (has own packet)
-void PacketCreator::UpdateStatShort(int stat, short value)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(stat);
-	write<short>(value);
-}
-
-// face, hair, hp, maxhp, mp, maxmp, fame, exp, mesos
-void PacketCreator::UpdateStatInt(int stat, int value)
-{
-	write<short>(send_headers::kUPDATE_STATS);
-	write<bool>(true); // 1 / true = fix client lock
-	write<int>(stat);
-	write<int>(value);
 }
 
 void PacketCreator::ItemGainChat(int itemid, int amount, signed char items_size)

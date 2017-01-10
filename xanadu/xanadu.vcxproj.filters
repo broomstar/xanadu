@@ -382,6 +382,9 @@
     <ClCompile Include="script_handler.cpp">
       <Filter>script engine</Filter>
     </ClCompile>
+    <ClCompile Include="stat_packets.cpp">
+      <Filter>send_packet_creator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes\aes.h">
