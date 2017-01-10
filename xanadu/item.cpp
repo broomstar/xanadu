@@ -219,7 +219,7 @@ void Item::set_commodity_id_sn(int commodity_id_sn)
 	commodity_id_sn_ = commodity_id_sn;
 }
 
-int Item::get_unique_id()
+long long Item::get_unique_id()
 {
 	return unique_id_;
 }

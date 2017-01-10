@@ -85,16 +85,12 @@ void Player::handle_use_pet()
 
 void Player::handle_pet_movement()
 {
-	int pet_object_id = read<int>();
-
+	long long pet_object_id = read<long long>();
 	std::shared_ptr<Item> pet = get_pet(pet_object_id);
-
 	if (!pet)
 	{
 		return;
 	}
-
-	skip_bytes(4);
 
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
@@ -107,7 +103,7 @@ void Player::handle_pet_movement()
 		{
 			PacketCreator packet;
 			// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
-			packet.MovePet(id_, pet->get_pet_slot(), pet_object_id, session_->get_receive_buffer() + 14, recv_length_ - 14);
+			packet.MovePet(id_, pet->get_pet_slot(), session_->get_receive_buffer() + 14, recv_length_ - 14);
 			map_->send_packet(&packet, this);
 		}
 	}
@@ -115,7 +111,7 @@ void Player::handle_pet_movement()
 
 void Player::handle_pet_command()
 {
-	int pet_object_id = read<int>();
+	long long pet_object_id = read<long long>();
 	std::shared_ptr<Item> pet = get_pet(pet_object_id);
 
 	if (!pet)
@@ -123,7 +119,7 @@ void Player::handle_pet_command()
 		return;
 	}
 
-	skip_bytes(5);
+	skip_bytes(1);
 	signed char command = read<signed char>();
 	pet->set_closeness(pet->get_pet_closeness() + 1, this);
 	{
@@ -135,7 +131,7 @@ void Player::handle_pet_command()
 
 void Player::handle_pet_chat()
 {
-	int pet_object_id = read<int>();
+	long long pet_object_id = read<long long>();
 	std::shared_ptr<Item> pet = get_pet(pet_object_id);
 
 	if (!pet)
@@ -143,7 +139,7 @@ void Player::handle_pet_chat()
 		return;
 	}
 
-	skip_bytes(5);
+	skip_bytes(1);
 	signed char act = read<signed char>();
 	std::string message = read<std::string>();
 	{
@@ -155,15 +151,14 @@ void Player::handle_pet_chat()
 
 void Player::handle_pet_loot()
 {
-	int pet_object_id = read<int>();
-
+	long long pet_object_id = read<long long>();
 	std::shared_ptr<Item> pet = get_pet(pet_object_id);
 
 	if (!pet)
 	{
 		return;
 	}
-	skip_bytes(13);
+	skip_bytes(9);
 
 	int drop_object_id = read<int>();
 

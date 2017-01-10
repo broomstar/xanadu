@@ -207,7 +207,7 @@ void Player::handle_cash_shop_action()
 	}
 	case CashShopReceivePacketActions::kRetrieveCashItem:
 	{
-		int cash_item_unique_id_sn = read<int>();
+		long long cash_item_unique_id_sn = read<long long>();
 
 		for (auto it : cashshop_storage_items_)
 		{
@@ -251,7 +251,7 @@ void Player::handle_cash_shop_action()
 	}
 	case CashShopReceivePacketActions::kStoreCashItem:
 	{
-		int cash_item_unique_id_sn = read<int>();
+		long long cash_item_unique_id_sn = read<long long>();
 
 		// to-do check if cashshop storage still has space left
 

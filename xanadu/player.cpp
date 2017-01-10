@@ -1971,20 +1971,19 @@ void Player::change_map(Map *new_map, signed char new_spawn_point)
 	map_->remove_player(this);
 	map_ = new_map;
 	spawn_point_ = new_spawn_point;
-
-	// send a packet
-	PacketCreator packet;
-	packet.change_map(this, false);
-	send_packet(&packet);
-
+	{
+		PacketCreator packet;
+		packet.change_map(this, false);
+		send_packet(&packet);
+	}
 	map_->add_player(this);
 }
 
-std::shared_ptr<Item> Player::get_pet(int id)
+std::shared_ptr<Item> Player::get_pet(long long unique_id)
 {
 	for (size_t i = 0; i < pets_.size(); ++i)
 	{
-		if (pets_[i]->get_unique_id() == id)
+		if (pets_[i]->get_unique_id() == unique_id)
 		{
 			return pets_[i];
 		}
@@ -1995,14 +1994,16 @@ std::shared_ptr<Item> Player::get_pet(int id)
 void Player::set_skin_color(signed char id)
 {
 	skin_color_ = id;
-	// send a packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsSkin, skin_color_);
-	send_packet(&packet1);
-	// send a packet
-	PacketCreator packet2;
-	packet2.UpdatePlayer(this);
-	map_->send_packet(&packet2, this);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsSkin, skin_color_);
+		send_packet(&packet);
+	}
+	{
+		PacketCreator packet;
+		packet.UpdatePlayer(this);
+		map_->send_packet(&packet, this);
+	}
 }
 
 void Player::set_face(int id)

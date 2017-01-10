@@ -148,7 +148,7 @@ public:
 	void set_exp(int exp);
 	int get_exp();
 	void add_nx_cash_credit(int nx_cash_credit);
-	std::shared_ptr<Item> get_pet(int id);
+	std::shared_ptr<Item> get_pet(long long unique_id);
 	std::vector<std::shared_ptr<Item>> *get_pets();
 	void level_up();
 	void change_map(Map *new_map, signed char new_spawn_point = 0);

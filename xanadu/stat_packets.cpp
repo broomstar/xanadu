@@ -9,7 +9,7 @@ void PacketCreator::EnableAction(bool unstuck)
 {
 	write<short>(send_headers::kUPDATE_STATS);
 	write<bool>(unstuck); // 1 / true = fix client lock and update client time/tick
-	write<int>(0); // stat (0 = none)
+	write<int>(kCharacterStatsNone);
 }
 
 void PacketCreator::UpdateLevel(unsigned char level)

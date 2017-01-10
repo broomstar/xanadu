@@ -678,10 +678,10 @@ void PacketCreator::AddCharStats(Player *player)
 	write<short>(player->get_sp());
 	write<int>(player->get_exp());
 	write<short>(player->get_fame());
-	write<int>(0); // gachapon exp? (_ZtlSecureTear_nTempEXP_CS)
+	write<int>(0); // gachapon exp? (_nTempEXP_CS)
 	write<int>(player->get_map()->get_id());
 	write<signed char>(player->get_spawn_point());
-	write<int>(0); // v3->nPlaytime = CInPacket::Decode4(iPacket);
+	write<int>(0); // Playtime
 }
 
 void PacketCreator::writeCharacterData(Player *player)

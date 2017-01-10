@@ -83,6 +83,7 @@ namespace attack_type_constants
 	};
 }
 
+constexpr int kCharacterStatsNone = 0x0;
 constexpr int kCharacterStatsSkin = 0x1;
 constexpr int kCharacterStatsFace = 0x2;
 constexpr int kCharacterStatsHair = 0x4;

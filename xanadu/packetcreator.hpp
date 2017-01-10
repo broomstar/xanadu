@@ -147,7 +147,7 @@ public:
 	void CancelChair();
 	// pet
 	void ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show);
-	void MovePet(int owner_player_id, signed char pet_slot, int pet_object_id, unsigned char *buffer, int size);
+	void MovePet(int owner_player_id, signed char pet_slot, unsigned char *buffer, int size);
 	void ShowOwnPetLevelUp(signed char pet_slot);
 	void ShowPetLevelUp(int owner_player_id, signed char pet_slot);
 	void UpdatePet(Item *pet);

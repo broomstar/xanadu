@@ -389,7 +389,7 @@ int World::get_guild_id()
 	return ++guild_ids_;
 }
 
-int World::get_cash_item_unique_sn_id()
+long long World::get_cash_item_unique_sn_id()
 {
 	return ++cash_item_unique_sn_ids_;
 }

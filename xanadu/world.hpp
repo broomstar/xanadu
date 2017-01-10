@@ -55,7 +55,7 @@ public:
 	int get_messenger_id();
 	int get_party_id();
 	int get_guild_id();
-	int get_cash_item_unique_sn_id();
+	long long get_cash_item_unique_sn_id();
 
 	// properties
 	std::string get_name();
@@ -134,8 +134,8 @@ private:
 	int messenger_ids_;
 	int party_ids_;
 	int guild_ids_;
-	int cash_item_unique_sn_ids_;
 	int exp_rate_;
+	long long cash_item_unique_sn_ids_;
 	std::string header_message_;
 	std::string name_;
 	std::unordered_map<signed char, Channel *> channels_;

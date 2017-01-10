@@ -49,7 +49,7 @@ public:
 	// cash specific
 	int get_commodity_id_sn();
 	void set_commodity_id_sn(int commodity_id_sn);
-	int get_unique_id();
+	long long get_unique_id();
 	// pet specific
 	signed char get_stance();
 	signed char get_pet_level();
@@ -109,7 +109,7 @@ private:
 	std::string name_;
 	// cash specific
 	int commodity_id_sn_;
-	int unique_id_;
+	long long unique_id_;
 	// pet specific
 	signed char stance_;
 	signed char pet_level_;

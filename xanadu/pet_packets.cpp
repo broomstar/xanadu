@@ -59,12 +59,12 @@ void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool
 	}
 }
 
-void PacketCreator::MovePet(int owner_player_id, signed char pet_slot, int pet_object_id, unsigned char* buffer, int size)
+void PacketCreator::MovePet(int owner_player_id, signed char pet_slot, unsigned char *buffer, int size)
 {
 	write<short>(send_headers::kPET_MOVE);
 	write<int>(owner_player_id);
 	write<signed char>(pet_slot);
-	write<int>(pet_object_id);
+	write<int>(0);
 
 	memcpy(buffer_ + length_, buffer, size);
 	length_ += size;

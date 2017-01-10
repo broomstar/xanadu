@@ -9,7 +9,6 @@
 void PacketCreator::ControlMob(Mob *mob, signed char spawn_type)
 {
 	write<short>(send_headers::kSPAWN_MONSTER_CONTROL);
-
 	write<signed char>(1); // aggro?
 	write<int>(mob->get_object_id());
 	write<signed char>(mob_constants::kControlStatusControlNormal);
@@ -35,7 +34,6 @@ void PacketCreator::ControlMob(Mob *mob, signed char spawn_type)
 void PacketCreator::EndControlMob(int mob_object_id)
 {
 	write<short>(send_headers::kSPAWN_MONSTER_CONTROL);
-
 	write<signed char>(0);
 	write<int>(mob_object_id);
 }
@@ -43,7 +41,6 @@ void PacketCreator::EndControlMob(int mob_object_id)
 void PacketCreator::SpawnMonster(Mob *mob, signed char spawn_type, int from)
 {
 	write<short>(send_headers::kSPAWN_MONSTER);
-
 	write<int>(mob->get_object_id());
 	write<signed char>(mob_constants::kControlStatusControlNormal);
 	write<int>(mob->get_monster_id());
@@ -74,7 +71,6 @@ void PacketCreator::SpawnMonster(Mob *mob, signed char spawn_type, int from)
 void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char action, signed char skill_id, signed char skill_level, short option, short start_position_x, short start_position_y, unsigned char *buffer, int buffer_size)
 {
 	write<short>(send_headers::kMOVE_MONSTER);
-
 	write<int>(mob_object_id);
 	write<signed char>(0);
 	write<bool>(use_skill);
@@ -93,7 +89,6 @@ void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char actio
 void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, signed char skill_id, signed char skill_level)
 {
 	write<short>(send_headers::kMOVE_MONSTER_RESPONSE);
-
 	write<int>(mob->get_object_id());
 	write<short>(move_id);
 	write<bool>(use_skill);
@@ -105,7 +100,6 @@ void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, sig
 void PacketCreator::ShowBossHp(int mob_id, int hp, int max_hp, signed char color, signed char background_color)
 {
 	write<short>(send_headers::kMAP_EFFECT);
-
 	write<signed char>(5); // mode: 5 = boss hp, there are also others
 	write<int>(mob_id);
 	write<int>(hp);
@@ -117,7 +111,6 @@ void PacketCreator::ShowBossHp(int mob_id, int hp, int max_hp, signed char color
 void PacketCreator::ShowMobHp(int mob_object_id, signed char hp_percent)
 {
 	write<short>(send_headers::kSHOW_MONSTER_HP);
-
 	write<int>(mob_object_id);
 	write<signed char>(hp_percent);
 }
@@ -125,7 +118,6 @@ void PacketCreator::ShowMobHp(int mob_object_id, signed char hp_percent)
 void PacketCreator::KillMob(int mob_object_id)
 {
 	write<short>(send_headers::kKILL_MONSTER);
-
 	write<int>(mob_object_id);
 	write<signed char>(1); // animation
 }
