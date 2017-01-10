@@ -37,14 +37,12 @@ void PacketCreator::UpdatePet(Item *pet)
 	ItemInfo(pet, false);
 }
 
-// show byte: 1 = show, 0 = remove
-
 void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show)
 {
 	write<short>(send_headers::kPET_SPAWN);
 	write<int>(owner_player_id);
 	write<signed char>(pet->get_pet_slot());
-	write<signed char>(show);
+	write<bool>(show);
 	write<signed char>(0);
 
 	if (show)
