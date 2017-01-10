@@ -4,6 +4,7 @@
 
 #include "player.hpp"
 #include "send_packet_opcodes.hpp"
+#include "constants.hpp"
 
 void PacketCreator::ShowChatMessage(Player *player, const std::string &message, bool bubble_only)
 {
@@ -62,43 +63,29 @@ void PacketCreator::ShowMessage(const std::string &message, unsigned char type, 
 void PacketCreator::FindPlayerReply(const std::string &name, bool success)
 {
 	write<short>(send_headers::kWHISPER);
-	write<signed char>(10); // action: 9 = find player in cs/mts/map/channel, 10 = findplayereply, 18 = whisper
+	write<signed char>(find_player_or_whisper_packet_action_constants::kFindPlayerReply);
 	write<std::string>(name);
-	write<bool>(success); // mode2: 0x0 = cannot find char, 0x1 = success
+	write<bool>(success);
 }
 
-void PacketCreator::FindPlayerCashShopOrMTS(const std::string &name)
+void PacketCreator::FindPlayer(const std::string &name, signed char mode2, int map_id_or_channel_id)
 {
 	write<short>(send_headers::kWHISPER);
-	write<signed char>(9); // action: 9 = find player in cs/mts/map/channel, 10 = findplayereply, 18 = whisper
+	write<signed char>(find_player_or_whisper_packet_action_constants::kFindPlayerMapOrChannelOrMtsOrCashshop); // action: 9 = find player in cs/mts/map/channel, 10 = findplayerreply, 18 = whisper
 	write<std::string>(name);
-	write<signed char>(2); // mode2: 0: MTS 1 : Map 2 : CS 3 : Different Channel
-	write<int>(-1); // map_id, -1 if mts or cash shop
-}
+	write<signed char>(mode2);
+	write<int>(map_id_or_channel_id); // mapid or channelid or -1 if mts or cash shop
 
-void PacketCreator::FindPlayerMap(const std::string &name, int mapid)
-{
-	write<short>(send_headers::kWHISPER);
-	write<signed char>(9); // action: 9 = find player in cs/mts/map/channel, 10 = findplayereply, 18 = whisper
-	write<std::string>(name);
-	write<signed char>(1); // mode2: 0: MTS 1 : Map 2 : CS 3 : Different Channel
-	write<int>(mapid); // map_id, -1 if mts or cash shop
-	write<long long>(0);
-}
-
-void PacketCreator::FindPlayerChannel(const std::string &name, int channel)
-{
-	write<short>(send_headers::kWHISPER);
-	write<signed char>(9); // action: 9 = find player in cs/mts/map/channel, 10 = findplayereply, 18 = whisper
-	write<std::string>(name);
-	write<signed char>(3); // mode2: 0: MTS 1 : Map 2 : CS 3 : Different Channel
-	write<int>(channel);
+	if (mode2 == find_player_packet_mode2_constants::kMap)
+	{
+		write<long long>(0);
+	}
 }
 
 void PacketCreator::WhisperPlayer(Player *player, const std::string &message)
 {
 	write<short>(send_headers::kWHISPER);
-	write<signed char>(18); // action: 9 = find player in cs/mts/map/channel, 10 = findplayereply, 18 = whisper
+	write<signed char>(find_player_or_whisper_packet_action_constants::kWhisper);
 	write<std::string>(player->get_name());
 	write<short>(player->get_channel_id());
 	write<std::string>(message);

@@ -96,9 +96,7 @@ public:
 	void ShowChatMessage(Player *player, const std::string &message, bool bubble_only);
 	void ShowMessage(const std::string &message, unsigned char type, unsigned char channel_id = 0, unsigned char whisper = 0, std::shared_ptr<Item> item = nullptr);
 	void FindPlayerReply(const std::string &name, bool success);
-	void FindPlayerCashShopOrMTS(const std::string &name);
-	void FindPlayerMap(const std::string &name, int mapid);
-	void FindPlayerChannel(const std::string &name, int channel);
+	void FindPlayer(const std::string &name, signed char mode2, int map_id_or_channel_id);
 	void WhisperPlayer(Player *player, const std::string &message);
 	void ShowSpecialChat(unsigned char type, const std::string &name, const std::string &message);
 	// drops

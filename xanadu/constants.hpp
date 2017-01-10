@@ -41,6 +41,27 @@ constexpr signed char kItemConstantsEquippedSlotsTamingMob = -18;
 constexpr signed char kItemConstantsEquippedSlotsTamingMobSaddle = -19;
 constexpr signed char kItemConstantsEquippedSlotsMedal = -49;
 
+namespace find_player_or_whisper_packet_action_constants
+{
+	enum
+	{
+		kFindPlayerMapOrChannelOrMtsOrCashshop = 9,
+		kFindPlayerReply = 10,
+		kWhisper = 18
+	};
+}
+
+namespace find_player_packet_mode2_constants
+{
+	enum
+	{
+		kMts,
+		kMap,
+		kCashshop,
+		kChannel
+	};
+}
+
 namespace attack_type_constants
 {
 	enum : signed char

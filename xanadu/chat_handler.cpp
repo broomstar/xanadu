@@ -46,7 +46,7 @@ void Player::handle_chat_command()
 				{
 					// packet
 					PacketCreator packet;
-					packet.FindPlayerCashShopOrMTS(receiver_player->get_name());
+					packet.FindPlayer(receiver_player->get_name(), receiver_player->get_is_in_cash_shop() ? find_player_packet_mode2_constants::kCashshop : find_player_packet_mode2_constants::kMts, -1);
 					send_packet(&packet);
 				}
 			}
@@ -55,7 +55,7 @@ void Player::handle_chat_command()
 				{
 					// packet
 					PacketCreator packet;
-					packet.FindPlayerMap(receiver_player->get_name(), receiver_player->get_map()->get_id());
+					packet.FindPlayer(receiver_player->get_name(), find_player_packet_mode2_constants::kMap, receiver_player->get_map()->get_id());
 					send_packet(&packet);
 				}
 			}
@@ -65,7 +65,7 @@ void Player::handle_chat_command()
 			{
 				// packet
 				PacketCreator packet;
-				packet.FindPlayerChannel(receiver_player->get_name(), receiver_player->get_channel_id());
+				packet.FindPlayer(receiver_player->get_name(), find_player_packet_mode2_constants::kChannel, receiver_player->get_channel_id());
 				send_packet(&packet);
 			}
 		}
