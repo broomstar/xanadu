@@ -73,8 +73,9 @@ void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char actio
 	write<short>(send_headers::kMOVE_MONSTER);
 	write<int>(mob_object_id);
 	write<signed char>(0);
-	write<bool>(use_skill);
-	write<signed char>(action);
+	write<bool>(use_skill); // bNextAttackPossible
+	write<signed char>(action); // bLeft
+
 	write<signed char>(skill_id);
 	write<signed char>(skill_level);
 	write<short>(option);
@@ -94,7 +95,7 @@ void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, sig
 	write<short>(send_headers::kMOVE_MONSTER_RESPONSE);
 	write<int>(mob->get_object_id());
 	write<short>(move_id);
-	write<bool>(use_skill);
+	write<bool>(use_skill); // bNextAttackPossible
 	write<short>(mob->get_mp());
 	write<signed char>(skill_id);
 	write<signed char>(skill_level);
