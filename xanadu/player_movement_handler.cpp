@@ -8,9 +8,82 @@
 
 void Player::handle_player_movement()
 {
-	skip_bytes(1); // portal count?
+	skip_bytes(1);
 	skip_bytes(4);
-	skip_bytes(4);
+
+	short start_position_x = read<short>();
+	short start_position_y = read<short>();
+
+	signed char actions_amount = read<signed char>();
+
+	for (signed char i = 0; i < actions_amount; ++i)
+	{
+		signed char action = read<signed char>();
+
+		switch (action)
+		{
+		case 0:
+		case 5:
+		case 17:
+			position_x_ = read<short>();
+			position_y_ = read<short>();
+			skip_bytes(2);
+			skip_bytes(2);
+			skip_bytes(2);
+			stance_ = read<signed char>();
+			foothold_ = read<short>();
+			break;
+		case 15:
+			position_x_ = read<short>();
+			position_y_ = read<short>();
+			skip_bytes(2);
+			skip_bytes(2);
+			skip_bytes(2);
+			skip_bytes(2);
+			stance_ = read<signed char>();
+			foothold_ = read<short>();
+			break;
+		case 1:
+		case 2:
+		case 6:
+		case 12:
+		case 13:
+		case 16:
+		case 18:
+		case 19:
+		case 20:
+		case 22:
+			position_x_ = read<short>();
+			position_y_ = read<short>();
+			stance_ = read<signed char>();
+			foothold_ = read<short>();
+			break;
+		case 3:
+		case 4:
+		case 7:
+		case 8:
+		case 9:
+		case 11:
+			position_x_ = read<short>();
+			position_y_ = read<short>();
+			skip_bytes(2);
+			foothold_ = read<short>();
+			stance_ = read<signed char>();
+			break;
+		case 10:
+			skip_bytes(1);
+			break;
+		case 14:
+			skip_bytes(2);
+			skip_bytes(2);
+			skip_bytes(2);
+			stance_ = read<signed char>();
+			foothold_ = read<short>();
+			break;
+		default:
+			break;
+		}
+	}
 
 	// only send the packet if there are atleast 2 players in the map
 
@@ -27,72 +100,10 @@ void Player::handle_player_movement()
 		{
 			return;
 		}
-
-		PacketCreator packet;
-		packet.ShowPlayerMovement(id_, session_->get_receive_buffer() + excluded_bytes, size);
-		map_->send_packet(&packet, this);
-	}
-
-	signed char actions_amount = read<signed char>();
-
-	for (signed char i = 0; i < actions_amount; ++i)
-	{
-		signed char action = read<signed char>();
-
-		switch (action)
 		{
-		case 0: // Normal up/down/left/right movement
-		case 5:
-		case 17:
-			position_x_ = read<short>();
-			position_y_ = read<short>();
-			skip_bytes(6);
-			stance_ = read<signed char>();
-			foothold_ = read<short>();
-			break;
-		case 15: // Jump down
-			position_x_ = read<short>();
-			position_y_ = read<short>();
-			skip_bytes(8);
-			stance_ = read<signed char>();
-			foothold_ = read<short>();
-			break;
-		case 1: // Jumping
-		case 2: // Jumping/knockback?
-		case 6: // Flash Jump
-		case 12: // Horntail knockback
-		case 13: // Recoil Shot
-		case 20:
-			position_x_ = read<short>();
-			position_y_ = read<short>();
-			stance_ = read<signed char>();
-			foothold_ = read<short>();
-			break;
-		case 3:
-		case 4: // Teleport
-		case 7: // Assaulter
-		case 8: // Assassinate
-		case 9: // Rush
-		case 11: // Chair
-			position_x_ = read<short>();
-			position_y_ = read<short>();
-			skip_bytes(2);
-			foothold_ = read<short>();
-			stance_ = read<signed char>();
-			break;
-		case 10: // Falling of some kind
-			skip_bytes(1);
-			break;
-		case 14:
-			skip_bytes(6);
-			stance_ = read<signed char>();
-			foothold_ = read<short>();
-			break;
-		case 16:
-			skip_bytes(7);
-			break;
-		default:
-			break;
+			PacketCreator packet;
+			packet.ShowPlayerMovement(id_, session_->get_receive_buffer() + excluded_bytes, size);
+			map_->send_packet(&packet, this);
 		}
 	}
 }

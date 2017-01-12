@@ -25,18 +25,6 @@ void PacketCreator::ShowPetLevelUp(int owner_player_id, signed char pet_slot)
 	write<signed char>(pet_slot);
 }
 
-void PacketCreator::UpdatePet(Item *pet)
-{
-	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<signed char>(0);
-	write<signed char>(1);
-	write<signed char>(0);
-	write<signed char>(kInventoryConstantsTypesCash);
-	write<signed char>(pet->get_slot());
-	write<signed char>(0);
-	ItemInfo(pet, false);
-}
-
 void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show)
 {
 	write<short>(send_headers::kPET_SPAWN);
@@ -64,10 +52,26 @@ void PacketCreator::MovePet(int owner_player_id, signed char pet_slot, unsigned 
 	write<short>(send_headers::kPET_MOVE);
 	write<int>(owner_player_id);
 	write<signed char>(pet_slot);
-	write<int>(0);
 
+	// movement data
+
+	write<short>(0); // start position x
+	write<short>(0); // start position y
+
+	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, size);
 	length_ += size;
+}
+
+void PacketCreator::ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string& message)
+{
+	write<short>(send_headers::kPET_CHAT);
+	write<int>(owner_player_id);
+	write<signed char>(pet->get_pet_slot());
+	write<signed char>(0);
+	write<signed char>(act);
+	write<std::string>(message);
+	write<signed char>(0);
 }
 
 void PacketCreator::PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet, signed char animation)
@@ -79,16 +83,5 @@ void PacketCreator::PetCommandReplay(int owner_player_id, std::shared_ptr<Item> 
 	write<bool>(animation == 1);
 	write<signed char>(animation);
 	write<signed char>(0); // success byte
-	write<signed char>(0);
-}
-
-void PacketCreator::ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string& message)
-{
-	write<short>(send_headers::kPET_CHAT);
-	write<int>(owner_player_id);
-	write<signed char>(pet->get_pet_slot());
-	write<signed char>(0);
-	write<signed char>(act);
-	write<std::string>(message);
 	write<signed char>(0);
 }

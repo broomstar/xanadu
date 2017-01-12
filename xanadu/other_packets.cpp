@@ -1165,9 +1165,13 @@ void PacketCreator::ShowPlayerMovement(int player_id, unsigned char *buffer, int
 {
 	write<short>(send_headers::kMOVE_PLAYER);
 	write<int>(player_id);
-	write<int>(0);
 
-	// copy movement data
+	// movement data
+
+	write<short>(0); // start position x
+	write<short>(0); // start position y
+
+	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, buffer_size);
 	length_ += buffer_size;
 }

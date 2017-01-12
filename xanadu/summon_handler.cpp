@@ -27,9 +27,10 @@ void Player::handle_summon_movement()
 	{
 		{
 			// exclude header
+			const int excluded_bytes = (4 + 2);
 			{
 				PacketCreator packet;
-				packet.MoveSummon(id_, session_->get_receive_buffer() + 2, recv_length_ - 2);
+				packet.MoveSummon(id_, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
 				map_->send_packet(&packet, this);
 			}
 		}

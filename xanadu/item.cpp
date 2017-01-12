@@ -297,7 +297,7 @@ void Item::set_closeness(short closeness, Player *player)
 	{
 		// packet
 		PacketCreator packet;
-		packet.UpdatePet(this);
+		packet.InventoryUpdatePet(this);
 		player->send_packet(&packet);
 	}
 }

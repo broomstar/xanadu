@@ -78,6 +78,9 @@ void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char actio
 	write<signed char>(skill_id);
 	write<signed char>(skill_level);
 	write<short>(option);
+
+	// movement data
+
 	write<short>(start_position_x);
 	write<short>(start_position_y);
 

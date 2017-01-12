@@ -15,8 +15,8 @@ void PacketCreator::SpawnSummon(Player *player, Summon *summon, bool animated)
 	write<signed char>(summon->skill_level_);
 	write<short>(summon->position_x_);
 	write<short>(summon->position_y_);
-	write<signed char>(0);
-	write<short>(0);
+	write<signed char>(0); // stance
+	write<short>(0); // foothold
 	write<signed char>(summon_get_movement_type(summon->skill_id_));
 	write<signed char>(summon_get_summon_type(summon->skill_id_));
 	write<bool>(animated);
@@ -26,6 +26,13 @@ void PacketCreator::MoveSummon(int owner_player_id, unsigned char* buffer, int s
 {
 	write<short>(send_headers::kSUMMON_MOVE);
 	write<int>(owner_player_id);
+
+	// movement data
+
+	write<short>(0); // start position x
+	write<short>(0); // start position y
+
+	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, size);
 	length_ += size;
 }

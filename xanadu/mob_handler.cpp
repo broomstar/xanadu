@@ -107,22 +107,21 @@ void Player::handle_mob_movement()
 	bool next_movement_could_be_skill = (nibbles & 0x0F) != 0;
 
 	// send a packet to the player which is used to make the client continue mob movement for the player
-
-	PacketCreator packet1;
-	packet1.MoveMobResponse(mob, move_id, next_movement_could_be_skill, skill_id, skill_level);
-	send_packet(&packet1);
-
+	{
+		PacketCreator packet;
+		packet.MoveMobResponse(mob, move_id, next_movement_could_be_skill, skill_id, skill_level);
+		send_packet(&packet);
+	}
 	// only send the packet if there are atleast 2 players in the map
-
 	auto map_players = map_->get_players();
 	if (map_players->size() >= 2)
 	{
 		// send a packet to all players in the map except the player to show the movement of the mob
 		// exclude some bytes from being sent as that data is not used for the packet
-
 		const int excluded_bytes = (29 + 2);
-		PacketCreator packet2;
-		packet2.MoveMob(monster_object_id, next_movement_could_be_skill, action, skill_id, skill_level, option, start_position_x, start_position_y, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
-		map_->send_packet(&packet2, this);
+
+		PacketCreator packet;
+		packet.MoveMob(monster_object_id, next_movement_could_be_skill, action, skill_id, skill_level, option, start_position_x, start_position_y, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
+		map_->send_packet(&packet, this);
 	}
 }

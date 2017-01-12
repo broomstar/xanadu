@@ -136,6 +136,7 @@ public:
 	void MoveItemMerge(signed char inventory_id, short source_slot, short destination_slot, short amount);
 	void MoveItemMergeTwo(signed char inventory_id, short source_slot, short source_amount, short destination_slot, short destination_amount);
 	void ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<Item> equip, bool destroyed);
+	void InventoryUpdatePet(Item *pet);
 	// items
 	void ItemInfo(Item *item, bool show_position = true);
 	void ShowAvatarMega(Player *player, unsigned char ear, int item_id, std::string message, std::string message2, std::string message3, std::string message4);
@@ -148,11 +149,10 @@ public:
 	// pet
 	void ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show);
 	void MovePet(int owner_player_id, signed char pet_slot, unsigned char *buffer, int size);
+	void ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string &message);
+	void PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet, signed char animation);
 	void ShowOwnPetLevelUp(signed char pet_slot);
 	void ShowPetLevelUp(int owner_player_id, signed char pet_slot);
-	void UpdatePet(Item *pet);
-	void PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet, signed char animation);
-	void ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string &message);
 	// map
 	void ShowPlayer(Player *player);
 	void RemovePlayer(Player *player);

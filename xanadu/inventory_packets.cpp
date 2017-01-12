@@ -293,3 +293,16 @@ void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<I
 		write<signed char>(2); // add movement
 	}
 }
+
+void PacketCreator::InventoryUpdatePet(Item *pet)
+{
+	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
+	write<bool>(false); // unstuck the client and update tick
+	write<signed char>(1); // how many items to upgrade
+
+	write<signed char>(0); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
+	write<signed char>(kInventoryConstantsTypesCash);
+	write<short>(pet->get_slot());
+
+	ItemInfo(pet, false);
+}

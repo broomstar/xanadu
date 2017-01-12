@@ -94,16 +94,17 @@ void Player::handle_pet_movement()
 
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
-
 	pet->set_position(start_position_x, start_position_y, 0);
 
 	// only send if there are other players in the map
 	if (map_->get_players()->size() > 1)
 	{
 		{
-			PacketCreator packet;
 			// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
-			packet.MovePet(id_, pet->get_pet_slot(), session_->get_receive_buffer() + 14, recv_length_ - 14);
+			const int excluded_bytes = (12 + 2);
+
+			PacketCreator packet;
+			packet.MovePet(id_, pet->get_pet_slot(), session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
 			map_->send_packet(&packet, this);
 		}
 	}
