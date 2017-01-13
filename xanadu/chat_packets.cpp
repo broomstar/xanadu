@@ -18,6 +18,7 @@ void PacketCreator::ShowChatMessage(Player *player, const std::string &message, 
 void PacketCreator::ShowMessage(const std::string &message, unsigned char type, unsigned char channel_id, unsigned char whisper, std::shared_ptr<Item> item)
 {
 	/*
+	possible values for type:
 	* 0: [Notice] in blue
 	* 1: Popup
 	* 2: Megaphone

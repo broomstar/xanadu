@@ -1078,7 +1078,7 @@ void PacketCreator::UpdatePlayer(Player *player)
 void PacketCreator::ShowKeymap(Player *player)
 {
 	write<short>(send_headers::kKEYMAP);
-	write<signed char>(0); // bool if it is empty?
+	write<signed char>(0);
 
 	for (int pos = kMinKeymapPos; pos < kMaxKeymapPos; ++pos)
 	{
