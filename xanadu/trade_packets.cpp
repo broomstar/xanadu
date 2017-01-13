@@ -12,15 +12,15 @@ void PacketCreator::ShowTrade(Player *player, Player *partner, signed char numbe
 	write<signed char>(3);
 	write<signed char>(2);
 	write<signed char>(number);
-	write<signed char>(0);
 
 	if (number == 1)
 	{
+		write<signed char>(0);
 		AddCharLook(partner);
 		write<std::string>(partner->get_name());
-		write<signed char>(1);
 	}
 
+	write<signed char>(number);
 	AddCharLook(player);
 	write<std::string>(player->get_name());
 	write<signed char>(-1);
@@ -32,7 +32,7 @@ void PacketCreator::InviteTrade(Player *player)
 	write<signed char>(2); // action
 	write<signed char>(3);
 	write<std::string>(player->get_name());
-	write<int>(0); // trade id
+	write<int>(0);
 }
 
 void PacketCreator::JoinTrade(Player *player)
@@ -64,7 +64,7 @@ void PacketCreator::ShowTradeChat(signed char side, std::string &message)
 void PacketCreator::TradeMesos(int mesos, signed char number)
 {
 	write<short>(send_headers::kPLAYER_INTERACTION);
-	write<signed char>(0x0F); // action
+	write<signed char>(0x10); // action
 	write<signed char>(number);
 	write<int>(mesos);
 }
@@ -72,7 +72,7 @@ void PacketCreator::TradeMesos(int mesos, signed char number)
 void PacketCreator::TradeItem(std::shared_ptr<Item> item, signed char number)
 {
 	write<short>(send_headers::kPLAYER_INTERACTION);
-	write<signed char>(0x0E); // action
+	write<signed char>(0x0F); // action
 	write<signed char>(number);
 	write<signed char>(item->get_slot());
 	ItemInfo(item.get(), false);
@@ -81,5 +81,5 @@ void PacketCreator::TradeItem(std::shared_ptr<Item> item, signed char number)
 void PacketCreator::TradeConfirm()
 {
 	write<short>(send_headers::kPLAYER_INTERACTION);
-	write<signed char>(0x10); // action
+	write<signed char>(0x11); // action
 }
