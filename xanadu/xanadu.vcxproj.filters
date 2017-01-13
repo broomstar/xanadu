@@ -385,6 +385,9 @@
     <ClCompile Include="stat_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
+    <ClCompile Include="movement_handler.cpp">
+      <Filter>receive_packet_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes\aes.h">

@@ -73,21 +73,22 @@ void PacketCreator::MoveMob(int mob_object_id, bool use_skill, signed char actio
 	write<short>(send_headers::kMOVE_MONSTER);
 	write<int>(mob_object_id);
 	write<signed char>(0);
-	write<bool>(use_skill); // bNextAttackPossible
-	write<signed char>(action); // bLeft
-
+	write<bool>(use_skill);
+	write<signed char>(action);
 	write<signed char>(skill_id);
 	write<signed char>(skill_level);
 	write<short>(option);
 
-	// movement data
-
+	// begin of movement data
+	
 	write<short>(start_position_x);
 	write<short>(start_position_y);
-
+	
 	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, buffer_size);
 	length_ += buffer_size;
+	
+	// end of movement data
 }
 
 void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, signed char skill_id, signed char skill_level)
@@ -95,7 +96,7 @@ void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, sig
 	write<short>(send_headers::kMOVE_MONSTER_RESPONSE);
 	write<int>(mob->get_object_id());
 	write<short>(move_id);
-	write<bool>(use_skill); // bNextAttackPossible
+	write<bool>(use_skill);
 	write<short>(mob->get_mp());
 	write<signed char>(skill_id);
 	write<signed char>(skill_level);
@@ -123,5 +124,5 @@ void PacketCreator::KillMob(int mob_object_id)
 {
 	write<short>(send_headers::kKILL_MONSTER);
 	write<int>(mob_object_id);
-	write<signed char>(1); // animation
+	write<signed char>(1);
 }

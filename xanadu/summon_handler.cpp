@@ -19,20 +19,37 @@ void Player::handle_summon_movement()
 
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
+
 	summon->position_x_ = start_position_x;
 	summon->position_y_ = start_position_y;
+
+	short summon_position_x = 0;
+	short summon_position_y = 0;
+	short summon_foothold = 0;
+	signed char summon_stance = 0;
+
+	movement_handler(summon_position_x, summon_position_y, summon_foothold, summon_stance);
+
+	if (summon_position_x != 0 || summon_position_y != 0 || summon_foothold != 0 || summon_stance != 0)
+	{
+		summon->position_x_ = summon_position_x;
+		summon->position_y_ = summon_position_y;
+	}
 
 	// only send if there are other players in the map
 	if (map_->get_players()->size() > 1)
 	{
+		// exclude header
+		constexpr const int excluded_bytes = (4 + 2);
+		int size = (recv_length_ - excluded_bytes);
+		if (size < 1)
 		{
-			// exclude header
-			const int excluded_bytes = (4 + 2);
-			{
-				PacketCreator packet;
-				packet.MoveSummon(id_, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
-				map_->send_packet(&packet, this);
-			}
+			return;
+		}
+		{
+			PacketCreator packet;
+			packet.MoveSummon(id_, start_position_x, start_position_y, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
+			map_->send_packet(&packet, this);
 		}
 	}
 }

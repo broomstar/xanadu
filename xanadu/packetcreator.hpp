@@ -148,7 +148,7 @@ public:
 	void CancelChair();
 	// pet
 	void ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show);
-	void MovePet(int owner_player_id, signed char pet_slot, unsigned char *buffer, int size);
+	void MovePet(int owner_player_id, signed char pet_slot, short start_position_x, short start_position_y, unsigned char *buffer, int size);
 	void ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string &message);
 	void PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet, signed char animation);
 	void ShowOwnPetLevelUp(signed char pet_slot);
@@ -211,7 +211,7 @@ public:
 	void UpdatePlayer(Player *player);
 	void change_map(Player *player, bool is_connect_packet);
 	void ShowKeymap(Player *player);
-	void ShowPlayerMovement(int player_id, unsigned char *buffer, int buffer_size);
+	void ShowPlayerMovement(int player_id, short start_position_x, short start_position_y, unsigned char *buffer, int buffer_size);
 	void FaceExpression(int player_id, int face);
 	void ShowInfo(Player *player);
 	// skills
@@ -266,7 +266,7 @@ public:
 	void DestroyReactor(int object_id, MapReactorData *reactor);
 	// summon
 	void SpawnSummon(Player *player, Summon *summon, bool animated);
-	void MoveSummon(int owner_player_id, unsigned char *buffer, int size);
+	void MoveSummon(int owner_player_id, short start_position_x, short start_position_y, unsigned char *buffer, int size);
 	void remove_summon(int owner_player_id, int summon_id);
 	// trade
 	void ShowTrade(Player *player, Player *partner, signed char number);

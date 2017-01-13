@@ -122,6 +122,7 @@
     <ClCompile Include="map_data_provider.cpp" />
     <ClCompile Include="mob_data_provider.cpp" />
     <ClCompile Include="mob_drops_data_provider.cpp" />
+    <ClCompile Include="movement_handler.cpp" />
     <ClCompile Include="mts_handler.cpp" />
     <ClCompile Include="mts_packets.cpp" />
     <ClCompile Include="script_handler.cpp" />

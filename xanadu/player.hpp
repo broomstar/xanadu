@@ -321,6 +321,7 @@ public:
 	void handle_hit_reactor();
 	void handle_enter_mts();
 	void handle_leave_mts();
+	void movement_handler(short &position_x, short &position_y, short &foothold, signed char &stance);
 
 	// packet reading
 

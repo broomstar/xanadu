@@ -1161,19 +1161,21 @@ void PacketCreator::ShowKeymap(Player *player)
 	}
 }
 
-void PacketCreator::ShowPlayerMovement(int player_id, unsigned char *buffer, int buffer_size)
+void PacketCreator::ShowPlayerMovement(int player_id, short start_position_x, short start_position_y, unsigned char *buffer, int buffer_size)
 {
 	write<short>(send_headers::kMOVE_PLAYER);
 	write<int>(player_id);
 
-	// movement data
+	// begin of movement data
 
-	write<short>(0); // start position x
-	write<short>(0); // start position y
+	write<short>(start_position_x);
+	write<short>(start_position_y);
 
 	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, buffer_size);
 	length_ += buffer_size;
+
+	// end of movement data
 }
 
 void PacketCreator::FaceExpression(int player_id, int face)

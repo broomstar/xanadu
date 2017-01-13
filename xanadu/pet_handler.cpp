@@ -57,7 +57,7 @@ void Player::handle_use_pet()
 		if (pets_.size() == 3)
 		{
 			// instead of the first pet
-			
+
 			pets_[0]->set_pet_slot(-1);
 			pet->set_pet_slot(0);
 			pets_[0] = pet;
@@ -67,7 +67,7 @@ void Player::handle_use_pet()
 			pet->set_pet_slot(static_cast<signed char>(pets_.size()));
 			pets_.push_back(pet);
 		}
-		
+
 		pet->set_position(position_x_, position_y_, 0);
 
 		{
@@ -94,17 +94,34 @@ void Player::handle_pet_movement()
 
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
+
 	pet->set_position(start_position_x, start_position_y, 0);
+
+	short pet_position_x = 0;
+	short pet_position_y = 0;
+	short pet_foothold = 0;
+	signed char pet_stance = 0;
+
+	movement_handler(pet_position_x, pet_position_y, pet_foothold, pet_stance);
+
+	if (pet_position_x != 0 || pet_position_y != 0 || pet_foothold != 0 || pet_stance != 0)
+	{
+		pet->set_position(pet_position_x, pet_position_y, 0);
+	}
 
 	// only send if there are other players in the map
 	if (map_->get_players()->size() > 1)
 	{
+		// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
+		constexpr const int excluded_bytes = (12 + 2);
+		int size = (recv_length_ - excluded_bytes);
+		if (size < 1)
 		{
-			// exclude the first 2 bytes (header) + 12 bytes = 14 and from the packet that is to be sent
-			const int excluded_bytes = (12 + 2);
-
+			return;
+		}
+		{
 			PacketCreator packet;
-			packet.MovePet(id_, pet->get_pet_slot(), session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
+			packet.MovePet(id_, pet->get_pet_slot(), start_position_x, start_position_y, session_->get_receive_buffer() + excluded_bytes, recv_length_ - excluded_bytes);
 			map_->send_packet(&packet, this);
 		}
 	}

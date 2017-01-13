@@ -22,19 +22,21 @@ void PacketCreator::SpawnSummon(Player *player, Summon *summon, bool animated)
 	write<bool>(animated);
 }
 
-void PacketCreator::MoveSummon(int owner_player_id, unsigned char* buffer, int size)
+void PacketCreator::MoveSummon(int owner_player_id, short start_position_x, short start_position_y, unsigned char* buffer, int size)
 {
 	write<short>(send_headers::kSUMMON_MOVE);
 	write<int>(owner_player_id);
 
-	// movement data
+	// begin of movement data
 
-	write<short>(0); // start position x
-	write<short>(0); // start position y
+	write<short>(start_position_x);
+	write<short>(start_position_y);
 
 	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, size);
 	length_ += size;
+
+	// end of movement data
 }
 
 void PacketCreator::remove_summon(int owner_player_id, int summon_id)

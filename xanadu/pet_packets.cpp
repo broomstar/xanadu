@@ -47,20 +47,22 @@ void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool
 	}
 }
 
-void PacketCreator::MovePet(int owner_player_id, signed char pet_slot, unsigned char *buffer, int size)
+void PacketCreator::MovePet(int owner_player_id, signed char pet_slot, short start_position_x, short start_position_y, unsigned char *buffer, int size)
 {
 	write<short>(send_headers::kPET_MOVE);
 	write<int>(owner_player_id);
 	write<signed char>(pet_slot);
 
-	// movement data
+	// begin of movement data
 
-	write<short>(0); // start position x
-	write<short>(0); // start position y
+	write<short>(start_position_x);
+	write<short>(start_position_y);
 
 	// copy the movement data into the packet buffer
 	memcpy(buffer_ + length_, buffer, size);
 	length_ += size;
+
+	// end of movement data
 }
 
 void PacketCreator::ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string& message)
