@@ -8,23 +8,6 @@
 #include "item.hpp"
 #include "constants.hpp"
 
-void PacketCreator::ShowOwnPetLevelUp(signed char pet_slot)
-{
-	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
-	write<signed char>(4);
-	write<signed char>(0);
-	write<signed char>(pet_slot);
-}
-
-void PacketCreator::ShowPetLevelUp(int owner_player_id, signed char pet_slot)
-{
-	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
-	write<int>(owner_player_id);
-	write<signed char>(4);
-	write<signed char>(0);
-	write<signed char>(pet_slot);
-}
-
 void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet, bool show)
 {
 	write<short>(send_headers::kPET_SPAWN);

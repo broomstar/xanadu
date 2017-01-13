@@ -102,7 +102,6 @@ public:
 	// drops
 	void ShowDrop(signed char type, std::shared_ptr<Drop> drop, short pos_x, short pos_y);
 	void RemoveDrop(int drop_id, signed char animation, int player_id, signed char pet_slot);
-	void get_inventory_full();
 	void CantGetAnymoreItems();
 	void GainExp(int exp, bool in_chat, bool white, int party_bonus);
 	void GainItem(int itemid, short amount);
@@ -124,7 +123,6 @@ public:
 	void UpdateGuildRanks(Guild *guild);
 	void UpdateGuildNotice(Guild *guild);
 	void GuildMemberOnline(int guild_id, int character_id, bool online = true);
-	// guild bbs
 	void guild_bbs_add_thread();
 	void guild_bbs_thread_list(int start);
 	void guild_bbs_show_thread(int local_thread_id);
@@ -137,6 +135,7 @@ public:
 	void MoveItemMergeTwo(signed char inventory_id, short source_slot, short source_amount, short destination_slot, short destination_amount);
 	void ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<Item> equip, bool destroyed);
 	void InventoryUpdatePet(Item *pet);
+	void get_inventory_full();
 	// items
 	void ItemInfo(Item *item, bool show_position = true);
 	void ShowAvatarMega(Player *player, unsigned char ear, int item_id, std::string message, std::string message2, std::string message3, std::string message4);
@@ -151,8 +150,6 @@ public:
 	void MovePet(int owner_player_id, signed char pet_slot, short start_position_x, short start_position_y, unsigned char *buffer, int size);
 	void ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet, signed char act, const std::string &message);
 	void PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet, signed char animation);
-	void ShowOwnPetLevelUp(signed char pet_slot);
-	void ShowPetLevelUp(int owner_player_id, signed char pet_slot);
 	// map
 	void ShowPlayer(Player *player);
 	void RemovePlayer(Player *player);
@@ -294,6 +291,9 @@ public:
 	void carnival_pq_died(signed char lost_cp, unsigned char team, std::string player_name);
 	void leave_carnival_pq(bool player_is_leader, unsigned char team, std::string player_name);
 	void cpq_show_game_result(signed char result);
+	// misc
+	void ShowOwnPetLevelUp(signed char pet_slot);
+	void ShowPetLevelUp(int owner_player_id, signed char pet_slot);
 
 	// templates
 

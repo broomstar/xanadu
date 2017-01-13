@@ -306,3 +306,10 @@ void PacketCreator::InventoryUpdatePet(Item *pet)
 
 	ItemInfo(pet, false);
 }
+
+void PacketCreator::get_inventory_full()
+{
+	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
+	write<signed char>(1);
+	write<signed char>(0);
+}

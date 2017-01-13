@@ -125,6 +125,7 @@
     <ClCompile Include="movement_handler.cpp" />
     <ClCompile Include="mts_handler.cpp" />
     <ClCompile Include="mts_packets.cpp" />
+    <ClCompile Include="pq_packets.cpp" />
     <ClCompile Include="script_handler.cpp" />
     <ClCompile Include="packetcreator.cpp" />
     <ClCompile Include="pet_data.cpp" />
