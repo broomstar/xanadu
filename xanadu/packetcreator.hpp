@@ -73,6 +73,7 @@ public:
 	// buddy
 	void BuddyList(Player *player);
 	void BuddyListInvite(Player *player);
+	void WriteBuddyData(int id, std::string &name, signed char opposite_status, int channel_id, std::string &group_name);
 	void UpdateBuddyChannel(int player_id, int channel_id);
 	void UpdateBuddyListCapacity(Player *player);
 	// cash shop

@@ -19,11 +19,7 @@ void PacketCreator::BuddyList(Player *player)
 	for (auto &it : *buddylist)
 	{
 		auto buddy = it.second;
-		write<int>(buddy->get_player_id());
-		write_string(buddy->get_player_name(), 13);
-		write<signed char>(buddy->get_opposite_status());
-		write<int>(buddy->get_channel_id());
-		write_string("Default Group", 17); // group name
+		WriteBuddyData(buddy->get_player_id(), buddy->get_player_name(), buddy->get_opposite_status(), buddy->get_channel_id(), std::string("Default Group"));
 	}
 
 	for (signed char i = 0; i < buddylist_size; ++i)
@@ -38,14 +34,17 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write<signed char>(BuddylistSendPacketActions::kInvite);
 	write<int>(player->get_id());
 	write<std::string>(player->get_name());
-
-	write<int>(player->get_id());
-	write_string(player->get_name(), 13);
-	write<signed char>(Buddylist::kOppositeStatusRequested);
-	write<int>(player->get_channel_id());
-	write_string("Default Group", 17); // group name
-
+	WriteBuddyData(player->get_id(), player->get_name(), Buddylist::kOppositeStatusRequested, player->get_channel_id(), std::string("Default Group"));
 	write<signed char>(0);
+}
+
+void PacketCreator::WriteBuddyData(int id, std::string &name, signed char opposite_status, int channel_id, std::string &group_name)
+{
+	write<int>(id);
+	write_string(name, 13);
+	write<signed char>(opposite_status);
+	write<int>(channel_id);
+	write_string(group_name, 17);
 }
 
 void PacketCreator::UpdateBuddyChannel(int player_id, int channel_id)
