@@ -24,10 +24,24 @@ void Player::handle_player_movement()
 
 	movement_handler(player_position_x, player_position_y, player_foothold, player_stance);
 
-	if (player_position_x != 0 || player_position_y != 0 || player_foothold != 0 || player_stance != 0)
+	if (player_position_x != 0)
 	{
 		position_x_ = player_position_x;
+	}
+
+	if (player_position_y != 0)
+	{
 		position_y_ = player_position_y;
+	}
+
+	if (player_foothold != 0)
+	{
+		foothold_ = player_foothold;
+	}
+
+	if (player_stance != 0)
+	{
+		stance_ = player_stance;
 	}
 
 	// only send the packet if there are atleast 2 players in the map
