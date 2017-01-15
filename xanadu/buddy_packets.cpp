@@ -42,7 +42,7 @@ void PacketCreator::BuddyListInvite(Player *player)
 	write<int>(player->get_id());
 	write_string(player->get_name(), 13);
 	write<signed char>(Buddylist::kOppositeStatusRequested);
-	write<int>(1); // channel_id?
+	write<int>(player->get_channel_id());
 	write_string("Default Group", 17); // group name
 
 	write<signed char>(0);
