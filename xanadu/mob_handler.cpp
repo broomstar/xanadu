@@ -38,9 +38,24 @@ void Player::handle_mob_movement()
 
 	movement_handler(mob_position_x, mob_position_y, mob_foothold, mob_stance);
 
-	if (mob_position_x != 0 || mob_position_y != 0 || mob_foothold != 0 || mob_stance != 0)
+	if (mob_position_x != 0)
 	{
 		mob->update_position(mob_position_x, mob_position_y);
+	}
+
+	if (mob_position_y != 0)
+	{
+		mob->update_position(mob_position_x, mob_position_y);
+	}
+
+	if (mob_foothold != 0)
+	{
+
+	}
+
+	if (mob_stance != 0)
+	{
+
 	}
 	
 	bool next_movement_could_be_skill = (nibbles & 0x0F) != 0;
