@@ -1319,25 +1319,20 @@ void Player::player_connect()
 	// add the player to the map
 	map_->add_player(this);
 
+	// display keymap
 	{
-		// display keymap
-		// send a packet
 		PacketCreator packet;
 		packet.ShowKeymap(this);
 		send_packet(&packet);
 	}
-
+	// display buddylist
 	{
-		// display buddylist
-		// send a packet
 		PacketCreator packet;
 		packet.BuddyList(this);
 		send_packet(&packet);
 	}
-
+	// display header message
 	{
-		// display header message
-		// send a packet
 		PacketCreator packet;
 		packet.ShowMessage(world->get_header_message(), 4);
 		send_packet(&packet);
@@ -1366,31 +1361,28 @@ bool Player::add_mesos(int amount)
 	}
 
 	mesos_ += amount;
-
-	// packet
-	PacketCreator packet85;
-	packet85.UpdateStatInt(kCharacterStatsMesos, mesos_);
-	send_packet(&packet85);
-
+	{
+		PacketCreator packet;
+		packet.UpdateStatInt(kCharacterStatsMesos, mesos_);
+		send_packet(&packet);
+	}
 	return true;
 }
 
 void Player::set_level(unsigned char newlevel)
 {
 	level_ = newlevel;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateLevel(newlevel);
-	send_packet(&packet1);
-
+	{
+		PacketCreator packet;
+		packet.UpdateLevel(newlevel);
+		send_packet(&packet);
+	}
 	// show the levelup effect to the map
-
-	// send a packet
-	PacketCreator packet2;
-	packet2.ShowForeignEffect(id_, 0);
-	map_->send_packet(&packet2, this);
-
+	{
+		PacketCreator packet;
+		packet.ShowForeignEffect(id_, 0);
+		map_->send_packet(&packet, this);
+	}
 	// update the party
 	if (party_)
 	{
@@ -1398,10 +1390,11 @@ void Player::set_level(unsigned char newlevel)
 		if (member)
 		{
 			member->set_level(newlevel);
-			// send a packet
-			PacketCreator packet;
-			packet.UpdateParty(party_);
-			party_->send_packet(&packet);
+			{
+				PacketCreator packet;
+				packet.UpdateParty(party_);
+				party_->send_packet(&packet);
+			}
 		}
 	}
 	// update the guild
@@ -1411,11 +1404,11 @@ void Player::set_level(unsigned char newlevel)
 		if (member)
 		{
 			member->set_level(newlevel);
-
-			// send a packet
-			PacketCreator packet22;
-			packet22.GuildInfo(guild_);
-			guild_->send_packet(&packet22);
+			{
+				PacketCreator packet;
+				packet.GuildInfo(guild_);
+				guild_->send_packet(&packet);
+			}
 		}
 	}
 }
@@ -1443,28 +1436,28 @@ void Player::set_job(short newjob)
 
 	// update the job
 	job_ = newjob;
-
-	// packet
-	PacketCreator packet3;
-	packet3.UpdateStatShort(kCharacterStatsJob, job_);
-	send_packet(&packet3);
-
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsJob, job_);
+		send_packet(&packet);
+	}
 	// show the job change effect to the map
-	// send a packet
-	PacketCreator packet5;
-	packet5.ShowForeignEffect(id_, 8);
-	map_->send_packet(&packet5, this);
-
+	{
+		PacketCreator packet;
+		packet.ShowForeignEffect(id_, 8);
+		map_->send_packet(&packet, this);
+	}
 	if (party_)
 	{
 		PartyMember *member = party_->get_member(id_);
 		if (member)
 		{
 			member->set_job(job_);
-			// send a packet
-			PacketCreator packet;
-			packet.UpdateParty(get_party());
-			party_->send_packet(&packet);
+			{
+				PacketCreator packet;
+				packet.UpdateParty(get_party());
+				party_->send_packet(&packet);
+			}
 		}
 	}
 
@@ -1474,10 +1467,11 @@ void Player::set_job(short newjob)
 		if (member)
 		{
 			member->set_job(job_);
-			// send a packet
-			PacketCreator packet30;
-			packet30.GuildInfo(guild_);
-			guild_->send_packet(&packet30);
+			{
+				PacketCreator packet;
+				packet.GuildInfo(guild_);
+				guild_->send_packet(&packet);
+			}
 		}
 	}
 
@@ -1527,10 +1521,11 @@ void Player::set_job(short newjob)
 				skills_[skill_id] = skill;
 			}
 		}
-		// send a packet
-		PacketCreator packet10;
-		packet10.UpdateSkills(this);
-		send_packet(&packet10);
+		{
+			PacketCreator packet;
+			packet.UpdateSkills(this);
+			send_packet(&packet);
+		}
 	}
 	}
 }
@@ -1538,41 +1533,41 @@ void Player::set_job(short newjob)
 void Player::set_str(short str)
 {
 	str_ = str;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsStr, str);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsStr, str);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_dex(short dex)
 {
 	dex_ = dex;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsDex, dex);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsDex, dex);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_int(short intt)
 {
 	int_ = intt;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsInt, int_);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsInt, int_);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_luk(short luk)
 {
 	luk_ = luk;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsLuk, luk);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsLuk, luk);
+		send_packet(&packet);
+	}
 }
 
 int Player::get_mesos()
@@ -1732,17 +1727,18 @@ void Player::set_hp(short shp)
 	}
 
 	hp_ = shp;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsHp, hp_);
-	send_packet(&packet1);
-
-	if (party_)
 	{
 		PacketCreator packet;
-		packet.UpdatePartyHp(this);
-		party_->send_packet(&packet);
+		packet.UpdateStatShort(kCharacterStatsHp, hp_);
+		send_packet(&packet);
+	}
+	if (party_)
+	{
+		{
+			PacketCreator packet;
+			packet.UpdatePartyHp(this);
+			party_->send_packet(&packet);
+		}
 	}
 }
 
@@ -1759,10 +1755,11 @@ void Player::set_mp(short smp)
 	}
 
 	mp_ = smp;
-
-	PacketCreator packet;
-	packet.UpdateStatShort(kCharacterStatsMp, mp_);
-	send_packet(&packet);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsMp, mp_);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_max_hp(short max_hp)
@@ -1778,16 +1775,18 @@ void Player::set_max_hp(short max_hp)
 	}
 
 	max_hp_ = max_hp;
-
-	PacketCreator packet;
-	packet.UpdateStatShort(kCharacterStatsMaxHp, max_hp_);
-	send_packet(&packet);
-
-	if (party_)
 	{
 		PacketCreator packet;
-		packet.UpdatePartyHp(this);
-		party_->send_packet(&packet);
+		packet.UpdateStatShort(kCharacterStatsMaxHp, max_hp_);
+		send_packet(&packet);
+	}
+	if (party_)
+	{
+		{
+			PacketCreator packet;
+			packet.UpdatePartyHp(this);
+			party_->send_packet(&packet);
+		}
 	}
 }
 
@@ -1804,21 +1803,21 @@ void Player::set_max_mp(short max_mp)
 	}
 
 	max_mp_ = max_mp;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsMaxMp, max_mp_);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsMaxMp, max_mp_);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_sp(short sp)
 {
 	sp_ = sp;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateSp(this, sp);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateSp(this, sp);
+		send_packet(&packet);
+	}
 }
 
 void Player::add_sp(short sp)
@@ -1829,21 +1828,21 @@ void Player::add_sp(short sp)
 void Player::set_ap(short ap)
 {
 	ap_ = ap;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatShort(kCharacterStatsAp, ap);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatShort(kCharacterStatsAp, ap);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_fame(int fame)
 {
 	fame_ = fame;
-
-	// packet
-	PacketCreator packet1;
-	packet1.UpdateStatInt(kCharacterStatsFame, fame);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateStatInt(kCharacterStatsFame, fame);
+		send_packet(&packet);
+	}
 }
 
 void Player::set_exp(int new_exp)
@@ -1877,11 +1876,11 @@ void Player::set_exp(int new_exp)
 	exp_ = new_exp;
 
 	// update the player's client by sending a packet
-
-	// packet
-	PacketCreator packet5;
-	packet5.UpdateStatInt(kCharacterStatsExp, exp_);
-	send_packet(&packet5);
+	{
+		PacketCreator packet;
+		packet.UpdateStatInt(kCharacterStatsExp, exp_);
+		send_packet(&packet);
+	}
 }
 
 void Player::level_up()
@@ -1891,9 +1890,11 @@ void Player::level_up()
 
 	if (level_ == 200 && get_is_gm() == false)
 	{
-		PacketCreator packet1;
-		packet1.ShowMessage("[Congrats] " + name_ + " has reached Level 200! Congratulate " + name_ + " on such an amazing achievement!", 6);
-		World::get_instance()->send_packet(&packet1);
+		{
+			PacketCreator packet;
+			packet.ShowMessage("[Congrats] " + name_ + " has reached Level 200! Congratulate " + name_ + " on such an amazing achievement!", 6);
+			World::get_instance()->send_packet(&packet);
+		}
 	}
 
 	set_ap(ap_ + 5);
@@ -2009,27 +2010,31 @@ void Player::set_skin_color(signed char id)
 void Player::set_face(int id)
 {
 	face_ = id;
-	// send a packet
-	PacketCreator packet1;
-	packet1.UpdateStatInt(kCharacterStatsFace, face_);
-	send_packet(&packet1);
-	// send a packet
-	PacketCreator packet2;
-	packet2.UpdatePlayer(this);
-	map_->send_packet(&packet2, this);
+	{
+		PacketCreator packet;
+		packet.UpdateStatInt(kCharacterStatsFace, face_);
+		send_packet(&packet);
+	}
+	{
+		PacketCreator packet;
+		packet.UpdatePlayer(this);
+		map_->send_packet(&packet, this);
+	}
 }
 
 void Player::set_hair(int id)
 {
 	hair_ = id;
-	// send a packet
-	PacketCreator packet1;
-	packet1.UpdateStatInt(kCharacterStatsHair, hair_);
-	send_packet(&packet1);
-	// send a packet
-	PacketCreator packet2;
-	packet2.UpdatePlayer(this);
-	map_->send_packet(&packet2, this);
+	{
+		PacketCreator packet;
+		packet.UpdateStatInt(kCharacterStatsHair, hair_);
+		send_packet(&packet);
+	}
+	{
+		PacketCreator packet;
+		packet.UpdatePlayer(this);
+		map_->send_packet(&packet, this);
+	}
 }
 
 short Player::get_item_amount(int itemid)
@@ -2058,12 +2063,11 @@ bool Player::give_item(int item_id, short amount)
 	{
 		return false;
 	}
-
-	// send a packet
-	PacketCreator packet;
-	packet.ItemGainChat(item_id, amount);
-	send_packet(&packet);
-
+	{
+		PacketCreator packet;
+		packet.ItemGainChat(item_id, amount);
+		send_packet(&packet);
+	}
 	return true;
 }
 
@@ -2076,11 +2080,11 @@ void Player::remove_item(int item_id, short amount)
 	}
 
 	inventory->remove_item(item_id, amount);
-
-	// send a packet
-	PacketCreator packet;
-	packet.ItemGainChat(item_id, -amount);
-	send_packet(&packet);
+	{
+		PacketCreator packet;
+		packet.ItemGainChat(item_id, -amount);
+		send_packet(&packet);
+	}
 }
 
 void Player::save_account()

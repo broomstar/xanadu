@@ -701,11 +701,11 @@ void World::join_messenger(Player *player, int messenger_id)
 
 	if (!messenger)
 	{
-		// packet
-		PacketCreator packet1;
-		packet1.ShowMessage("The messenger has already been closed.", 5);
-		player->send_packet(&packet1);
-
+		{
+			PacketCreator packet;
+			packet.ShowMessage("The messenger has already been closed.", 5);
+			player->send_packet(&packet);
+		}
 		return;
 	}
 
@@ -713,11 +713,11 @@ void World::join_messenger(Player *player, int messenger_id)
 
 	if (players->size() > 2)
 	{
-		// packet
-		PacketCreator packet2;
-		packet2.ShowMessage("The messenger is full.", 5);
-		player->send_packet(&packet2);
-
+		{
+			PacketCreator packet;
+			packet.ShowMessage("The messenger is full.", 5);
+			player->send_packet(&packet);
+		}
 		return;
 	}
 
@@ -757,22 +757,24 @@ void World::join_messenger(Player *player, int messenger_id)
 	for (auto &it : *players)
 	{
 		Player *target = it.second;
-		// send a packet
-		PacketCreator packet30;
-		packet30.MessengerAddPlayer(target);
-		player->send_packet(&packet30);
-		// send a packet
-		PacketCreator packet31;
-		packet31.MessengerAddPlayer(player);
-		target->send_packet(&packet31);
+		{
+			PacketCreator packet;
+			packet.MessengerAddPlayer(target);
+			player->send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.MessengerAddPlayer(player);
+			target->send_packet(&packet);
+		}
 	}
 
 	messenger->add_member(player);
-
-	// send a packet
-	PacketCreator packet32;
-	packet32.MessengerJoin(player->get_messenger_position());
-	player->send_packet(&packet32);
+	{
+		PacketCreator packet;
+		packet.MessengerJoin(player->get_messenger_position());
+		player->send_packet(&packet);
+	}
 }
 
 // guilds
