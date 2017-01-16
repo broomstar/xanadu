@@ -26,7 +26,7 @@ void Player::handle_chat_command()
 
 	switch (type)
 	{
-	case 5: // find
+	case chat_command_handler_type_constants::kFind:
 	{
 		if (!receiver_player || receiver_player->get_is_gm() && !get_is_gm())
 		{
@@ -67,7 +67,7 @@ void Player::handle_chat_command()
 		}
 		break;
 	}
-	case 6: // whisper
+	case chat_command_handler_type_constants::kWhisper:
 	{
 		if (receiver_player)
 		{

@@ -39,11 +39,11 @@ void Player::handle_messenger_action()
 			else
 			{
 				messenger_->delete_member(id_);
-
-				// send a packet
-				PacketCreator packet45;
-				packet45.MessengerRemovePlayer(get_messenger_position());
-				messenger_->send_packet(&packet45);
+				{
+					PacketCreator packet;
+					packet.MessengerRemovePlayer(get_messenger_position());
+					messenger_->send_packet(&packet);
+				}
 			}
 
 			messenger_ = nullptr;
@@ -61,30 +61,33 @@ void Player::handle_messenger_action()
 			{
 				if (!target->get_messenger())
 				{
-					// send a packet
-					PacketCreator packet60;
-					packet60.MessengerInvite(this);
-					target->send_packet(&packet60);
-
-					// send a packet
-					PacketCreator packet62;
-					packet62.MessengerNote(invited_name, true);
-					send_packet(&packet62);
+					{
+						PacketCreator packet;
+						packet.MessengerInvite(this);
+						target->send_packet(&packet);
+					}
+					{
+						PacketCreator packet;
+						packet.MessengerNote(invited_name, true);
+						send_packet(&packet);
+					}
 				}
 				else
 				{
-					// send a packet
-					PacketCreator packet63;
-					packet63.MessengerChat(name_, invited_name + " is already using Maple Messenger.");
-					send_packet(&packet63);
+					{
+						PacketCreator packet;
+						packet.MessengerChat(name_, invited_name + " is already using Maple Messenger.");
+						send_packet(&packet);
+					}
 				}
 			}
 			else
 			{
-				// send a packet
-				PacketCreator packet64;
-				packet64.MessengerNote(invited_name, false);
-				send_packet(&packet64);
+				{
+					PacketCreator packet;
+					packet.MessengerNote(invited_name, false);
+					send_packet(&packet);
+				}
 			}
 		}
 		break;
@@ -95,10 +98,11 @@ void Player::handle_messenger_action()
 		Player *target = World::get_instance()->GetPlayerByName(inviter_name);
 		if (target)
 		{
-			// send a packet
-			PacketCreator packet51;
-			packet51.MessengerDeclined(name_);
-			target->send_packet(&packet51);
+			{
+				PacketCreator packet;
+				packet.MessengerDeclined(name_);
+				target->send_packet(&packet);
+			}
 		}
 		break;
 	}
@@ -108,11 +112,11 @@ void Player::handle_messenger_action()
 		{
 			std::string name = read<std::string>();
 			std::string text = read<std::string>();
-
-			// send a packet
-			PacketCreator packet52;
-			packet52.MessengerChat(name, text);
-			messenger_->send_packet(&packet52, this);
+			{
+				PacketCreator packet;
+				packet.MessengerChat(name, text);
+				messenger_->send_packet(&packet, this);
+			}
 		}
 		break;
 	}

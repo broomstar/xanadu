@@ -17,13 +17,11 @@ void Player::handle_enter_mts()
 
 	in_mts_ = true;
 	map_->remove_player(this);
-
 	{
 		PacketCreator packet;
 		packet.EnterMTS(this);
 		send_packet(&packet);
 	}
-
 	{
 		PacketCreator packet;
 		packet.ShowMTSCash();
@@ -34,12 +32,10 @@ void Player::handle_enter_mts()
 void Player::handle_leave_mts()
 {
 	in_mts_ = false;
-
 	{
 		PacketCreator packet;
 		packet.change_map(this, true);
 		send_packet(&packet);
 	}
-
 	map_->add_player(this);
 }

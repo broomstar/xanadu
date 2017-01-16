@@ -62,6 +62,15 @@ namespace find_player_packet_mode2_constants
 	};
 }
 
+namespace chat_command_handler_type_constants
+{
+	enum
+	{
+		kFind = 5,
+		kWhisper = 6
+	};
+}
+
 namespace group_chat_handler_and_packet_type_constants
 {
 	enum
