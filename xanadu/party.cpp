@@ -15,11 +15,11 @@ id_(party_id),
 leader_(leader->get_id())
 {
 	add_member(leader);
-
-	// send a packet
-	PacketCreator packet;
-	packet.PartyCreated(party_id);
-	leader->send_packet(&packet);
+	{
+		PacketCreator packet;
+		packet.PartyCreated(party_id);
+		leader->send_packet(&packet);
+	}
 }
 
 // destructor
@@ -55,9 +55,10 @@ std::unordered_map<int, std::unique_ptr<PartyMember>> *Party::get_members()
 
 PartyMember *Party::get_member(int player_id)
 {
-	if (members_.find(player_id) != members_.end())
+	auto iterator = members_.find(player_id);
+	if (iterator != members_.end())
 	{
-		return members_[player_id].get();
+		return iterator->second.get();
 	}
 
 	return nullptr;
@@ -66,11 +67,11 @@ PartyMember *Party::get_member(int player_id)
 void Party::set_leader(int player_id)
 {
 	leader_ = player_id;
-
-	// send a packet
-	PacketCreator packet;
-	packet.ChangeLeader(player_id, false);
-	send_packet(&packet);
+	{
+		PacketCreator packet;
+		packet.ChangeLeader(player_id, false);
+		send_packet(&packet);
+	}
 }
 
 void Party::add_member(Player *player)
@@ -82,25 +83,29 @@ void Party::add_member(Player *player)
 
 void Party::delete_member(int player_id)
 {
-	if (players_.find(player_id) != players_.end())
+	auto iterator_players = players_.find(player_id);
+	if (iterator_players != players_.end())
 	{
-		players_.erase(player_id);
+		players_.erase(iterator_players);
 	}
-	if (members_.find(player_id) != members_.end())
+	auto iterator_members = members_.find(player_id);
+	if (iterator_members != members_.end())
 	{
-		members_.erase(player_id);
+		members_.erase(iterator_members);
 	}
 }
 
 void Party::remove_member(int player_id)
 {
-	if (players_.find(player_id) != players_.end())
+	auto iterator_players = players_.find(player_id);
+	if (iterator_players != players_.end())
 	{
-		players_.erase(player_id);
+		players_.erase(iterator_players);
 	}
-	if (members_.find(player_id) != members_.end())
+	auto iterator_members = members_.find(player_id);
+	if (iterator_members != members_.end())
 	{
-		PartyMember *member = members_[player_id].get();
+		PartyMember *member = iterator_members->second.get();
 		member->set_channel_id(-2);
 		member->set_map_id(999999999);
 	}
@@ -122,21 +127,20 @@ void Party::set_variable(std::string name, int val)
 
 int Party::get_variable(std::string name)
 {
-	if (variables_.find(name) == variables_.end())
-	{
-		return -1;
-	}
-	else
+	auto iterator = variables_.find(name);
+	if (iterator != variables_.end())
 	{
 		return variables_[name];
 	}
+	return -1;
 }
 
 void Party::delete_variable(std::string &name)
 {
-	if (variables_.find(name) != variables_.end())
+	auto iterator = variables_.find(name);
+	if (iterator != variables_.end())
 	{
-		variables_.erase(name);
+		variables_.erase(iterator);
 	}
 }
 
