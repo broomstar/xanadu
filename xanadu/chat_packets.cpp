@@ -80,7 +80,7 @@ void PacketCreator::FindPlayerReply(const std::string &name, bool success)
 void PacketCreator::FindPlayer(const std::string &name, signed char mode2, int map_id_or_channel_id)
 {
 	write<short>(send_headers::kWHISPER);
-	write<signed char>(find_player_or_whisper_packet_action_constants::kFindPlayerMapOrChannelOrMtsOrCashshop); // action: 9 = find player in cs/mts/map/channel, 10 = findplayerreply, 18 = whisper
+	write<signed char>(find_player_or_whisper_packet_action_constants::kFindPlayerMapOrChannelOrMtsOrCashshop);
 	write<std::string>(name);
 	write<signed char>(mode2);
 	write<int>(map_id_or_channel_id); // mapid or channelid or -1 if mts or cash shop
