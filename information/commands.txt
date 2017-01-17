@@ -23,9 +23,10 @@
 !heal			    Heals you
 !spawn  [mobid]		    It spawns the [mobid]
 !header [text]		    It changes the header text to [text]
-!say [text]		    Says Playername: [text] to all players
 !notice [text]		   Says [Notice][text] to all players
-!notice2 [text]		                    Sends a "box" to all players with a message
+!popup [text]		                    Sends a "box" to all players with a message
+!rednotice [text]		   Says [Notice][text] to all players in red/pink
+!say [text]		    Says Playername: [text] to all players
 !hide
 !unhide
 !meeting                                Warps to GM Map

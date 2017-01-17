@@ -15,40 +15,46 @@ void PacketCreator::ShowChatMessage(Player *player, const std::string &message, 
 	write<bool>(bubble_only);
 }
 
+enum message_types
+{
+	kNoticeBlue,
+	kPopupBox,
+	kMegaphone,
+	kSuperMegaphone,
+	kScrollingMessageAtTop,
+	kRedPinkNotice,
+	kBlueNotice,
+	kItemMegaphone = 8
+};
 void PacketCreator::ShowMessage(const std::string &message, unsigned char type, unsigned char channel_id, unsigned char whisper, std::shared_ptr<Item> item)
 {
-	/*
-	possible values for type:
-	* 0: [Notice] in blue
-	* 1: Popup
-	* 2: Megaphone
-	* 3: Super Megaphone
-	* 4: Scrolling message at top
-	* 5: Red Text
-	* 6: Blue Text
-	* 8: Item megaphone
-	*/
-
 	write<short>(send_headers::kSERVERMESSAGE);
 	write<signed char>(type);
 
-	if (type == 4)
+	if (type == kScrollingMessageAtTop)
 	{
 		write<signed char>(message != "");
 	}
 
 	write<std::string>(message);
 
-	if (type == 3 || type == 8)
+	switch (type)
+	{
+	case kSuperMegaphone:
 	{
 		write<signed char>(channel_id);
 		write<signed char>(whisper);
+		break;
 	}
-
-	// display item in item megaphone
-
-	if (type == 8)
+	case kBlueNotice:
 	{
+		write<int>(0);
+		break;
+	}
+	case kItemMegaphone:
+	{
+		write<signed char>(channel_id);
+		write<signed char>(whisper);
 		if (item)
 		{
 			write<signed char>(item->get_slot());
@@ -58,6 +64,8 @@ void PacketCreator::ShowMessage(const std::string &message, unsigned char type, 
 		{
 			write<signed char>(0);
 		}
+		break;
+	}
 	}
 }
 

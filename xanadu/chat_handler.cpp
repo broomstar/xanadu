@@ -604,21 +604,8 @@ void Player::handle_use_chat()
 			world->set_header_message(header_message);
 
 			{
-				// packet
 				PacketCreator packet;
 				packet.ShowMessage(header_message, 4);
-				world->send_packet(&packet);
-			}
-		}
-
-		else if (command == "say")
-		{
-			std::string notice = message.substr(message.find(" ") + 1);
-
-			{
-				// packet
-				PacketCreator packet;
-				packet.ShowMessage("[" + get_name() + "] " + notice, 6);
 				world->send_packet(&packet);
 			}
 		}
@@ -626,23 +613,39 @@ void Player::handle_use_chat()
 		else if (command == "notice")
 		{
 			std::string notice = message.substr(message.find(" ") + 1);
-
 			{
-				// packet
 				PacketCreator packet;
 				packet.ShowMessage(notice, 0);
 				world->send_packet(&packet);
 			}
 		}
 
-		else if (command == "notice2")
+		else if (command == "popup")
 		{
 			std::string notice = message.substr(message.find(" ") + 1);
-
 			{
-				// packet
 				PacketCreator packet;
 				packet.ShowMessage(notice, 1);
+				world->send_packet(&packet);
+			}
+		}
+
+		else if (command == "rednotice")
+		{
+			std::string notice = message.substr(message.find(" ") + 1);
+			{
+				PacketCreator packet;
+				packet.ShowMessage(notice, 5);
+				world->send_packet(&packet);
+			}
+		}
+
+		else if (command == "say")
+		{
+			std::string notice = message.substr(message.find(" ") + 1);
+			{
+				PacketCreator packet;
+				packet.ShowMessage("[" + get_name() + "] " + notice, 6);
 				world->send_packet(&packet);
 			}
 		}
