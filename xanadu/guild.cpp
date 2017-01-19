@@ -288,7 +288,13 @@ void Guild::SetRank5(std::string rank, bool init)
 
 GuildMember *Guild::GetMember(int player_id)
 {
-	return (members_.find(player_id) != members_.end() ? members_[player_id].get() : nullptr);
+	auto iterator = members_.find(player_id);
+	if (iterator != members_.end())
+	{
+		return iterator->second.get();
+	}
+
+	return nullptr;
 }
 
 void Guild::AddMember(Player *player)
@@ -305,9 +311,10 @@ void Guild::AddMember(GuildMember *member)
 
 void Guild::RemoveMember(int player_id)
 {
-	if (players_.find(player_id) != players_.end())
+	auto iterator = players_.find(player_id);
+	if (iterator != players_.end())
 	{
-		players_.erase(player_id);
+		players_.erase(iterator);
 	}
 
 	GuildMember *member = GetMember(player_id);
@@ -319,14 +326,16 @@ void Guild::RemoveMember(int player_id)
 
 void Guild::DeleteMember(int player_id)
 {
-	if (players_.find(player_id) != players_.end())
+	auto iterator_players = players_.find(player_id);
+	if (iterator_players != players_.end())
 	{
-		players_.erase(player_id);
+		players_.erase(iterator_players);
 	}
 
-	if (GetMember(player_id))
+	auto iterator_members = members_.find(player_id);
+	if (iterator_members != members_.end())
 	{
-		members_.erase(player_id);
+		members_.erase(iterator_members);
 	}
 }
 
