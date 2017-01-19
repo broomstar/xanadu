@@ -37,8 +37,6 @@
 #include "tools.hpp"
 #include "constants.hpp"
 
-// start of other packets
-
 // info for SHOW_STATUS_INFO:
 // it has the following modes:
 
@@ -874,51 +872,12 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
 
 	// messages on the screen that disappears after some seconds
 	// maybe used in combination with quiet ban? (so upon login player is informed about it)
-
-	write<short>(0); // 0 = nothing, more than 0 = amount of message lines
-
+	// structure:
+	// size: 2 bytes/short int
 	// if more than 0:
-
 	// write string title
-
 	// and for each message line: write string message
-
-	// extract follows
-
-	/*
-	for the 2 bytes above this comment (v96):
-
-	  v96 = (unsigned __int16)CInPacket::Decode2(v2);
-  Src = 0;
-  sub_414EDD(&Str2, 0xFFFFFFFF);
-  v103 = 0;
-  v89 = 0;
-  LOBYTE(v103) = 1;
-  if ( v96 )
-  {
-	v3 = CInPacket::DecodeStr(&v102);
-	LOBYTE(v103) = 2;
-	ZXString_char_::operator_(v3);
-	LOBYTE(v103) = 1;
-	if ( v102 )
-	  sub_434E38((volatile LONG *)(v102 - 12));
-	if ( v96 > 0 )
-	{
-	  v101 = v96;
-	  do
-	  {
-		CInPacket::DecodeStr(&v102);
-		LOBYTE(v103) = 3;
-		sub_4655D4(-1);
-		ZXString_char_::operator_(&v102);
-		LOBYTE(v103) = 1;
-		if ( v102 )
-		  sub_434E38((volatile LONG *)(v102 - 12));
-		--v101;
-	  }
-	  while ( v101 );
-	}
-  }*/
+	write<short>(0); // 0 = nothing, more than 0 = amount of message lines
 
 	if (is_connect_packet)
 	{
@@ -937,11 +896,15 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet)
 	write<long long>(tools::time_to_tick());
 }
 
+// random number generator seeds
 void PacketCreator::writeRngSeeds()
 {
-	write<int>(36556356); // random number generator seed 1
-	write<int>(233868); // random number generator seed 2
-	write<int>(98358998); // random number generator seed 3
+	constexpr const int seed1 = 36556356;
+	constexpr const int seed2 = 233868;
+	constexpr const int seed3 = 98358998;
+	write<int>(seed1);
+	write<int>(seed2);
+	write<int>(seed3);
 }
 
 void PacketCreator::AddCharLook(Player *player, bool megaphone)
@@ -1276,4 +1239,28 @@ void PacketCreator::ShowPetLevelUp(int owner_player_id, signed char pet_slot)
 	write<signed char>(4);
 	write<signed char>(0);
 	write<signed char>(pet_slot);
+}
+
+void PacketCreator::ShowForeignEffect(int player_id, signed char effect)
+{
+	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
+	write<int>(player_id);
+	write<signed char>(effect); // 0 = level up, 8 = job change, others are (partially) buffs/skills?
+}
+
+void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int skill_id, signed char skill_level)
+{
+	if (player_id > 0)
+	{
+		write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
+		write<int>(player_id);
+	}
+	else
+	{
+		write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
+	}
+
+	write<signed char>(effect_id); // info for kSHOW_FOREIGN_EFFECT: 0 = level up, 8 = job change, others are (partially) buffs/skills?
+	write<int>(skill_id);
+	write<signed char>(skill_level);
 }

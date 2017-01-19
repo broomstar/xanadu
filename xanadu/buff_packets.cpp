@@ -67,30 +67,6 @@ void PacketCreator::ShowMonsterRiding(int player_id, int item_id, int skill_id)
 	write<signed char>(0);
 }
 
-void PacketCreator::ShowForeignEffect(int player_id, signed char effect)
-{
-	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
-	write<int>(player_id);
-	write<signed char>(effect); // 0 = level up, 8 = job change
-}
-
-void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int skill_id, signed char skill_level)
-{
-	if (player_id > 0)
-	{
-		write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
-		write<int>(player_id);
-	}
-	else
-	{
-		write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
-	}
-
-	write<signed char>(effect_id);
-	write<int>(skill_id);
-	write<signed char>(skill_level);
-}
-
 void PacketCreator::ShowPlayerBuff(Values *values, int skill_id, int time)
 {
 	write<short>(send_headers::kGIVE_BUFF);
@@ -136,7 +112,7 @@ void PacketCreator::ShowMapBuff(int player_id, Values *values)
 
 	for (Value &value : *values2)
 	{
-		// morph is 8 bit here except for pirate morph
+		// morph is 8 bit here except for pirate morph?
 		write<short>(value.get_value());
 	}
 

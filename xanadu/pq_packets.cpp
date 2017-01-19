@@ -3,8 +3,6 @@
 #include "packetcreator.hpp"
 #include "send_packet_opcodes.hpp"
 
-// monster carnival party quest packets
-
 void PacketCreator::StartCarnivalPartyQuest(unsigned char team)
 {
 	write<short>(send_headers::kMONSTER_CARNIVAL_START);
@@ -77,5 +75,3 @@ void PacketCreator::cpq_show_game_result(signed char result)
 	write<short>(send_headers::kMONSTER_CARNIVAL_SHOW_GAME_RESULT);
 	write<signed char>(result);
 }
-
-// end of monster carnival party quest packets

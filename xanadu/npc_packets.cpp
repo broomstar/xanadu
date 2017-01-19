@@ -162,8 +162,7 @@ void PacketCreator::GetFredrickStorage(std::unordered_map<signed char, std::shar
 }
 
 /*
-action is for example:
-
+possible actions are:
 9 = take out
 10/0x0A = Error: Inventory is full
 11/0x0B = Error: You do not have enough mesos
@@ -171,7 +170,6 @@ action is for example:
 13/0x0D = store items
 19/0x13 = store mesos
 22/0x16 = open storage/show what's in it
-
 */
 
 void PacketCreator::GetStorage(int npc_id, signed char slots, std::vector<std::shared_ptr<Item>> items, int mesos)

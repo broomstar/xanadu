@@ -15,16 +15,6 @@ void PacketCreator::EnterMTS(Player *player)
 	write<int>(0); // Commission Base
 	write<int>(0); // Auction Duration Min
 	write<int>(0); // Auction Duration Max
-
-	/*
-	SystemTimeToFileTime(&st, (_FILETIME *)((char *)&ftSecond + 4));
-CInPacket::DecodeBuffer(v3, &ftServer, 8u);
-v12.dwHighDateTime = ftServer;
-v12.dwLowDateTime = (unsigned int)&ftFirst;
-v13 = CITC::FileTimeAddition(v2, v12, ftSecond, bSubtract);
-v2->m_ftRel.dwLowDateTime = *(_DWORD *)v13.dwLowDateTime;
-v2->m_ftRel.dwHighDateTime = *(_DWORD *)(v13.dwLowDateTime + 4);
-*/
 	write<long long>(0); // time
 }
 
