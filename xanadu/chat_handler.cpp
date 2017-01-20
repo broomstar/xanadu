@@ -242,7 +242,7 @@ void Player::handle_use_chat()
 			{
 				// packet
 				PacketCreator packet;
-				packet.obtain_cp();
+				packet.obtain_cp(100, 100);
 				send_packet(&packet);
 			}
 		}
@@ -253,7 +253,7 @@ void Player::handle_use_chat()
 			{
 				// packet
 				PacketCreator packet;
-				packet.obtain_party_cp(mcpq_constants::kTeamRed);
+				packet.obtain_party_cp(mcpq_constants::kTeamRed, 200, 200);
 				send_packet(&packet);
 			}
 		}

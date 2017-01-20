@@ -285,8 +285,8 @@ public:
 	void MessengerInvite(Player *inviter);
 	// party quest
 	void StartCarnivalPartyQuest(unsigned char team);
-	void obtain_cp();
-	void obtain_party_cp(unsigned char team);
+	void obtain_cp(short cp, short total_cp);
+	void obtain_party_cp(unsigned char team, short cp, short total_cp);
 	void carnival_pq_message(signed char message);
 	void carnival_pq_summon(signed char tab, signed char summon_number, std::string player_name);
 	void carnival_pq_died(signed char lost_cp, unsigned char team, std::string player_name);

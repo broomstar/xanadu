@@ -13,22 +13,27 @@ void PacketCreator::StartCarnivalPartyQuest(unsigned char team)
 	write<short>(0); // Total Obtained CP of the team
 	write<short>(0); // Obtained CP - Used CP of the enemy team
 	write<short>(0); // Total Obtained CP of the enemy team
-	write_null(10); // one byte for each cpq mob?
+	
+	// write one byte for each cpq mob?
+	for (int i = 0; i < 10; ++i)
+	{
+		write<signed char>(0);
+	}
 }
 
-void PacketCreator::obtain_cp()
+void PacketCreator::obtain_cp(short cp, short total_cp)
 {
 	write<short>(send_headers::kMONSTER_CARNIVAL_OBTAINED_CP);
-	write<short>(100); // Obtained CP - Used CP
-	write<short>(100); // Total Obtained CP
+	write<short>(cp); // Obtained CP - Used CP
+	write<short>(total_cp); // Total Obtained CP
 }
 
-void PacketCreator::obtain_party_cp(unsigned char team)
+void PacketCreator::obtain_party_cp(unsigned char team, short cp, short total_cp)
 {
 	write<short>(send_headers::kMONSTER_CARNIVAL_PARTY_CP);
 	write<unsigned char>(team); // Team where the points are given to.
-	write<short>(200); // Obtained CP - Used CP
-	write<short>(200); // Total Obtained CP
+	write<short>(cp); // Obtained CP - Used CP
+	write<short>(total_cp); // Total Obtained CP
 }
 
 void PacketCreator::carnival_pq_message(signed char message)
