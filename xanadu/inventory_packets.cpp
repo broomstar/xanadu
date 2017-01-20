@@ -164,7 +164,7 @@ void PacketCreator::ItemInfo(Item *item, bool show_position)
 void PacketCreator::UpdateSlot(std::shared_ptr<Item> item)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client and update tick
+	write<bool>(true); // sets wether to unstuck the client and update tick
 	write<signed char>(1); // how many items to upgrade
 
 	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -177,7 +177,7 @@ void PacketCreator::UpdateSlot(std::shared_ptr<Item> item)
 void PacketCreator::MoveItem(signed char inventory_id, short source_slot, short destination_slot)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client and update tick
+	write<bool>(true); // sets wether to unstuck the client and update tick
 	write<signed char>(1); // how many items to update
 
 	write<signed char>(2); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -196,7 +196,7 @@ void PacketCreator::MoveItem(signed char inventory_id, short source_slot, short 
 void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(from_drop); // unstuck the client and update tick
+	write<bool>(from_drop); // sets wether to unstuck the client and update tick
 	write<signed char>(1); // how many items to add
 
 	write<signed char>(0); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -209,7 +209,7 @@ void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop)
 void PacketCreator::remove_item(signed char inventory_id, int slot, bool from_drop)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(from_drop); // unstuck the client and update tick
+	write<bool>(from_drop); // sets wether to unstuck the client and update tick
 	write<signed char>(1); // how many items to remove
 
 	write<signed char>(3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -226,7 +226,7 @@ void PacketCreator::remove_item(signed char inventory_id, int slot, bool from_dr
 void PacketCreator::MoveItemMerge(signed char inventory_id, short source_slot, short destination_slot, short amount)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client and update tick
+	write<bool>(true); // sets wether to unstuck the client and update tick
 	write<signed char>(2); // how many items to update
 
 	write<signed char>(3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -245,7 +245,7 @@ void PacketCreator::MoveItemMerge(signed char inventory_id, short source_slot, s
 void PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot, short source_amount, short destination_slot, short destination_amount)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client and update tick
+	write<bool>(true); // sets wether to unstuck the client and update tick
 	write<signed char>(2); // how many items to update
 
 	write<signed char>(1); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -264,7 +264,7 @@ void PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot
 void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<Item> equip, bool destroyed)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(true); // unstuck the client and update tick
+	write<bool>(true); // sets wether to unstuck the client and update tick
 	write<signed char>(destroyed ? 2 : 3); // how many items to update
 
 	write<signed char>((scroll->get_amount() > 1) ? 1 : 3); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -297,7 +297,7 @@ void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll, std::shared_ptr<I
 void PacketCreator::InventoryUpdatePet(Item *pet)
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<bool>(false); // unstuck the client and update tick
+	write<bool>(false); // sets wether to unstuck the client and update tick
 	write<signed char>(1); // how many items to upgrade
 
 	write<signed char>(0); // mode (0 = add item, 1 = update quantity, 2 = move, 3 = remove)
@@ -310,6 +310,6 @@ void PacketCreator::InventoryUpdatePet(Item *pet)
 void PacketCreator::get_inventory_full()
 {
 	write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-	write<signed char>(1);
-	write<signed char>(0);
+	write<bool>(true); // sets wether to unstuck the client and update tick
+	write<signed char>(0); // how many items to upgrade
 }
