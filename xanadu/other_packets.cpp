@@ -1296,5 +1296,6 @@ void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int ski
 
 	write<signed char>(effect_id); // info for kSHOW_FOREIGN_EFFECT: 0 = level up, 8 = job change, others are (partially) buffs/skills?
 	write<int>(skill_id);
+	write<signed char>(0); // direction?
 	write<signed char>(skill_level);
 }

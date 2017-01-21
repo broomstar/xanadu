@@ -248,8 +248,10 @@ void Player::handle_use_special_skill()
 	
 	if (tools::skill_id_is_special_skill(skill_id))
 	{
-		PacketCreator packet;
-		packet.ShowSkillEffect(id_, skill_id, skill_level, flags, speed);
-		map_->send_packet(&packet, this);
+		{
+			PacketCreator packet;
+			packet.ShowSkillEffect(id_, skill_id, skill_level, flags, speed);
+			map_->send_packet(&packet, this);
+		}
 	}
 }

@@ -24,6 +24,7 @@ void PacketCreator::ShowSkillEffect(int player_id, int skill_id, signed char ski
 	write<signed char>(skill_level);
 	write<signed char>(flags);
 	write<signed char>(speed);
+	write<signed char>(0); // direction?
 }
 
 void PacketCreator::CancelSkillEffect(int player_id, int skill_id)
