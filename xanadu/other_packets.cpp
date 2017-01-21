@@ -195,6 +195,12 @@ void PacketCreator::CancelChair()
 	write<signed char>(0);
 }
 
+void PacketCreator::HiredMerchantBox()
+{
+	write<short>(send_headers::kREQUEST_HIRED_MERCHANT);
+	write<signed char>(7); // action
+}
+
 void PacketCreator::ShowPlayer(Player *player)
 {
 	write<short>(send_headers::kSPAWN_PLAYER);
@@ -484,8 +490,25 @@ void PacketCreator::RemovePlayer(Player *player)
 	write<int>(player->get_id());
 }
 
+/*
+
+needs to be tested
+
+* type - (0:Light&Long 1:Heavy&Short)
+* delay - seconds
+
+void PacketCreator::tremble_map_effect(signed char type, int delay)
+{
+	write<short>(send_headers::kMAP_EFFECT);
+	write<signed char>(1);
+	write<signed char>(type);
+	write<int>(delay);
+}
+*/
+
 // this packet shows effects in the map
-// mode specifies the type of effect: 2 = object, 3 = effect, 4 = sound, 6 = map music
+// mode that specifies the type of effect: 1 = tremble effect?, 2 = object, 3 = effect, 4 = sound, 5 = boss hp, 6 = map music
+// except for 5 (boss hp), they follow the same structure
 // name specifies the effect to be shown
 
 void PacketCreator::MapEffect(signed char mode, std::string name)
@@ -493,6 +516,17 @@ void PacketCreator::MapEffect(signed char mode, std::string name)
 	write<short>(send_headers::kMAP_EFFECT);
 	write<signed char>(mode);
 	write<std::string>(name);
+}
+
+void PacketCreator::ShowBossHp(int mob_id, int hp, int max_hp, signed char color, signed char background_color)
+{
+	write<short>(send_headers::kMAP_EFFECT);
+	write<signed char>(5); // mode that specifies the type of effect: 2 = object, 3 = effect, 4 = sound, 5 = boss hp, 6 = map music
+	write<int>(mob_id);
+	write<int>(hp);
+	write<int>(max_hp);
+	write<signed char>(color);
+	write<signed char>(background_color);
 }
 
 void PacketCreator::ShowTimer(int seconds)

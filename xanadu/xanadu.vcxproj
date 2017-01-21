@@ -114,7 +114,7 @@
     <ClCompile Include="cash_shop_packets.cpp" />
     <ClCompile Include="buffvalue.cpp" />
     <ClCompile Include="buffvalues.cpp" />
-    <ClCompile Include="hired_merchant_packets.cpp" />
+    <ClCompile Include="player_interation_packets.cpp" />
     <ClCompile Include="item_data_provider.cpp" />
     <ClCompile Include="logger.cpp" />
     <ClCompile Include="map_portal_data.cpp" />
@@ -188,7 +188,6 @@
     <ClCompile Include="summon_handler.cpp" />
     <ClCompile Include="summon_packets.cpp" />
     <ClCompile Include="timer.cpp" />
-    <ClCompile Include="trade_packets.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="wzcrypto.cpp" />
     <ClCompile Include="wzfile.cpp" />

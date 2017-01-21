@@ -183,9 +183,6 @@
     <ClCompile Include="buddy_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
-    <ClCompile Include="trade_packets.cpp">
-      <Filter>send_packet_creator</Filter>
-    </ClCompile>
     <ClCompile Include="summon_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
@@ -261,9 +258,6 @@
     </ClCompile>
     <ClCompile Include="cash_shop_package_data_provider.cpp">
       <Filter>database</Filter>
-    </ClCompile>
-    <ClCompile Include="hired_merchant_packets.cpp">
-      <Filter>send_packet_creator</Filter>
     </ClCompile>
     <ClCompile Include="aes\aes_modes.c">
       <Filter>aes</Filter>
@@ -389,6 +383,9 @@
       <Filter>receive_packet_handler</Filter>
     </ClCompile>
     <ClCompile Include="pq_packets.cpp">
+      <Filter>send_packet_creator</Filter>
+    </ClCompile>
+    <ClCompile Include="player_interation_packets.cpp">
       <Filter>send_packet_creator</Filter>
     </ClCompile>
   </ItemGroup>

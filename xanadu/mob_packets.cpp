@@ -102,17 +102,6 @@ void PacketCreator::MoveMobResponse(Mob *mob, short move_id, bool use_skill, sig
 	write<signed char>(skill_level);
 }
 
-void PacketCreator::ShowBossHp(int mob_id, int hp, int max_hp, signed char color, signed char background_color)
-{
-	write<short>(send_headers::kMAP_EFFECT);
-	write<signed char>(5); // mode: 5 = boss hp, there are also others
-	write<int>(mob_id);
-	write<int>(hp);
-	write<int>(max_hp);
-	write<signed char>(color);
-	write<signed char>(background_color);
-}
-
 void PacketCreator::ShowMobHp(int mob_object_id, signed char hp_percent)
 {
 	write<short>(send_headers::kSHOW_MONSTER_HP);
