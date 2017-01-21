@@ -556,7 +556,7 @@ void PacketCreator::PlayerAttack(signed char attack_type, PlayerAttackInfo &atta
 
 	write<int>(attack.player_id_);
 	write<signed char>(attack.info_byte_);
-	write<signed char>(0x5B);
+	write<signed char>(0x5B); // player level
 	write<signed char>(attack.skill_level_);
 
 	if (attack.skill_id_ > 0)
@@ -568,7 +568,7 @@ void PacketCreator::PlayerAttack(signed char attack_type, PlayerAttackInfo &atta
 	write<signed char>(attack.direction_);
 	write<signed char>(attack.stance_);
 	write<signed char>(attack.weapon_speed_);
-	write<signed char>(10);
+	write<signed char>(10); // mastery
 	write<int>(attack.item_id_);
 
 	for (auto &it : attack.damages_)
@@ -595,6 +595,12 @@ void PacketCreator::PlayerAttack(signed char attack_type, PlayerAttackInfo &atta
 		{
 			write<int>(attack.charge_);
 		}
+	}
+
+	if (attack_type == attack_type_constants::kRanged)
+	{
+		write<short>(0); // x position - of item used?
+		write<short>(0); // y position - of item used?
 	}
 }
 
