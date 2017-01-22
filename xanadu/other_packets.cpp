@@ -720,13 +720,11 @@ void PacketCreator::writeCharacterData(Player *player)
 void PacketCreator::AddInventoryInfo(Player *player)
 {
 	write<int>(player->get_mesos());
-
 	write<signed char>(player->get_equip_slots());
 	write<signed char>(player->get_use_slots());
 	write<signed char>(player->get_setup_slots());
 	write<signed char>(player->get_etc_slots());
 	write<signed char>(player->get_cash_slots());
-
 	write<long long>(kZeroTime);
 
 	enum Constants

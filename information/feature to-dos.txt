@@ -5,6 +5,8 @@ to-do implement features:
 
 - implement guild alliances
 
+- maybe properly implement reactors (mainly: scripted reactors, reactors that drop items, boss spawn reactors)
+
 - maybe implement cashshop wishlist
 
 - maybe implement timeless equips level and exp system
