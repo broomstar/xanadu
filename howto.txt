@@ -28,7 +28,16 @@ how to set up the source:
 5. in the Data\\MySQL folder, open MySQL_x64_vs140.sln, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
 important Note: when getting compilation errors related to mysql.h file, abort compilation and replace <mysql.h> where the error is with C:\Program Files\MySQL\MySQL Server 5.7\include and compile again/re-compile it
 
-* NOTE: angelscript library is also needed, to-do describe it here, in short: get it, compile it with special settings MD and MDd
+* the angelscript library needs to be setup by downloading it, extracting it and compiling it.
+
+get it from: http://www.angelcode.com/angelscript/downloads.html
+path should be: C:\angelscript_2.31.2\ (containg sdk and deeper folders)
+go to: C:\angelscript_2.31.2\sdk\angelscript\projects\msvc2015
+open angelscript.sln
+set the option to x64 on the almost top bar in visual studio.
+set to multithreaded debug dll (debug) and mutlithreaded dll (release) in the code generation options in the project options
+then compile for debug and release
+done, my source can now be compiled and used.
 
 * open xanadu.sln and compile the source (for testing and developing: in Debug mode, for other purposes: in Release mode)
 in visual studio do the following:
