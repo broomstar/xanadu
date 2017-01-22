@@ -7,10 +7,8 @@
 #include "constants.hpp"
 #include "tools.hpp"
 
-void Player::handle_storage_reqest()
+namespace StorageReceivePacketActions
 {
-	npc_->set_state(1000);
-
 	enum
 	{
 		kTakeOutItem = 4,
@@ -19,12 +17,17 @@ void Player::handle_storage_reqest()
 		kManageMesos = 7,
 		kExit = 8
 	};
+}
+
+void Player::handle_storage_reqest()
+{
+	npc_->set_state(1000);
 
 	signed char action = read<signed char>();
 
 	switch (action)
 	{
-	case kTakeOutItem:
+	case StorageReceivePacketActions::kTakeOutItem:
 	{
 		signed char inventory_id = read<signed char>();
 
@@ -50,15 +53,14 @@ void Player::handle_storage_reqest()
 		storage_items_.erase(iter);
 
 		{
-			// packet
 			PacketCreator packet;
-			packet.TakeOutStorage(storage_slots_, inventory_id, storage_items_);
+			packet.StoreOrTakeOutStorage(false, storage_slots_, inventory_id, storage_items_);
 			send_packet(&packet);
 		}
 
 		break;
 	}
-	case kStoreItem:
+	case StorageReceivePacketActions::kStoreItem:
 	{
 		signed char item_slot = static_cast<signed char>(read<short>());
 		int item_id = read<int>();
@@ -102,9 +104,8 @@ void Player::handle_storage_reqest()
 
 		{
 			// display item in storage
-			// packet
 			PacketCreator packet;
-			packet.StoreStorage(storage_slots_, inventory_id, storage_items_);
+			packet.StoreOrTakeOutStorage(true, storage_slots_, inventory_id, storage_items_);
 			send_packet(&packet);
 		}
 
@@ -113,13 +114,13 @@ void Player::handle_storage_reqest()
 
 		break;
 	}
-	case kArrange:
+	case StorageReceivePacketActions::kArrange:
 	{
 		// to-do
 
 		break;
 	}
-	case kManageMesos:
+	case StorageReceivePacketActions::kManageMesos:
 	{
 		int meso_value = read<int>();
 
@@ -138,16 +139,16 @@ void Player::handle_storage_reqest()
 	}
 }
 
+// handler action constants
+
+constexpr signed char kFredrickHandlerActionTakeOut = 26;
+constexpr signed char kFredrickHandlerActionExit = 28;
+
 void Player::handle_merchant_storage_request()
 {
 	npc_->set_state(1000);
 
 	signed char action = read<signed char>();
-
-	// handler action constants
-
-	constexpr signed char kFredrickHandlerActionTakeOut = 26;
-	constexpr signed char kFredrickHandlerActionExit = 28;
 
 	switch (action)
 	{

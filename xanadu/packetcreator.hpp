@@ -182,8 +182,7 @@ public:
 	void GetStorage(int npc_id, signed char slots, std::vector<std::shared_ptr<Item>> items, int mesos);
 	void GetStorageFull();
 	void MesoStorage(signed char slots, int mesos);
-	void StoreStorage(signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items);
-	void TakeOutStorage(signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items);
+	void StoreOrTakeOutStorage(bool store, signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items);
 	// party
 	void PartyInfo(Party *party);
 	void PartyCreated(int party_id);

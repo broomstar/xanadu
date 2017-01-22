@@ -242,3 +242,21 @@ void Player::handle_get_player_info()
 		send_packet(&packet);
 	}
 }
+
+void Player::handle_hired_merchant_request()
+{
+	if (merchant_)
+	{
+		return;
+	}
+
+	if (!map_->can_open_store(this))
+	{
+		return;
+	}
+	{
+		PacketCreator packet;
+		packet.HiredMerchantBox();
+		send_packet(&packet);
+	}
+}

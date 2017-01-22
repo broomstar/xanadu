@@ -11,8 +11,6 @@
 #include "item_data_provider.hpp"
 #include "tools.hpp"
 
-// functions
-
 void PacketCreator::ShowNpc(Npc *npc)
 {
 	write<short>(send_headers::kSPAWN_NPC);
@@ -160,21 +158,24 @@ void PacketCreator::GetFredrickStorage(std::unordered_map<signed char, std::shar
 	write<signed char>(0);
 }
 
-/*
-possible actions are:
-9 = take out
-10/0x0A = Error: Inventory is full
-11/0x0B = Error: You do not have enough mesos
-12/0x0C = Error: Item couldn't be retrieved because it's One-Of-A-Kind and player has it already
-13/0x0D = store items
-19/0x13 = store mesos
-22/0x16 = open storage/show what's in it
-*/
+namespace storage_packet_action_constants
+{
+	enum
+	{
+		kTakeOut = 9,
+		kErrorInventoryFull = 10, // Error: Inventory is full
+		kErrorNotEnoughMesos = 11, // Error: You do not have enough mesos
+		kErrorOneOfAKind = 12, // Error: Item couldn't be retrieved because it's One-Of-A-Kind and player has it already
+		kStoreItems = 13,
+		kStoreMesos = 19,
+		kOpenStorage = 22
+	};
+}
 
 void PacketCreator::GetStorage(int npc_id, signed char slots, std::vector<std::shared_ptr<Item>> items, int mesos)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x16); // action
+	write<signed char>(storage_packet_action_constants::kOpenStorage);
 	write<int>(npc_id);
 	write<signed char>(slots);
 	write<signed char>(0x7E);
@@ -198,13 +199,13 @@ void PacketCreator::GetStorage(int npc_id, signed char slots, std::vector<std::s
 void PacketCreator::GetStorageFull()
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x0A); // action
+	write<signed char>(storage_packet_action_constants::kErrorInventoryFull);
 }
 
 void PacketCreator::MesoStorage(signed char slots, int mesos)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x13); // action
+	write<signed char>(storage_packet_action_constants::kStoreMesos);
 	write<signed char>(slots);
 	write<short>(2);
 	write<short>(0);
@@ -212,40 +213,10 @@ void PacketCreator::MesoStorage(signed char slots, int mesos)
 	write<int>(mesos);
 }
 
-void PacketCreator::StoreStorage(signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items)
+void PacketCreator::StoreOrTakeOutStorage(bool store, signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items)
 {
 	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(0x0D); // action
-	write<signed char>(slots);
-	write<short>(static_cast<short>((2 << inventory_id)));
-	write<short>(0);
-	write<int>(0);
-
-	signed char items_size = 0;
-
-	for (auto &item : items)
-	{
-		if (item->get_inventory_id() == inventory_id)
-		{
-			++items_size;
-		}
-	}
-
-	write<signed char>(items_size);
-
-	for (auto &item : items)
-	{
-		if (item->get_inventory_id() == inventory_id)
-		{
-			ItemInfo(item.get(), false);
-		}
-	}
-}
-
-void PacketCreator::TakeOutStorage(signed char slots, signed char inventory_id, std::vector<std::shared_ptr<Item>> items)
-{
-	write<short>(send_headers::kOPEN_STORAGE);
-	write<signed char>(9); // action
+	write<signed char>(store ? storage_packet_action_constants::kStoreItems : storage_packet_action_constants::kTakeOut);
 	write<signed char>(slots);
 	write<short>(static_cast<short>((2 << inventory_id)));
 	write<short>(0);

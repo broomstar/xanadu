@@ -13,24 +13,6 @@
 #include "packetcreator.hpp"
 #include "constants.hpp"
 
-void Player::handle_hired_merchant_request()
-{
-	if (merchant_)
-	{
-		return;
-	}
-
-	if (!map_->can_open_store(this))
-	{
-		return;
-	}
-	{
-		PacketCreator packet;
-		packet.HiredMerchantBox();
-		send_packet(&packet);
-	}
-}
-
 void Player::handle_item_transportation()
 {
 	signed char action = read<signed char>();
