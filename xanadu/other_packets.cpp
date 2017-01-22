@@ -51,8 +51,8 @@
 void PacketCreator::GainItem(int itemid, short amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
-	write<signed char>(0); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+	write<signed char>(0); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
+	write<signed char>(0); // mode2 for drop pickup: -1 = can't pickup, 0 = item, 1 = mesos
 	write<int>(itemid);
 	write<int>(amount);
 }
@@ -60,8 +60,8 @@ void PacketCreator::GainItem(int itemid, short amount)
 void PacketCreator::GainMesos(int amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
-	write<signed char>(1); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+	write<signed char>(0); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
+	write<signed char>(1); // mode2 for drop pickup: -1 = can't pickup, 0 = item, 1 = mesos
 	write<signed char>(0);
 	write<int>(amount);
 	write<short>(0);
@@ -75,14 +75,14 @@ void PacketCreator::GainMesos(int amount)
 void PacketCreator::CantGetAnymoreItems()
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(0); // mode: 0 = drop pickup, there are also much other types
-	write<unsigned char>(0xFF); // mode2: -1 = can't pickup, 0 = item, 1 = mesos
+	write<signed char>(0); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
+	write<unsigned char>(0xFF); // mode2 for drop pickup: -1 = can't pickup, 0 = item, 1 = mesos
 }
 
 void PacketCreator::UpdateQuestInfo(signed char mode, Quest *quest)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(1); // 1 = quest message, there are also much other types
+	write<signed char>(1); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
 	write<short>(quest->get_id());
 	write<signed char>(mode); // 0 = forfeit, 1 = update, 2 = completed
 
@@ -103,7 +103,7 @@ void PacketCreator::UpdateQuestInfo(signed char mode, Quest *quest)
 void PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(3); // 3 = increase exp, there are also much other types
+	write<signed char>(3); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
 	write<bool>(white); // white or yellow
 	write<int>(exp); // amount of exp
 	write<bool>(in_chat); // in chat or on screen
@@ -125,14 +125,14 @@ void PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus)
 void PacketCreator::FameGainChat(int amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(4); // 4 = increase fame, there are also much other types
+	write<signed char>(4); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
 	write<int>(amount);
 }
 
 void PacketCreator::MesosGainChat(int amount)
 {
 	write<short>(send_headers::kSHOW_STATUS_INFO);
-	write<signed char>(5); // 5 = increase mesos, there are also much other types
+	write<signed char>(5); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
 	write<int>(amount);
 }
 
@@ -154,14 +154,14 @@ void PacketCreator::HandleCloseChalkboard(int player_id)
 {
 	write<short>(send_headers::kCHALKBOARD);
 	write<int>(player_id);
-	write<signed char>(0);
+	write<signed char>(0); // mode: 0 = close, 1 = create
 }
 
 void PacketCreator::UseChalkBoard(int player_id, const std::string &message)
 {
 	write<short>(send_headers::kCHALKBOARD);
 	write<int>(player_id);
-	write<signed char>(1);
+	write<signed char>(1); // mode: 0 = close, 1 = create
 	write<std::string>(message);
 }
 
@@ -478,9 +478,7 @@ void PacketCreator::ShowPlayer(Player *player)
 	}
 	
 	write<signed char>(0); // berserk skill darkforce effect - 1 or 0 probably (skillid: 1320006, job: dark knight - which is an explorer and warrior)
-
 	write<signed char>(0);
-
 	write<signed char>(0); // carnival party quest team for some fields maybe?
 }
 
@@ -1272,20 +1270,20 @@ void PacketCreator::ShowOwnPetLevelUp(signed char pet_slot)
 	write<signed char>(pet_slot);
 }
 
-void PacketCreator::ShowPetLevelUp(int owner_player_id, signed char pet_slot)
-{
-	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
-	write<int>(owner_player_id);
-	write<signed char>(4);
-	write<signed char>(0);
-	write<signed char>(pet_slot);
-}
-
 void PacketCreator::ShowForeignEffect(int player_id, signed char effect)
 {
 	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
 	write<int>(player_id);
-	write<signed char>(effect); // 0 = level up, 8 = job change, others are (partially) buffs/skills?
+	write<signed char>(effect); // 0 = level up, 4 = pet level up (has custom structure), 8 = job change, others are (partially) buffs/skills?
+}
+
+void PacketCreator::ShowPetLevelUp(int owner_player_id, signed char pet_slot)
+{
+	write<short>(send_headers::kSHOW_FOREIGN_EFFECT);
+	write<int>(owner_player_id);
+	write<signed char>(4); // 0 = level up, 4 = pet level up (has custom structure), 8 = job change, others are (partially) buffs/skills?
+	write<signed char>(0);
+	write<signed char>(pet_slot);
 }
 
 void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int skill_id, signed char skill_level)
