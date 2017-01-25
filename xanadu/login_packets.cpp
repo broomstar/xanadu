@@ -43,10 +43,10 @@ void PacketCreator::ConnectToChannel(int player_id)
 	if (world->is_dedicated_server())
 	{
 		// the server ip
-		write<unsigned char>(185);
-		write<signed char>(92);
-		write<unsigned char>(223);
-		write<unsigned char>(189);
+		write<unsigned char>(0);
+		write<signed char>(0);
+		write<unsigned char>(0);
+		write<unsigned char>(0);
 	}
 	else
 	{
