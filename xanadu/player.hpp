@@ -285,6 +285,7 @@ public:
 	void handle_storage_reqest();
 	void handle_face_expression();
 	void handle_add_stat();
+	void handle_auto_ap();
 	void handle_buddy_list_action();
 	void handle_guild_action();
 	void handle_guild_bbs_action();

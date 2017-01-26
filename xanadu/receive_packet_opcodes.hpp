@@ -53,6 +53,7 @@ namespace receive_headers
 	constexpr short kUSE_RETURN_SCROLL = 0x55;
 	constexpr short kUSE_SCROLL = 0x56;
 	constexpr short kDISTRIBUTE_AP = 0x57;
+	constexpr short kDISTRIBUTE_AUTO_AP = 0x58;
 	constexpr short kREQUEST_HEAL_OVER_TIME = 0x59;
 	constexpr short kDISTRIBUTE_SP = 0x5A;
 	constexpr short kUSE_SKILL = 0x5B;

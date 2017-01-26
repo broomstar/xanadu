@@ -1,8 +1,6 @@
 
 to-do implement features:
 
-- implement auto ap
-
 - implement guild alliances
 
 - maybe properly implement reactors (mainly: scripted reactors, reactors that drop items, boss spawn reactors)

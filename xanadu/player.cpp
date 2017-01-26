@@ -394,6 +394,9 @@ void Player::handle_packet_in_game()
 		case receive_headers::kDISTRIBUTE_AP:
 			handle_add_stat();
 			break;
+		case receive_headers::kDISTRIBUTE_AUTO_AP:
+			handle_auto_ap();
+			break;
 		case receive_headers::kREQUEST_CHARACTER_INFO:
 			handle_get_player_info();
 			break;
