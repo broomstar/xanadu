@@ -128,7 +128,7 @@ void PacketCreator::ShowWorld()
 {
 	World *world = World::get_instance();
 	write<short>(send_headers_login::kSERVER_LIST);
-	write<signed char>(world->get_id()); // -1 = no worlds, >= 0 is world id
+	write<signed char>(world->get_id()); // kServerListPacketNoWorlds = no worlds, >= 0 is world id with data
 	write<std::string>(world->get_name());
 	write<signed char>(kWorld1Flag);
 	write<std::string>(kWorld1EventMessage);
@@ -137,9 +137,10 @@ void PacketCreator::ShowWorld()
 	write<signed char>(0);
 
 	// channel data
-	write<signed char>(kChannelsCount);
+	signed char channels_count = world->get_channels_count();
+	write<signed char>(channels_count);
 
-	for (signed char channel_id = 0; channel_id < kChannelsCount; ++channel_id)
+	for (signed char channel_id = 0; channel_id < channels_count; ++channel_id)
 	{
 		std::string channel_name = (world->get_name() + "-" + std::to_string(channel_id + 1));
 		write<std::string>(channel_name);
@@ -162,10 +163,12 @@ void PacketCreator::ShowWorld()
 	}*/
 }
 
+const constexpr signed char kServerListPacketNoWorlds = -1;
+
 void PacketCreator::EndWorlds()
 {
 	write<short>(send_headers_login::kSERVER_LIST);
-	write<signed char>(-1); // -1 = no worlds, >= 0 is world id
+	write<signed char>(kServerListPacketNoWorlds); // kServerListPacketNoWorlds = no worlds, >= 0 is world id with data
 }
 
 /*

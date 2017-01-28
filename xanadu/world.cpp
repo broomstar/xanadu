@@ -420,6 +420,11 @@ std::string World::get_header_message()
 
 // channels
 
+signed char World::get_channels_count()
+{
+	return static_cast<signed char>(channels_.size());
+}
+
 Channel *World::GetChannel(int id)
 {
 	if (channels_.find(id) != channels_.end())

@@ -66,6 +66,7 @@ public:
 	std::string get_header_message();
 
 	// channels
+	signed char get_channels_count();
 	Channel *GetChannel(int id);
 
 	// players
