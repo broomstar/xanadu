@@ -652,6 +652,9 @@ void Player::handle_packet_in_login()
 		case receive_headers_login::kLOGIN_BACK:
 			handle_relog_request();
 			break;
+		case receive_headers_login::kVIEW_ALL_CHARACTERS:
+			handle_view_all_characters();
+			break;
 		}
 	}
 	catch (Poco::Exception/* &e*/)

@@ -7,6 +7,8 @@ namespace send_headers_login
 	constexpr short kLoginStatus = 0x00;
 	constexpr short kSERVER_STATUS = 0x03;
 	constexpr short kPIN_CHECK_OPERATION = 0x06;
+	constexpr short kVIEW_ALL_CHAR = 0x08;
+	constexpr short kSELECT_CHARACTER_BY_VAC = 0x09;
 	constexpr short kSERVER_LIST = 0x0a;
 	constexpr short kCHARACTER_LIST = 0x0b;
 	constexpr short kSERVER_IP = 0x0c;

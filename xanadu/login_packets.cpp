@@ -110,6 +110,39 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 }
 
 /*
+values for success_or_failure_reason:
+same as for LoginRequest
+*/
+void PacketCreator::GetViewAllCharactersLoginError(signed char success_or_failure_reason)
+{
+	write<short>(send_headers_login::kSELECT_CHARACTER_BY_VAC);
+	write<signed char>(success_or_failure_reason);
+	write<signed char>(0);
+}
+
+void PacketCreator::ShowAllCharacter(int chars, int unk)
+{
+	write<short>(send_headers_login::kVIEW_ALL_CHAR);
+	write<signed char>(1); // mode: 0 = view info, 1 = set chars amount
+	write<int>(chars);
+	write<int>(unk);
+}
+
+void PacketCreator::ShowAllCharacterInfo(int world_id, std::unordered_map<int, Character *> *characters)
+{
+	write<short>(send_headers_login::kVIEW_ALL_CHAR);
+	write<signed char>(0); // mode: 0 = view info, 1 = set chars amount
+	write<signed char>(world_id);
+	write<unsigned char>(static_cast<unsigned char>(characters->size()));
+
+	for (auto &it : *characters)
+	{
+		Character *character = it.second;
+		ShowCharacter(character, true);
+	}
+}
+
+/*
 * mode values:
 * 0 - PIN was accepted
 * 1 - Register a new PIN
@@ -296,12 +329,15 @@ void PacketCreator::AddCharLook(Character *character, bool megaphone)
 	write<int>(0); // pet 3 itemid
 }
 
-void PacketCreator::ShowCharacter(Character *character)
+void PacketCreator::ShowCharacter(Character *character, bool view_all)
 {
 	AddCharStats(character);
 	AddCharLook(character);
 
-	write<signed char>(0); // ? written only if not viewall?
+	if (!view_all)
+	{
+		write<signed char>(0);
+	}
 
 	// rankings
 
@@ -330,12 +366,12 @@ void PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *charact
 {
 	write<short>(send_headers_login::kCHARACTER_LIST);
 	write<signed char>(0); // success or error value
-	write<signed char>(static_cast<unsigned char>(characters->size()));
+	write<unsigned char>(static_cast<unsigned char>(characters->size()));
 
 	for (auto &it : *characters)
 	{
 		Character *character = it.second;
-		ShowCharacter(character);
+		ShowCharacter(character, false);
 	}
 
 	write<signed char>(1); // PIC modes: 0 = Register PIC | 1 = Ask for PIC | 2 = Disable PIC
@@ -359,7 +395,7 @@ void PacketCreator::AddCharacter(Character *character)
 {
 	write<short>(send_headers_login::kCREATE_NEW_CHARACTER);
 	write<signed char>(0); // success or error value
-	ShowCharacter(character);
+	ShowCharacter(character, false);
 }
 
 // success or error value:

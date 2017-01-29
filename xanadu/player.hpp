@@ -248,6 +248,9 @@ public:
 	void handle_packet_in_mts();
 	void handle_packet_in_game();
 	void handle_packet_in_login();
+
+	// login
+
 	void handle_login_request();
 	void handle_pin_operation();
 	void handle_channel_selection();
@@ -258,6 +261,10 @@ public:
 	void handle_create_character();
 	void handle_delete_character();
 	void handle_relog_request();
+	void handle_view_all_characters();
+
+	// others
+
 	void handle_hp_mp_recovering();
 	void handle_key_map_changes();
 	void handle_summon_movement();

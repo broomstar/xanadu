@@ -213,6 +213,24 @@ void Player::handle_relog_request()
 	}
 }
 
+void Player::handle_view_all_characters()
+{
+	short chars_num = static_cast<short>(characters_.size());
+	int unk = chars_num + 3 - chars_num % 3;
+	{
+		PacketCreator packet;
+		packet.ShowAllCharacter(chars_num, unk);
+		send_packet(&packet);
+	}
+	World *world = World::get_instance();
+	int world_id = world->get_id();
+	{
+		PacketCreator packet;
+		packet.ShowAllCharacterInfo(world_id, &characters_);
+		send_packet(&packet);
+	}
+}
+
 void Player::handle_connect_game()
 {
 	std::string pic = read<std::string>();

@@ -15,8 +15,6 @@ to-do implement features:
 NOTES:
 need to work out the details of these features first
 
-- maybe implement view all characters on login
-
 - maybe implement pet food
 
 - maybe implement pet fullness
