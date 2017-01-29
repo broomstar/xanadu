@@ -18,6 +18,7 @@ namespace receive_headers_login
 	constexpr short kDELETE_CHARACTER = 0x17;
 	constexpr short kLOGIN_BACK = 0x1C;
 	constexpr short kSELECT_CHARACTER_WITH_PIC = 0x1E;
+	constexpr short kSELECT_CHARACTER_WITH_PIC_VAC = 0x20;
 }
 
 namespace receive_headers

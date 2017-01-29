@@ -141,8 +141,6 @@ buglist
 
 -------------------- other --------------------
 
-- logging in trough view all characters doesn't work (view all characters itself works in therms of displaying all characters)
-
 - improve angelscript related code (maybe save bytecode, maybe do other caching, and more)
 
 - to-do maybe use multiple worker threads for asynchronous operations (requires code to be correct for multithreading, for example by using locks and atoms and designing it that way)

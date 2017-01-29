@@ -257,6 +257,7 @@ public:
 	void handle_world_selection();
 	void handle_world_list_request();
 	void handle_connect_game();
+	void handle_connect_game_vac();
 	void handle_character_creation_name_check();
 	void handle_create_character();
 	void handle_delete_character();

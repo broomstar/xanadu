@@ -243,6 +243,29 @@ void Player::handle_connect_game()
 	}
 }
 
+void Player::handle_connect_game_vac()
+{
+	std::string pic = read<std::string>();
+	int player_id = read<int>();
+	int world_id = read<int>();
+
+	channel_id_ = 0; // set channel id as the lowest possible, they start as 0, as on view all characters they player does not choose a channel himself
+
+	// temporary store the userid combined with the channel id
+	// this workaround is needed, as there are no split servers
+	// loginserver(s), worldserver(s) and channelservers
+	// so when logging into the character, by temporary storing
+	// this info, it will know which channel was choosen
+	World *world = World::get_instance();
+	world->store_channel_id_for_user_id(channel_id_, user_id_);
+
+	{
+		PacketCreator packet;
+		packet.ConnectToChannel(player_id);
+		send_packet(&packet);
+	}
+}
+
 void Player::handle_character_creation_name_check()
 {
 	std::string name = read<std::string>();

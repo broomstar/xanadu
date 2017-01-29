@@ -637,6 +637,9 @@ void Player::handle_packet_in_login()
 		case receive_headers_login::kSELECT_CHARACTER_WITH_PIC:
 			handle_connect_game();
 			break;
+		case receive_headers_login::kSELECT_CHARACTER_WITH_PIC_VAC:
+			handle_connect_game_vac();
+			break;
 		case receive_headers_login::kPLAYER_LOGGEDIN:
 			player_connect();
 			break;
