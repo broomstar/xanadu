@@ -284,3 +284,8 @@ void Player::handle_guild_bbs_action()
 	}
 	}
 }
+
+void Player::handle_guild_alliance_action()
+{
+
+}

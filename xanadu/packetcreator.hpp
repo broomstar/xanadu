@@ -117,6 +117,7 @@ public:
 	void GuildMemberData(GuildMember *member);
 	void CreateGuild();
 	void GuildInfo(Guild *guild);
+	void GetGuildInfo(Guild *guild);
 	void AddGuildPlayer(int guild_id, GuildMember *member);
 	void InviteGuild(Player *inviter);
 	void GuildPlayerLeave(int guild_id, int char_id, std::string char_name, bool expelled = false);
@@ -127,9 +128,16 @@ public:
 	void UpdateGuildRanks(Guild *guild);
 	void UpdateGuildNotice(Guild *guild);
 	void GuildMemberOnline(int guild_id, int character_id, bool online = true);
+	// guild bbs
 	void guild_bbs_add_thread();
 	void guild_bbs_thread_list(int start);
 	void guild_bbs_show_thread(int local_thread_id);
+	// guild alliances
+	void GuildAllianceMemberOnline(Player *player, bool online);
+	void GuildAllianceNotice(int id, std::string notice);
+	void ChangeAllianceRankTitle(int alliance, std::vector<std::string> ranks);
+	void UpdateAllianceJobLevel(Player *player);
+	void DisbandAlliance(int alliance);
 	// inventory
 	void UpdateSlot(std::shared_ptr<Item> item);
 	void MoveItem(signed char inventory_id, short source_slot, short destination_slot);

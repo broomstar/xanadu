@@ -565,6 +565,9 @@ void Player::handle_packet_in_game()
 		case receive_headers::kGUILD_BBS_OPERATION:
 			handle_guild_bbs_action();
 			break;
+		case receive_headers::kGUILD_ALLIANCE_OPERATION:
+			handle_guild_alliance_action();
+			break;
 		case receive_headers::kENTER_CASHSHOP:
 			handle_cash_shop_enter();
 			break;

@@ -37,6 +37,7 @@ namespace send_headers
 	constexpr short kPARTY_OPERATION = 0x3E;
 	constexpr short kBUDDY_LIST = 0x3F;
 	constexpr short kGUILD_OPERATION = 0x41;
+	constexpr short kGUILD_ALLIANCE_OPERATION = 0x42;
 	constexpr short kSPAWN_PORTAL = 0x43;
 	constexpr short kSERVERMESSAGE = 0x44;
 	constexpr short kSHOW_AVATAR_MEGA = 0x6F;

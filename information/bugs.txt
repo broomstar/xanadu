@@ -111,7 +111,7 @@ buglist
 
 - guild bbs needs to be fully implemented (need to check and fix sql tables draft, add bbs class, use it, make handlers and packets finished, then code mysql data saving and data loading)
 
-- guild allainces need to be implemented
+- guild alliances need to be fully implemented
 
 - when a player joins/creates or leaves/disbands a guild, the guild name isn't shown/removed to other players in the map
 

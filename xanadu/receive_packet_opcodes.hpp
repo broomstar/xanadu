@@ -85,6 +85,7 @@ namespace receive_headers
 	constexpr short kSUMMON_DAMAGE = 0xB1;
 	constexpr short kUSE_DOOR = 0x85;
 	constexpr short kCHANGE_KEYMAP = 0x87;
+	constexpr short kGUILD_ALLIANCE_OPERATION = 0x98;
 	constexpr short kGUILD_BBS_OPERATION = 0x9B;
 	constexpr short kENTER_MTS = 0x9C;
 	constexpr short kMOVE_LIFE = 0xBC;

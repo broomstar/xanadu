@@ -35,14 +35,17 @@ void PacketCreator::GuildInfo(Guild *guild)
 {
 	write<short>(send_headers::kGUILD_OPERATION);
 	write<signed char>(GuildSendPacketActions::kInfo);
-
 	bool valid_guild = (guild ? true : false);
 	write<bool>(valid_guild);
 	if (!valid_guild)
 	{
 		return;
 	}
+	GetGuildInfo(guild);
+}
 
+void PacketCreator::GetGuildInfo(Guild *guild)
+{
 	write<int>(guild->get_id());
 	write<std::string>(guild->get_name());
 	write<std::string>(guild->GetRank1());
@@ -50,7 +53,6 @@ void PacketCreator::GuildInfo(Guild *guild)
 	write<std::string>(guild->GetRank3());
 	write<std::string>(guild->GetRank4());
 	write<std::string>(guild->GetRank5());
-
 	{
 		// guild member data
 		auto members = guild->get_members();
@@ -66,7 +68,6 @@ void PacketCreator::GuildInfo(Guild *guild)
 			GuildMemberData(it.second.get());
 		}
 	}
-
 	write<int>(guild->get_capacity());
 	write<short>(guild->get_logo_background());
 	write<signed char>(guild->get_logo_background_color());
@@ -159,6 +160,8 @@ void PacketCreator::GuildMemberOnline(int guild_id, int player_id, bool online)
 	write<bool>(online);
 }
 
+// start of guild bbs
+
 void PacketCreator::guild_bbs_add_thread()
 {
 	write<int>(0); // local_thread_id
@@ -185,7 +188,6 @@ void PacketCreator::guild_bbs_thread_list(int start)
 	}
 
 	int thread_count = 0; // get it from sql or from cache
-
 	int local_thread_id = 0;
 	bool has_notice = (local_thread_id == 0);
 	write<bool>(has_notice);
@@ -241,4 +243,151 @@ void PacketCreator::guild_bbs_show_thread(int local_thread_id)
 		write<long long>(0); // timestamp // mplew.writeLong(getKoreanTimestamp(repliesRS.getLong("timestamp")));
 		write<std::string>(""); // content
 	}
+}
+
+// start of guild alliance
+
+/*
+public static byte[] getAllianceInfo(MapleAlliance alliance)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	mplew.write(0x0C); // action
+	mplew.write(1);
+	mplew.writeInt(alliance.getId());
+	mplew.writeMapleAsciiString(alliance.getName());
+	for (int i = 1; i <= 5; i++)
+	{
+		mplew.writeMapleAsciiString(alliance.getRankTitle(i));
+	}
+	mplew.write(alliance.getGuilds().size());
+	mplew.writeInt(2); // probably capacity
+	for (Integer guild : alliance.getGuilds())
+	{
+		mplew.writeInt(guild);
+	}
+	mplew.writeMapleAsciiString(alliance.getNotice());
+}
+
+public static byte[] makeNewAlliance(MapleAlliance alliance, MapleClient c)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	mplew.write(0x0F); // action
+	mplew.writeInt(alliance.getId());
+	mplew.writeMapleAsciiString(alliance.getName());
+	for (int i = 1; i <= 5; i++)
+	{
+		mplew.writeMapleAsciiString(alliance.getRankTitle(i));
+	}
+	mplew.write(alliance.getGuilds().size());
+	for (Integer guild : alliance.getGuilds())
+	{
+		mplew.writeInt(guild);
+	}
+	mplew.writeInt(2); // probably capacity
+	mplew.writeShort(0);
+	for (Integer guildd : alliance.getGuilds())
+	{
+		getGuildInfo(mplew, Server.getInstance().getGuild(guildd, c.getPlayer().getMGC()));
+	}
+}
+
+public static byte[] getGuildAlliances(MapleAlliance alliance, MapleClient c)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	mplew.write(0x0D); // action
+	mplew.writeInt(alliance.getGuilds().size());
+	for (Integer guild : alliance.getGuilds())
+	{
+		getGuildInfo(mplew, Server.getInstance().getGuild(guild, null));
+	}
+}
+
+public static byte[] addGuildToAlliance(MapleAlliance alliance, int newGuild, MapleClient c)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	mplew.write(0x12); // action
+	mplew.writeInt(alliance.getId());
+	mplew.writeMapleAsciiString(alliance.getName());
+	for (int i = 1; i <= 5; i++)
+	{
+		mplew.writeMapleAsciiString(alliance.getRankTitle(i));
+	}
+	mplew.write(alliance.getGuilds().size());
+	for (Integer guild : alliance.getGuilds())
+	{
+		mplew.writeInt(guild);
+	}
+	mplew.writeInt(2);
+	mplew.writeMapleAsciiString(alliance.getNotice());
+	mplew.writeInt(newGuild);
+	getGuildInfo(mplew, Server.getInstance().getGuild(newGuild, null));
+}*/
+
+void PacketCreator::GuildAllianceMemberOnline(Player *player, bool online)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	write<signed char>(0x0E); // action
+	write<int>(player->get_guild()->get_alliance_id());
+	write<int>(player->get_guild()->get_id());
+	write<int>(player->get_id());
+	write<bool>(online);
+}
+
+void PacketCreator::GuildAllianceNotice(int id, std::string notice)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	write<signed char>(0x1C); // action
+	write<int>(id);
+	write<std::string>(notice);
+}
+
+void PacketCreator::ChangeAllianceRankTitle(int alliance, std::vector<std::string> ranks)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	write<signed char>(0x1A); // action
+	write<int>(alliance);
+	for (auto it : ranks)
+	{
+		write<std::string>(it);
+	}
+}
+
+void PacketCreator::UpdateAllianceJobLevel(Player *player)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	write<signed char>(0x18); // action
+	write<int>(player->get_guild()->get_alliance_id());
+	write<int>(player->get_guild()->get_id());
+	write<int>(player->get_id());
+	write<int>(player->get_level());
+	write<int>(player->get_job());
+}
+
+/*public static byte[] removeGuildFromAlliance(MapleAlliance alliance, int expelledGuild, MapleClient c)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	mplew.write(0x10); // action
+	mplew.writeInt(alliance.getId());
+	mplew.writeMapleAsciiString(alliance.getName());
+	for (int i = 1; i <= 5; i++)
+	{
+		mplew.writeMapleAsciiString(alliance.getRankTitle(i));
+	}
+	mplew.write(alliance.getGuilds().size());
+	for (Integer guild : alliance.getGuilds())
+	{
+		mplew.writeInt(guild);
+	}
+	mplew.writeInt(2);
+	mplew.writeMapleAsciiString(alliance.getNotice());
+	mplew.writeInt(expelledGuild);
+	getGuildInfo(mplew, Server.getInstance().getGuild(expelledGuild, null));
+	mplew.write(0x01);
+}*/
+
+void PacketCreator::DisbandAlliance(int alliance)
+{
+	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
+	write<signed char>(0x1D); // action
+	write<int>(alliance);
 }
