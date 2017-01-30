@@ -11,7 +11,6 @@
 void Player::handle_guild_action()
 {
 	signed char action = read<signed char>();
-
 	switch (action)
 	{
 	case 2: // Create a guild
@@ -193,7 +192,6 @@ void Player::handle_guild_bbs_action()
 {
 	signed char action = read<signed char>();
 	int local_thread_id = 0;
-
 	enum actions
 	{
 		kCreateOrEditThread,
@@ -203,7 +201,6 @@ void Player::handle_guild_bbs_action()
 		kReply,
 		kDeleteReply
 	};
-
 	switch (action)
 	{
 	case kCreateOrEditThread:
@@ -287,5 +284,56 @@ void Player::handle_guild_bbs_action()
 
 void Player::handle_guild_alliance_action()
 {
-
+	signed char action = read<signed char>();
+	enum actions
+	{
+		kUnk = 1,
+		kLeaveAlliance = 2,
+		kInviteGuild = 3,
+		kUnkk = 4,
+		kExpelGuild = 6,
+		kChangeAllianceLeader = 7,
+		kUnkkk = 8,
+		kUnkkkk = 9,
+		kUnkkkkk = 10
+	};
+	switch (action)
+	{
+	case kUnk:
+	{
+		break;
+	}
+	case kLeaveAlliance:
+	{
+		break;
+	}
+	case kInviteGuild:
+	{
+		break;
+	}
+	case kUnkk:
+	{
+		break;
+	}
+	case kExpelGuild:
+	{
+		break;
+	}
+	case kChangeAllianceLeader:
+	{
+		break;
+	}
+	case kUnkkk:
+	{
+		break;
+	}
+	case kUnkkkk:
+	{
+		break;
+	}
+	case kUnkkkkk:
+	{
+		break;
+	}
+	}
 }
