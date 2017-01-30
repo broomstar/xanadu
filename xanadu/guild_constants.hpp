@@ -24,3 +24,17 @@ namespace GuildBBSSendPacketActions
 	constexpr signed char kShowThreads = 6;
 	constexpr signed char kShowThread = 7;
 }
+
+namespace GuildAllianceSendPacketActions
+{
+	constexpr signed char kGetInfo = 12;
+	constexpr signed char kGetAlliances = 13;
+	constexpr signed char kAllianceGuildMemberOnline = 14;
+	constexpr signed char kMakeAlliance = 15;
+	constexpr signed char kRemoveGuildFromAlliance = 16;
+	constexpr signed char kAddGuildToAlliance = 18;
+	constexpr signed char kUpdateAllianceJobLevel = 24;
+	constexpr signed char kChangeAllianceRankTitle = 26;
+	constexpr signed char kGuildAllianceNotice = 28;
+	constexpr signed char kDisbandAlliance = 29;
+}

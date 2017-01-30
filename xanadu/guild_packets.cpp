@@ -247,7 +247,7 @@ void PacketCreator::guild_bbs_show_thread(int local_thread_id)
 void PacketCreator::GetAllianceInfo(/*MapleAlliance alliance*/)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x0C); // action
+	write<signed char>(GuildAllianceSendPacketActions::kGetInfo);
 	write<signed char>(1);
 	/*mplew.writeInt(alliance.getId());
 	mplew.writeMapleAsciiString(alliance.getName());
@@ -267,7 +267,7 @@ void PacketCreator::GetAllianceInfo(/*MapleAlliance alliance*/)
 void PacketCreator::MakeNewAlliance(/*MapleAlliance alliance, */Player *player)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x0F); // action
+	write<signed char>(GuildAllianceSendPacketActions::kMakeAlliance);
 	/*mplew.writeInt(alliance.getId());
 	mplew.writeMapleAsciiString(alliance.getName());
 	for (int i = 1; i <= 5; i++)
@@ -290,7 +290,7 @@ void PacketCreator::MakeNewAlliance(/*MapleAlliance alliance, */Player *player)
 void PacketCreator::GetGuildAlliances(/*MapleAlliance alliance, */Player *player)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x0D); // action
+	write<signed char>(GuildAllianceSendPacketActions::kGetAlliances);
 	/*write<int>(alliance.getGuilds().size());
 	for (Integer guild : alliance.getGuilds())
 	{
@@ -301,7 +301,7 @@ void PacketCreator::GetGuildAlliances(/*MapleAlliance alliance, */Player *player
 void PacketCreator::AddGuildToAlliance(/*MapleAlliance alliance, */int new_guild, Player *player)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x12); // action
+	write<signed char>(GuildAllianceSendPacketActions::kAddGuildToAlliance);
 	/*mplew.writeInt(alliance.getId());
 	mplew.writeMapleAsciiString(alliance.getName());
 	for (int i = 1; i <= 5; i++)
@@ -322,7 +322,7 @@ void PacketCreator::AddGuildToAlliance(/*MapleAlliance alliance, */int new_guild
 void PacketCreator::GuildAllianceMemberOnline(Player *player, bool online)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x0E); // action
+	write<signed char>(GuildAllianceSendPacketActions::kAllianceGuildMemberOnline);
 	write<int>(player->get_guild()->get_alliance_id());
 	write<int>(player->get_guild()->get_id());
 	write<int>(player->get_id());
@@ -332,7 +332,7 @@ void PacketCreator::GuildAllianceMemberOnline(Player *player, bool online)
 void PacketCreator::GuildAllianceNotice(int id, std::string notice)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x1C); // action
+	write<signed char>(GuildAllianceSendPacketActions::kGuildAllianceNotice);
 	write<int>(id);
 	write<std::string>(notice);
 }
@@ -340,7 +340,7 @@ void PacketCreator::GuildAllianceNotice(int id, std::string notice)
 void PacketCreator::ChangeAllianceRankTitle(int alliance, std::vector<std::string> ranks)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x1A); // action
+	write<signed char>(GuildAllianceSendPacketActions::kChangeAllianceRankTitle);
 	write<int>(alliance);
 	for (auto it : ranks)
 	{
@@ -351,7 +351,7 @@ void PacketCreator::ChangeAllianceRankTitle(int alliance, std::vector<std::strin
 void PacketCreator::UpdateAllianceJobLevel(Player *player)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x18); // action
+	write<signed char>(GuildAllianceSendPacketActions::kUpdateAllianceJobLevel);
 	write<int>(player->get_guild()->get_alliance_id());
 	write<int>(player->get_guild()->get_id());
 	write<int>(player->get_id());
@@ -362,7 +362,7 @@ void PacketCreator::UpdateAllianceJobLevel(Player *player)
 void PacketCreator::RemoveGuildFromAlliance(/*MapleAlliance alliance, */int expelled_guild, Player *player)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x10); // action
+	write<signed char>(GuildAllianceSendPacketActions::kRemoveGuildFromAlliance);
 	/*write<int>(alliance.getId());
 	mplew.writeMapleAsciiString(alliance.getName());
 	for (int i = 1; i <= 5; i++)
@@ -384,6 +384,6 @@ void PacketCreator::RemoveGuildFromAlliance(/*MapleAlliance alliance, */int expe
 void PacketCreator::DisbandAlliance(int alliance)
 {
 	write<short>(send_headers::kGUILD_ALLIANCE_OPERATION);
-	write<signed char>(0x1D); // action
+	write<signed char>(GuildAllianceSendPacketActions::kDisbandAlliance);
 	write<int>(alliance);
 }
