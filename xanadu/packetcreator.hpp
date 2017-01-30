@@ -133,10 +133,15 @@ public:
 	void guild_bbs_thread_list(int start);
 	void guild_bbs_show_thread(int local_thread_id);
 	// guild alliances
+	void GetAllianceInfo(/*MapleAlliance alliance*/);
+	void MakeNewAlliance(/*MapleAlliance alliance, */Player *player);
+	void GetGuildAlliances(/*MapleAlliance alliance, */Player *player);
+	void AddGuildToAlliance(/*MapleAlliance alliance, */int new_guild, Player *player);
 	void GuildAllianceMemberOnline(Player *player, bool online);
 	void GuildAllianceNotice(int id, std::string notice);
 	void ChangeAllianceRankTitle(int alliance, std::vector<std::string> ranks);
 	void UpdateAllianceJobLevel(Player *player);
+	void RemoveGuildFromAlliance(/*MapleAlliance alliance, */int expelled_guild, Player *player);
 	void DisbandAlliance(int alliance);
 	// inventory
 	void UpdateSlot(std::shared_ptr<Item> item);
