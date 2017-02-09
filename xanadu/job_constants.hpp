@@ -47,14 +47,43 @@ namespace job_ids
 	constexpr short kOutlaw = 521;
 	constexpr short kCorsair = 522;
 	constexpr short kGm = 900;
+	constexpr short kNoblesse = 1000;
+	constexpr short kDawnWarrior1 = 1100;
+	constexpr short kDawnWarrior2 = 1110;
+	constexpr short kDawnWarrior3 = 1111;
+	constexpr short kDawnWarrior4 = 1112;
+	constexpr short kBlazeWizard1 = 1200;
+	constexpr short kBlazeWizard2 = 1210;
+	constexpr short kBlazeWizard3 = 1211;
+	constexpr short kBlazeWizard4 = 1212;
+	constexpr short kWindArcher1 = 1300;
+	constexpr short kWindArcher2 = 1310;
+	constexpr short kWindArcher3 = 1311;
+	constexpr short kWindArcher4 = 1312;
+	constexpr short kNightWalker1 = 1400;
+	constexpr short kNightWalker2 = 1410;
+	constexpr short kNightWalker3 = 1411;
+	constexpr short kNightWalker4 = 1412;
+	constexpr short kThunderBreaker1 = 1500;
+	constexpr short kThunderBreaker2 = 1510;
+	constexpr short kThunderBreaker3 = 1511;
+	constexpr short kThunderBreaker4 = 1512;
+	constexpr short kLegend = 2000;
+	constexpr short kAran1 = 2100;
+	constexpr short kAran2 = 2110;
+	constexpr short kAran3 = 2111;
+	constexpr short kAran4 = 2112;
 }
 
 inline bool is_beginner_job(short job_id)
 {
-	if (job_id == job_ids::kBeginner)
+	switch (job_id)
 	{
+	case job_ids::kBeginner:
+	case job_ids::kNoblesse:
+	case job_ids::kLegend:
 		return true;
+	default:
+		return false;
 	}
-
-	return false;
 }

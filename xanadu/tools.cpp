@@ -42,30 +42,30 @@ namespace tools
 
 	// skill related functions
 
-	bool is_monster_riding(int item_id)
+	bool is_monster_riding(int skill_id)
 	{
-		return (item_id == 1004);
+		return (skill_id == 1004);
 	}
 
 	bool skill_id_is_summon(int skill_id)
 	{
 		switch (skill_id)
 		{
-		case 3111002:
-		case 3211002:
-		case 3120012:
-		case 3220012:
-		case 1321007:
-		case 2121005:
-		case 2221005:
-		case 2321003:
-		case 3101007:
-		case 3201007:
-		case 3111005:
-		case 3211005:
-		case 4111007:
-		case 4211007:
-			// Ranger Puppet, Sniper Puppet, Bowmaster Elite Puppet, Marksman Elite Puppet, Beholden, Ifrit, Elquines, Bahamut, Silver Hawk, Golden Eagle, Eagle Eye, Frostprey, Dark Flare, Dark Flare
+		case 3111002: // Ranger Puppet
+		case 3211002: // Sniper Puppet
+		case 3120012: // Bowmaster Elite Puppet
+		case 3220012: // Marksman Elite Puppet
+		case 13111004: // Wind Archer Puppet
+		case 1321007: // Beholden
+		case 2121005: // Ifrit
+		case 2221005: // Elquines
+		case 2321003: // Bahamut
+		case 3101007: // Silver Hawk
+		case 3201007: // Golden Eagle
+		case 3111005: // Eagle Eye
+		case 3211005: // Frostprey
+		case 4111007: // Dark Flare
+		case 4211007: // Dark Flare
 			return true;
 		default:
 			return false;
@@ -76,10 +76,11 @@ namespace tools
 	{
 		switch (skill_id)
 		{
-		case 3111002:
-		case 3211002:
-		case 3120012:
-		case 3220012: // Ranger Puppet, Sniper Puppet, Bowmaster Elite Puppet, Marksman Elite Puppet
+		case 3111002:  // Ranger Puppet
+		case 3211002:  // Sniper Puppet
+		case 3120012:  // Bowmaster Elite Puppet
+		case 3220012:  // Marksman Elite Puppet
+		case 13111004: // Wind Archer Puppet
 			return true;
 		default:
 			return false;
@@ -90,12 +91,11 @@ namespace tools
 	{
 		switch (skill_id)
 		{
-		case 2321001:
-		case 2111002:
-		case 3121004:
-		case 3221001:
-		case 5221004:
-			// Big Bang, Explosion, Hurricane, Piercing Arrow, Rapid Fire
+		case 2321001: // Big Bang
+		case 2111002: // Explosion
+		case 3121004: // Hurricane
+		case 3221001: // Piercing Arrow
+		case 5221004: // Rapid Fire
 			return true;
 		default:
 			return false;

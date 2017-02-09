@@ -35,6 +35,7 @@ signed char summon_get_movement_type(int skill_id)
 	case 4341006: // Mirrored Target (Blade Master)
 	case 4111007: // Dark Flare
 	case 4211007: // Dark Flare
+	case 13111004: // Puppet (Wind Archer)
 		return kNoMovement;
 	case 2311006: // Summon Dragon
 	case 3111005: // Silver Hawk

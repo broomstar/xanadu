@@ -297,13 +297,13 @@ void Player::handle_create_character()
 	switch (job)
 	{
 	case 0:
-		job_id = 1000;
+		job_id = job_ids::kNoblesse;
 		break;
 	case 1:
 		job_id = job_ids::kBeginner;
 		break;
 	case 2:
-		job_id = 2000;
+		job_id = job_ids::kLegend;
 		break;
 	default:
 		return;
