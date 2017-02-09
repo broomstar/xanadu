@@ -246,6 +246,7 @@ public:
 	void RemoveDoor(int object_id, bool town);
 	void SpawnMist(int object_id, int owner_character_id, int skill_id, int mist_position_x, int mist_position_y, int mist_position_width, int mist_position_height, int skill_level);
 	void RemoveMist(int object_id);
+	void ShowAranCombo(int count);
 	// hired Merchant
 	void HiredMerchantBox();
 	void GetHiredMerchant(Player *player, std::shared_ptr<HiredMerchant> merchant, bool first_time);

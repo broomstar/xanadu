@@ -76,6 +76,7 @@ namespace receive_headers
 	constexpr short kGUILD_OPERATION = 0x7E;
 	constexpr short kGUILD_DENIE = 0x7F;
 	constexpr short kBUDDY_LIST = 0x82;
+	constexpr short kARAN_COMBO = 0xA3;
 	constexpr short kMOVE_PET = 0xA7;
 	constexpr short kPET_CHAT = 0xA8;
 	constexpr short kPET_COMMAND = 0xA9;

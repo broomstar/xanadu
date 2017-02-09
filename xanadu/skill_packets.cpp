@@ -130,3 +130,9 @@ void PacketCreator::RemoveMist(int object_id)
 	write<short>(send_headers::kREMOVE_MIST);
 	write<int>(object_id);
 }
+
+void PacketCreator::ShowAranCombo(int count)
+{
+	write<short>(send_headers::kARAN_COMBO_COUNTER);
+	write<int>(count);
+}

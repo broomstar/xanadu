@@ -46,6 +46,7 @@ void Player::handle_use_attack(signed char attack_type)
 	case 2321001: // Big Bang
 	case 5201002: // Grenade
 	case 5101004: // Corkscrew Blow
+	case 21120006: // Combo Tempest
 		attack.charge_ = read<int>();
 		break;
 	}
@@ -215,6 +216,22 @@ void Player::handle_use_attack(signed char attack_type)
 				inventory->remove_item_by_slot(static_cast<signed char>(star_slot), hits);
 			}
 		}
+	}
+
+	switch (attack.skill_id_)
+	{
+	case 21120007: // Combo Barrier
+	case 21100005: // Combo Drain
+	case 21120006: // Combo Tempest
+	{
+		aran_combo_value_ = 0;
+		{
+			PacketCreator packet;
+			packet.ShowAranCombo(aran_combo_value_);
+			send_packet(&packet);
+		}
+		break;
+	}
 	}
 
 	// handle energy charge

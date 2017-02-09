@@ -81,6 +81,7 @@ namespace send_headers
 	constexpr short kCANCEL_CHAIR = 0xCD;
 	constexpr short kSHOW_ITEM_GAIN_INCHAT = 0xCE;
 	constexpr short kUPDATE_QUEST_INFO = 0xD3;
+	constexpr short kARAN_COMBO_COUNTER = 0xE1;
 	constexpr short kCOOLDOWN = 0xEA;
 	constexpr short kSPAWN_MONSTER = 0xEC;
 	constexpr short kKILL_MONSTER = 0xED;

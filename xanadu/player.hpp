@@ -331,6 +331,7 @@ public:
 	void handle_hit_reactor();
 	void handle_enter_mts();
 	void handle_leave_mts();
+	void handle_add_aran_combo();
 	void movement_handler(short &position_x, short &position_y, short &foothold, signed char &stance);
 
 	// packet reading
@@ -447,6 +448,8 @@ private:
 	int merchant_storage_mesos_;
 	int trade_mesos;
 	int mesos_;
+	int aran_combo_value_;
+	unsigned long long last_aran_combo_ticks_;
 	unsigned long long last_gm_call_ticks_;
 	Map *map_;
 	ShopData *shop_;

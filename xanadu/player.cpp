@@ -75,6 +75,7 @@ Player::Player(Session *session) :
 	in_cash_shop_(false),
 	in_mts_(false),
 	in_game_(false),
+	aran_combo_value_(0),
 	last_gm_call_ticks_(0),
 	npc_(new PlayerNpc()),
 	mount_skill_id_(0),
@@ -579,6 +580,9 @@ void Player::handle_packet_in_game()
 			break;
 		case receive_headers::kENTER_MTS:
 			handle_enter_mts();
+			break;
+		case receive_headers::kARAN_COMBO:
+			handle_add_aran_combo();
 			break;
 		}
 	}
@@ -2661,6 +2665,23 @@ void Player::save()
 	save_merchant_storage_equips();
 	save_merchant_storage_items();
 }
+
+void Player::handle_add_aran_combo()
+{
+	unsigned long long ticks = GetTickCount64();
+	if ((ticks - last_aran_combo_ticks_) > 3500)
+	{
+		aran_combo_value_ = 0;
+	}
+	last_aran_combo_ticks_ = ticks;
+	++aran_combo_value_;
+	{
+		PacketCreator packet;
+		packet.ShowAranCombo(aran_combo_value_);
+		send_packet(&packet);
+	}
+}
+
 
 void Player::hide()
 {
