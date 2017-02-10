@@ -70,7 +70,7 @@ Effect *Effect::get_skill_effect(int id, signed char level)
 	return eb;
 }
 
-Effect::Effect(int id, ItemData *data):
+Effect::Effect(int id, ItemData *data) :
 	level_(0),
 	id_(-id),
 	skill_data_(nullptr),
@@ -112,7 +112,7 @@ Effect::Effect(int id, ItemData *data):
 	}
 }
 
-Effect::Effect(int id, SkillLevelData *data):
+Effect::Effect(int id, SkillLevelData *data) :
 	level_(data->id),
 	id_(id),
 	skill_data_(data),
@@ -285,11 +285,11 @@ void handle_stop_cooldown(int player_id, int skill_id, const std::error_code &ec
 	{
 		timers->erase(timer_id);
 	}
-
-	// send a packet
-	PacketCreator packet1;
-	packet1.SendCooldown(skill_id, 0);
-	player->send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.SendCooldown(skill_id, 0);
+		player->send_packet(&packet);
+	}
 }
 
 void Effect::use_attack_skill(Player *player)
@@ -304,11 +304,11 @@ void Effect::use_attack_skill(Player *player)
 	}
 	if (skill_data_->cooldown_time > 0)
 	{
-		// send a packet
-		PacketCreator packet1;
-		packet1.SendCooldown(id_, skill_data_->cooldown_time);
-		player->send_packet(&packet1);
-
+		{
+			PacketCreator packet;
+			packet.SendCooldown(id_, skill_data_->cooldown_time);
+			player->send_packet(&packet);
+		}
 		// timer
 		timer::Id timer_id(timer::kTimerTypesCoolDownTimer, id_);
 
@@ -336,10 +336,11 @@ void handle_stop_buff(int player_id, int skill_id, const std::error_code &ec)
 
 void Effect::use_skill(Player *player)
 {
-	PacketCreator packet1;
-	packet1.ShowBuffEffect(player->get_id(), 1, id_, level_);
-	player->get_map()->send_packet(&packet1, player);
-
+	{
+		PacketCreator packet;
+		packet.ShowBuffEffect(player->get_id(), 1, id_, level_);
+		player->get_map()->send_packet(&packet, player);
+	}
 	if (id_ == 1121010)
 	{
 		int combo_skill_id = 1111002;
@@ -351,22 +352,22 @@ void Effect::use_skill(Player *player)
 			combo_skill_id = 11111001;
 			break;
 		}
-		
+
 		player->set_crusader_combo_value(player->get_crusader_combo_value() - 10);
 
 		Values m;
 		auto vals = m.get_values();
 		vals->push_back(Value(buffstat_constants::kCombo, player->get_crusader_combo_value()));
-		
-		// send a packet
-		PacketCreator packet11;
-		packet11.ShowPlayerBuff(&m, combo_skill_id, 1000 * 100);
-		player->send_packet(&packet11);
-		
-		// send a packet
-		PacketCreator packet12;
-		packet12.ShowMapBuff(player->get_id(), &m);
-		player->get_map()->send_packet(&packet12);
+		{
+			PacketCreator packet;
+			packet.ShowPlayerBuff(&m, combo_skill_id, 1000 * 100);
+			player->send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.ShowMapBuff(player->get_id(), &m);
+			player->get_map()->send_packet(&packet);
+		}
 	}
 
 	if (skill_data_->hp_cost > 0)
@@ -400,16 +401,16 @@ void Effect::use_skill(Player *player)
 				{
 					if (target_player->get_hp() > 0)
 					{
-						// send a packet
-						PacketCreator packet21;
-						packet21.ShowBuffEffect(target_player->get_id(), 2, id_, level_);
-						target_player->get_map()->send_packet(&packet21, target_player);
-
-						// send a packet
-						PacketCreator packet22;
-						packet22.ShowBuffEffect(0, 2, id_, level_);
-						target_player->send_packet(&packet22);
-
+						{
+							PacketCreator packet;
+							packet.ShowBuffEffect(target_player->get_id(), 2, id_, level_);
+							target_player->get_map()->send_packet(&packet, target_player);
+						}
+						{
+							PacketCreator packet;
+							packet.ShowBuffEffect(0, 2, id_, level_);
+							target_player->send_packet(&packet);
+						}
 						if (id_ == 1301007 || id_ == 9101008) // Hyper Body - SuperGM Hyper Body
 						{
 							int max_hp_value = (target_player->get_max_hp() / 100 * skill_data_->x);
@@ -422,7 +423,7 @@ void Effect::use_skill(Player *player)
 						if (is_buff)
 						{
 							target_player->add_buff(this);
-							
+
 							// send a packet
 							PacketCreator packet10;
 							packet10.ShowPlayerBuff(&values_, id_, skill_data_->time);
@@ -463,30 +464,29 @@ void Effect::use_skill(Player *player)
 
 		player->set_mount_item_id(mount_id);
 		player->set_mount_skill_id(id_);
-
-		// send a packet
-		PacketCreator packet23;
-		packet23.ShowMonsterRiding(0, mount_id, id_);
-		player->send_packet(&packet23);
-
-		// send a packet
-		PacketCreator packet24;
-		packet24.ShowMonsterRiding(player->get_id(), mount_id, id_);
-		player->get_map()->send_packet(&packet24, player);
-
+		{
+			PacketCreator packet;
+			packet.ShowMonsterRiding(0, mount_id, id_);
+			player->send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.ShowMonsterRiding(player->get_id(), mount_id, id_);
+			player->get_map()->send_packet(&packet, player);
+		}
 		return;
 	}
 
 	if (skill_data_->cooldown_time > 0)
 	{
-		// send a packet
-		PacketCreator packet25;
-		packet25.SendCooldown(id_, skill_data_->cooldown_time);
-		player->send_packet(&packet25);
-
+		{
+			PacketCreator packet;
+			packet.SendCooldown(id_, skill_data_->cooldown_time);
+			player->send_packet(&packet);
+		}
 		// timer
 		timer::Id timer_id(timer::kTimerTypesCoolDownTimer, id_);
-		
+
 		std::shared_ptr<Timer> timer(new Timer(skill_data_->cooldown_time));
 		timer->get_object()->async_wait(std::bind(&handle_stop_cooldown, player->get_id(), id_, std::placeholders::_1));
 		auto timers = player->get_timers();
@@ -506,15 +506,14 @@ void Effect::use_skill(Player *player)
 	if (is_buff)
 	{
 		player->add_buff(this);
-		
-		// send a packet
-		PacketCreator packet15;
-		packet15.ShowPlayerBuff(&values_, id_, skill_data_->time);
-		player->send_packet(&packet15);
-
+		{
+			PacketCreator packet;
+			packet.ShowPlayerBuff(&values_, id_, skill_data_->time);
+			player->send_packet(&packet);
+		}
 		// timer
 		timer::Id timer_id(timer::kTimerTypesBuffTimer, id_);
-		
+
 		std::shared_ptr<Timer> timer(new Timer(skill_data_->time / 1000));
 		timer->get_object()->async_wait(std::bind(&handle_stop_buff, player->get_id(), id_, std::placeholders::_1));
 		auto timers = player->get_timers();
@@ -534,10 +533,11 @@ void Effect::use_skill(Player *player)
 		}
 		if (vals->size() > 0)
 		{
-			// send a packet
-			PacketCreator packet20;
-			packet20.ShowMapBuff(player->get_id(), &m);
-			player->get_map()->send_packet(&packet20);
+			{
+				PacketCreator packet;
+				packet.ShowMapBuff(player->get_id(), &m);
+				player->get_map()->send_packet(&packet);
+			}
 		}
 	}
 }
@@ -567,12 +567,11 @@ void Effect::use_item(Player *player)
 	if (item_data_->time > 0 && values_.get_values()->size() > 0)
 	{
 		player->add_buff(this);
-
-		// send a packet
-		PacketCreator packet;
-		packet.ShowPlayerBuff(&values_, id_, item_data_->time * 1000);
-		player->send_packet(&packet);
-
+		{
+			PacketCreator packet;
+			packet.ShowPlayerBuff(&values_, id_, item_data_->time * 1000);
+			player->send_packet(&packet);
+		}
 		// timer
 		std::shared_ptr<Timer> timer(new Timer(item_data_->time));
 

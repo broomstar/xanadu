@@ -49,11 +49,11 @@ void Player::handle_add_skill_point()
 		skill_level = ++skill.level_;
 		master_level = skill.master_level_;
 	}
-	
-	// send a packet
-	PacketCreator packet1;
-	packet1.UpdateSkill(skill_id, skill_level, master_level);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.UpdateSkill(skill_id, skill_level, master_level);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_cancel_skill_buff()
@@ -63,11 +63,11 @@ void Player::handle_cancel_skill_buff()
 	// special skill effect
 	if (tools::skill_id_is_special_skill(skill_id))
 	{
-		// send a packet
-		PacketCreator packet1;
-		packet1.CancelSkillEffect(id_, skill_id);
-		map_->send_packet(&packet1, this);
-
+		{
+			PacketCreator packet;
+			packet.CancelSkillEffect(id_, skill_id);
+			map_->send_packet(&packet, this);
+		}
 		return;
 	}
 
@@ -76,17 +76,16 @@ void Player::handle_cancel_skill_buff()
 	{
 		Values vals;
 		vals.get_values()->push_back(Value(buffstat_constants_position_1::kMonsterRiding, 0));
-
-		// send a packet
-		PacketCreator packet2;
-		packet2.CancelPlayerBuff(&vals);
-		send_packet(&packet2);
-
-		// send a packet
-		PacketCreator packet3;
-		packet3.CancelMapBuff(id_, &vals);
-		map_->send_packet(&packet3);
-
+		{
+			PacketCreator packet;
+			packet.CancelPlayerBuff(&vals);
+			send_packet(&packet);
+		}
+		{
+			PacketCreator packet;
+			packet.CancelMapBuff(id_, &vals);
+			map_->send_packet(&packet);
+		}
 		mount_skill_id_ = 0;
 		mount_item_id_ = 0;
 
@@ -232,11 +231,11 @@ void Player::handle_use_skill()
 			break;
 		}
 	}
-
-	// packet
-	PacketCreator packet9;
-	packet9.EnableAction();
-	send_packet(&packet9);
+	{
+		PacketCreator packet;
+		packet.EnableAction();
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_use_special_skill()
