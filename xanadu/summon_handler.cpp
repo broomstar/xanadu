@@ -78,7 +78,6 @@ void Player::handle_damage_mob_summon()
 	}
 
 	// nothing to send if there are no other players in the map
-
 	if (map_->get_players()->size() > 1)
 	{
 		{

@@ -49,12 +49,11 @@ void Player::handle_player_use_chair()
 void Player::handle_player_cancel_chair()
 {
 	chair_ = 0;
-
-	// packet
-	PacketCreator packet1;
-	packet1.CancelChair();
-	send_packet(&packet1);
-
+	{
+		PacketCreator packet;
+		packet.CancelChair();
+		send_packet(&packet);
+	}
 	if (map_->get_players()->size() > 1)
 	{
 		{

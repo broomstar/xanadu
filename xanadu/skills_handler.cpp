@@ -135,12 +135,11 @@ void Player::handle_use_skill()
 	if (tools::skill_id_is_summon(skill_id))
 	{
 		add_summon(skill_id, skill_level, skill_level_data->x, skill_level_data->time);
-		
-		// packet
-		PacketCreator packet1;
-		packet1.EnableAction();
-		send_packet(&packet1);
-		
+		{
+			PacketCreator packet;
+			packet.EnableAction();
+			send_packet(&packet);
+		}
 		return;
 	}
 
@@ -214,11 +213,11 @@ void Player::handle_use_skill()
 						&& target_player->get_map() == map_
 						&& target_player->get_hp() == 0)
 					{
-						// send a packet
-						PacketCreator packet3;
-						packet3.ShowBuffEffect(0, 2, skill_id, skill_level);
-						target_player->send_packet(&packet3);
-
+						{
+							PacketCreator packet;
+							packet.ShowBuffEffect(0, 2, skill_id, skill_level);
+							target_player->send_packet(&packet);
+						}
 						target_player->set_hp(target_player->get_max_hp());
 					}
 				}

@@ -30,14 +30,12 @@ void PacketCreator::ConnectToChannel(int player_id)
 	// 15 = "We're still processing your request at this time, so you don't have access to this game for now. ..." popup and login not happening
 	// 16 or 21 = "Please verify your account via email in order to play the game." popup and login not happening
 	write<signed char>(0);
-
 	// in combination with 12 from the byte before this one:
 	// 0 and higher than 3 = "Connection failed due to system error Please try again later." popup and login not happening
 	// 1 = "You have entered incorrect an LOGIN ID. Please try again" popup and throws client back to login screen
 	// 2 = "You have entered an incorrect form of ID, or your account info hasn't been changed yet. Please try again." popup and throws client back to login screen
 	// 3 = "Unverified account will be blocked after 7 days from the date of registration. To verify your account immediately, press OK" popup and throws client back to login screen
 	write<signed char>(0);
-
 	// ip adress
 	World *world = World::get_instance();
 	if (world->is_dedicated_server())
@@ -80,25 +78,20 @@ void PacketCreator::LoginRequest(signed char success_or_failure_reason, int user
 	write<signed char>(success_or_failure_reason);
 	write<signed char>(0);
 	write<int>(0);
-
 	if (success_or_failure_reason != 0)
 	{
 		return;
 	}
-
 	write<int>(user_id);
 	write<signed char>(kGenderConstantsMale); // gender byte 0 = male, 1 = female, number 10/0x0A triggers gender select
 	write<signed char>(0); // nGradeCode (admin byte: bool, true/1 for GMs/admins, false/0 for normal), for GM commands and maybe other stuff
-
 	/*
 	info for the byte below:
 	short toWrite = (short) (c.gmLevel() * 32);
 	mplew.write(toWrite > 0x80 ? 0x80 : toWrite);
 	*/
 	write<signed char>(0); // nSubGradeCode (0x80 is admin, 0x20 and 0x40 = subgm), for GM commands and maybe other stuff
-
 	write<signed char>(0); // nCountryID
-
 	write<std::string>(account_name);
 	write<signed char>(0); // nPurchaseExp
 	write<signed char>(0); // quiet ban/chat block reason
@@ -134,7 +127,6 @@ void PacketCreator::ShowAllCharacterInfo(int world_id, std::unordered_map<int, C
 	write<signed char>(0); // mode: 0 = view info, 1 = set chars amount
 	write<signed char>(world_id);
 	write<unsigned char>(static_cast<unsigned char>(characters->size()));
-
 	for (auto &it : *characters)
 	{
 		Character *character = it.second;
@@ -150,7 +142,6 @@ void PacketCreator::ShowAllCharacterInfo(int world_id, std::unordered_map<int, C
 * 3 - Connection failed due to system error
 * 4 - Enter the pin
 */
-
 void PacketCreator::LoginProcess()
 {
 	write<short>(send_headers_login::kPIN_CHECK_OPERATION);
@@ -168,7 +159,6 @@ void PacketCreator::ShowWorld()
 	write<short>(100);
 	write<short>(100);
 	write<signed char>(0);
-
 	// channel data
 	signed char channels_count = world->get_channels_count();
 	write<signed char>(channels_count);
@@ -182,12 +172,9 @@ void PacketCreator::ShowWorld()
 		write<signed char>(channel_id);
 		write<signed char>(0);
 	}
-
 	// login screen balloons (credits to Eric from RageZone)
-
 	//constexpr short balloon_size = 1;
 	write<short>(0); // balloon size
-
 	/*for (int i = 0; i < balloon_size; ++i)
 	{
 		write<short>(236); // X position
@@ -210,7 +197,6 @@ Possible values for status:
 * 1 - Highly populated (a 2-sentence message pops up at world select as a warning of high population)
 * 2 - Full (a 2-sentence message pops up at world select and the client does not request channel loading)
 */
-
 void PacketCreator::ShowChannels()
 {
 	write<short>(send_headers_login::kSERVER_STATUS);
@@ -300,10 +286,7 @@ void PacketCreator::AddCharLook(Character *character, bool megaphone)
 		}
 	}
 
-	enum
-	{
-		kEndEquipInfo = -1
-	};
+	constexpr const signed char kEndEquipInfo = -1;
 
 	// visible equips info
 	for (auto it : visible_equips)
@@ -340,10 +323,8 @@ void PacketCreator::ShowCharacter(Character *character, bool view_all)
 	}
 
 	// rankings
-
 	bool enable_rankings = false;
 	write<bool>(enable_rankings);
-
 	if (enable_rankings)
 	{
 		write<int>(0); // world rank
@@ -361,21 +342,17 @@ void PacketCreator::ShowCharacter(Character *character, bool view_all)
 // 5 = "This is not a registered ID". popup
 // 6 = "Connection failed due to system error" popup
 // 7 = ID already logged in or server under inspection popup
-
 void PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *characters, int character_slots)
 {
 	write<short>(send_headers_login::kCHARACTER_LIST);
 	write<signed char>(0); // success or error value
 	write<unsigned char>(static_cast<unsigned char>(characters->size()));
-
 	for (auto &it : *characters)
 	{
 		Character *character = it.second;
 		ShowCharacter(character, false);
 	}
-
 	write<signed char>(1); // PIC modes: 0 = Register PIC | 1 = Ask for PIC | 2 = Disable PIC
-
 	write<int>(character_slots);
 }
 
@@ -390,7 +367,6 @@ void PacketCreator::CheckName(std::string name, bool name_used)
 // 0 = success
 // 10 = too many connections, could not process
 // 26 = "You cannot create a new character under that account that has requested for a transfer."
-
 void PacketCreator::AddCharacter(Character *character)
 {
 	write<short>(send_headers_login::kCREATE_NEW_CHARACTER);
@@ -407,7 +383,6 @@ void PacketCreator::AddCharacter(Character *character)
 // 22 = cannot delete guild master character
 // 24 = wedding character cannot be deleted
 // 26 = cannot delete character which is being transfered currently
-
 void PacketCreator::RemoveCharacter(int characterid)
 {
 	write<short>(send_headers_login::kDELETE_CHARACTER);

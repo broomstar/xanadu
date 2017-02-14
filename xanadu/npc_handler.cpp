@@ -151,27 +151,28 @@ void Player::handle_npc_shop()
 			}
 			if (give_item(item_id, amount))
 			{
-				// packet
-				PacketCreator packet26;
-				packet26.Bought(0);
-				send_packet(&packet26);
+				{
+					PacketCreator packet;
+					packet.Bought(0);
+					send_packet(&packet);
+				}
 			}
 			else
 			{
 				add_mesos(price);
-				
-				// packet
-				PacketCreator packet27;
-				packet27.Bought(3);
-				send_packet(&packet27);
+				{
+					PacketCreator packet;
+					packet.Bought(3);
+					send_packet(&packet);
+				}
 			}
 			break;
 		}
 	case 1: // Sell
 		{
 			short slot = read<short>();
-			int itemId = read<int>();
-			signed char inventory_id = tools::get_inventory_id_from_item_id(itemId);
+			int item_id = read<int>();
+			signed char inventory_id = tools::get_inventory_id_from_item_id(item_id);
 			Inventory *inventory = get_inventory(inventory_id);
 			if (!inventory)
 			{
@@ -182,12 +183,12 @@ void Player::handle_npc_shop()
 			{
 				return;
 			}
-			ItemData *data = ItemDataProvider::get_instance()->get_item_data(itemId);
+			ItemData *data = ItemDataProvider::get_instance()->get_item_data(item_id);
 			if (!data)
 			{
 				return;
 			}
-			if (tools::is_star(itemId))
+			if (tools::is_star(item_id))
 			{
 				add_mesos(item->get_amount());
 			}
@@ -196,12 +197,11 @@ void Player::handle_npc_shop()
 				add_mesos(item->get_amount() * data->price);
 			}
 			inventory->remove_item(static_cast<signed char>(slot));
-
-			// packet
-			PacketCreator packet28;
-			packet28.Bought(0);
-			send_packet(&packet28);
-
+			{
+				PacketCreator packet;
+				packet.Bought(0);
+				send_packet(&packet);
+			}
 			break;
 		}
 	case 2: // Recharge
@@ -224,17 +224,16 @@ void Player::handle_npc_shop()
 				return;
 			}
 			item->set_amount(data->max_per_slot);
-
-			// packet
-			PacketCreator packet29;
-			packet29.UpdateSlot(item);
-			send_packet(&packet29);
-
-			// packet
-			PacketCreator packet30;
-			packet30.Bought(0);
-			send_packet(&packet30);
-
+			{
+				PacketCreator packet;
+				packet.UpdateSlot(item);
+				send_packet(&packet);
+			}
+			{
+				PacketCreator packet;
+				packet.Bought(0);
+				send_packet(&packet);
+			}
 			break;
 		}
 	case 3: // Leave

@@ -11,17 +11,14 @@ void Player::handle_player_drop_mesos()
 {
 	skip_bytes(4);
 	int dropped_mesos = read<int>();
-
 	if (dropped_mesos < 10)
 	{
 		return;
 	}
-
 	if (dropped_mesos > 50000)
 	{
 		return;
 	}
-
 	if (!add_mesos(-dropped_mesos))
 	{
 		return;
@@ -45,7 +42,6 @@ void Player::handle_player_loot_drop()
 	skip_bytes(9);
 	int drop_object_id = read<int>();
 	std::shared_ptr<Drop> drop = map_->get_drop(drop_object_id);
-
 	if (drop)
 	{
 		map_->loot_drop(this, drop);

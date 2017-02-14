@@ -10,25 +10,20 @@
 void Player::handle_mob_movement()
 {
 	int monster_object_id = read<int>();
-
 	Mob *mob = map_->get_mob(monster_object_id);
 	if (!mob)
 	{
 		return;
 	}
-
 	short move_id = read<short>();
 	signed char nibbles  = read<signed char>();
 	signed char action = read<signed char>();
 	signed char skill_id = read<signed char>();
 	signed char skill_level = read<signed char>();
 	short option = read<short>();
-
 	skip_bytes(13);
-
 	short start_position_x = read<short>();
 	short start_position_y = read<short>();
-
 	mob->update_position(start_position_x, start_position_y);
 
 	short mob_position_x = 0;

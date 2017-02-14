@@ -33,14 +33,11 @@ void Player::handle_storage_reqest()
 
 		// check if the target inventory is valid
 		Inventory *inventory = get_inventory(inventory_id);
-
 		if (!inventory)
 		{
 			return;
 		}
-
 		signed char slot = read<signed char>();
-
 		if (slot >= storage_items_.size())
 		{
 			return;
@@ -128,7 +125,6 @@ void Player::handle_storage_reqest()
 		add_mesos(meso_value);
 
 		{
-			// packet
 			PacketCreator packet;
 			packet.MesoStorage(storage_slots_, storage_mesos_);
 			send_packet(&packet);
@@ -157,12 +153,10 @@ void Player::handle_merchant_storage_request()
 		if (!add_mesos(merchant_storage_mesos_))
 		{
 			{
-				// packet
 				PacketCreator packet;
 				packet.FredrickMessage(31);
 				send_packet(&packet);
 			}
-
 			return;
 		}
 
@@ -198,7 +192,6 @@ void Player::handle_merchant_storage_request()
 		if (free_equip_slots < 0 || free_etc_slots < 0 || free_use_slots < 0 || free_setup_slots < 0)
 		{
 			{
-				// packet
 				PacketCreator packet;
 				packet.FredrickMessage(34);
 				send_packet(&packet);
@@ -222,7 +215,6 @@ void Player::handle_merchant_storage_request()
 			if (!inventory->add_item_find_slot(item))
 			{
 				{
-					// packet
 					PacketCreator packet;
 					packet.FredrickMessage(34);
 					send_packet(&packet);
@@ -235,7 +227,6 @@ void Player::handle_merchant_storage_request()
 		merchant_storage_items_.clear();
 
 		{
-			// packet
 			PacketCreator packet;
 			packet.FredrickMessage(30);
 			send_packet(&packet);

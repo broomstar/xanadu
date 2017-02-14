@@ -214,12 +214,10 @@ void Player::handle_change_channel()
 {
 	// check if the target channel is valid
 	signed char new_channel_id = read<signed char>();
-
 	if (!World::get_instance()->GetChannel(new_channel_id))
 	{
 		return;
 	}
-
 	channel_id_ = new_channel_id;
 	set_map(map_->get_id());
 }

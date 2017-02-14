@@ -236,10 +236,11 @@ void Player::handle_use_scripted_portal()
 			fprintf(file, "\n");
 			fclose(file);
 		}
-
-		// send this packet to prevent the client from blocking itself
-		PacketCreator packet;
-		packet.EnableAction();
-		send_packet(&packet);
+		{
+			// send this packet to prevent the client from blocking itself
+			PacketCreator packet;
+			packet.EnableAction();
+			send_packet(&packet);
+		}
 	}
 }

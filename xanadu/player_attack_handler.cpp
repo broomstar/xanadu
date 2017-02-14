@@ -248,10 +248,11 @@ void Player::handle_use_attack(signed char attack_type)
 			{
 				energy_bar_ = 10000;
 			}
-
-			PacketCreator packet10;
-			packet10.GiveEnergyCharge(0, energy_bar_, 10000);
-			send_packet(&packet10);
+			{
+				PacketCreator packet;
+				packet.GiveEnergyCharge(0, energy_bar_, 10000);
+				send_packet(&packet);
+			}
 		}
 	}
 

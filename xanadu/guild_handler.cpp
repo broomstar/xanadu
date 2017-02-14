@@ -42,7 +42,6 @@ void Player::handle_guild_action()
 			return;
 		}
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.InviteGuild(this);
 			invited->send_packet(&packet);
@@ -68,7 +67,6 @@ void Player::handle_guild_action()
 			return;
 		}
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.GuildPlayerLeave(guild_->get_id(), id_, name_);
 			guild_->send_packet(&packet);
@@ -112,7 +110,6 @@ void Player::handle_guild_action()
 		guild_->SetRank4(rank4, false);
 		guild_->SetRank5(rank5, false);
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.UpdateGuildRanks(guild_);
 			guild_->send_packet(&packet);
@@ -142,7 +139,6 @@ void Player::handle_guild_action()
 			target_player->set_guild_rank(new_rank);
 		}
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ChangeRank(guild_->get_id(), target_player_id, new_rank);
 			guild_->send_packet(&packet);
@@ -161,7 +157,6 @@ void Player::handle_guild_action()
 		guild_->SetLogo(read<short>(), false);
 		guild_->SetLogoColor(read<signed char>(), false);
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.ShowGuildEmblem(guild_);
 			guild_->send_packet(&packet);
@@ -178,7 +173,6 @@ void Player::handle_guild_action()
 		std::string &notice = read<std::string>();
 		guild_->SetNotice(notice, false);
 		{
-			// send a packet
 			PacketCreator packet;
 			packet.UpdateGuildNotice(guild_);
 			guild_->send_packet(&packet);

@@ -81,13 +81,11 @@ void Player::handle_chat_command()
 			{
 				return;
 			}
-
 			{
 				PacketCreator packet;
 				packet.WhisperPlayer(this, message);
 				receiver_player->send_packet(&packet);
 			}
-
 			{
 				PacketCreator packet;
 				packet.FindPlayerReply(receiver_player->get_name(), true);
