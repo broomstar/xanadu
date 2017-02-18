@@ -96,6 +96,7 @@ public:
 	// mts
 	void EnterMTS(Player *player);
 	void ShowMTSCash();
+	void SendMTS();
 	// chat
 	void ShowChatMessage(Player *player, const std::string &message, bool bubble_only);
 	void ShowMessage(const std::string &message, unsigned char type, unsigned char channel_id = 0, unsigned char whisper = 0, std::shared_ptr<Item> item = nullptr);
