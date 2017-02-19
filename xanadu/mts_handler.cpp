@@ -27,6 +27,12 @@ void Player::handle_enter_mts()
 		packet.ShowMTSCash();
 		send_packet(&packet);
 	}
+	int pages = 0;
+	{
+		PacketCreator packet;
+		packet.SendMTS(1, 0, 0, pages);
+		send_packet(&packet);
+	}
 }
 
 void Player::handle_leave_mts()
