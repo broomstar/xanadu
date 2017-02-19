@@ -137,5 +137,5 @@ void PacketCreator::SendMTS(/*List<MTSItemInfo> items, */int tab, int type, int 
 	if ( CInPacket::Decode1(v3) )
 		 v2->m_bITCRequestSent = 0;
 */
-	write<signed char>(1);
+	write<bool>(true); // maybe for unstucking like enableaction
 }

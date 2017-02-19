@@ -1250,7 +1250,7 @@ void PacketCreator::SendFamee(std::string name2, signed char type, int newFame)
 void PacketCreator::ItemGainChat(int itemid, int amount, signed char items_size)
 {
 	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
-	write<signed char>(3); // 3 = gain item, there are also much other types
+	write<signed char>(3); // actions: 3 = gain item, 4 = pet level up, there are also much other types
 	write<signed char>(items_size);
 
 	for (signed char i = 0; i < items_size; ++i)
@@ -1263,7 +1263,7 @@ void PacketCreator::ItemGainChat(int itemid, int amount, signed char items_size)
 void PacketCreator::ShowOwnPetLevelUp(signed char pet_slot)
 {
 	write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
-	write<signed char>(4);
+	write<signed char>(4); // actions: 3 = gain item, 4 = pet level up, there are also much other types
 	write<signed char>(0);
 	write<signed char>(pet_slot);
 }
@@ -1296,7 +1296,8 @@ void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int ski
 		write<short>(send_headers::kSHOW_ITEM_GAIN_INCHAT);
 	}
 
-	write<signed char>(effect_id); // info for kSHOW_FOREIGN_EFFECT: 0 = level up, 8 = job change, others are (partially) buffs/skills?
+	// actions for kSHOW_ITEM_GAIN_INCHAT: 3 = gain item, 4 = pet level up, there are also much other types
+	write<signed char>(effect_id); // actions for kSHOW_FOREIGN_EFFECT: 0 = level up, 8 = job change, others are (partially) buffs/skills?
 	write<int>(skill_id);
 	write<signed char>(0); // direction?
 	write<signed char>(skill_level);
