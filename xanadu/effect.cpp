@@ -424,14 +424,13 @@ void Effect::use_skill(Player *player)
 						{
 							target_player->add_buff(this);
 
-							// send a packet
-							PacketCreator packet10;
-							packet10.ShowPlayerBuff(&values_, id_, skill_data_->time);
-							target_player->send_packet(&packet10);
-
+							{
+								PacketCreator packet;
+								packet.ShowPlayerBuff(&values_, id_, skill_data_->time);
+								target_player->send_packet(&packet);
+							}
 							// timer
 							timer::Id timer_id(timer::kTimerTypesBuffTimer, id_);
-
 							std::shared_ptr<Timer> timer(new Timer(skill_data_->time / 1000));
 							timer->get_object()->async_wait(std::bind(&handle_stop_buff, target_player->get_id(), id_, std::placeholders::_1));
 							auto timers = target_player->get_timers();
@@ -486,7 +485,6 @@ void Effect::use_skill(Player *player)
 		}
 		// timer
 		timer::Id timer_id(timer::kTimerTypesCoolDownTimer, id_);
-
 		std::shared_ptr<Timer> timer(new Timer(skill_data_->cooldown_time));
 		timer->get_object()->async_wait(std::bind(&handle_stop_cooldown, player->get_id(), id_, std::placeholders::_1));
 		auto timers = player->get_timers();
@@ -513,7 +511,6 @@ void Effect::use_skill(Player *player)
 		}
 		// timer
 		timer::Id timer_id(timer::kTimerTypesBuffTimer, id_);
-
 		std::shared_ptr<Timer> timer(new Timer(skill_data_->time / 1000));
 		timer->get_object()->async_wait(std::bind(&handle_stop_buff, player->get_id(), id_, std::placeholders::_1));
 		auto timers = player->get_timers();
@@ -574,9 +571,7 @@ void Effect::use_item(Player *player)
 		}
 		// timer
 		std::shared_ptr<Timer> timer(new Timer(item_data_->time));
-
 		timer::Id timer_id(timer::kTimerTypesBuffTimer, id_);
-
 		auto timers = player->get_timers();
 		timers->operator[](timer_id) = timer;
 		timer->get_object()->async_wait(std::bind(&handle_stop_buff, player->get_id(), id_, std::placeholders::_1));
