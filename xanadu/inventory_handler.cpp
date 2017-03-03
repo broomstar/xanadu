@@ -304,68 +304,61 @@ void Player::handle_use_cash_item()
 		cash_inventory->remove_item(item_id, 1);
 		break;
 	}
-	// to-do scissors of karma
-	/*
-		case 5520000: // Scissors of Karma
-	case 5520001: // Platinum Scissors of Karma
+
+	case 5520000: // Scissors of Karma
+	{
+		int inventory_id = read<int>();
+		Inventory *inventory = get_inventory(inventory_id);
+		if (!inventory)
+		{
+			return;
+		}
+		int slot = read<int>();
+		std::shared_ptr<Item> item = inventory->get_item_by_slot(slot);
+		if (!item)
+		{
+			return;
+		}
+		item->set_flag(item->get_flag() | kItemConstantsFlagsKarma);
+		{
+			PacketCreator packet;
+			packet.NewItem(item, false);
+			send_packet(&packet);
+		}
+		cash_inventory->remove_item(item_id, 1);
+		break;
+	}
+	// to-do vicious hammer
+	/*case 5570000: // ViciousHammer
 		{
 			int inventory_id = read_int32();
-			Inventory* inventory = get_inventory(inventory_id);
+			int equip_slot = read_int32();
+			Inventory * inventory = get_inventory(inventory_id);
 			if (!inventory)
 			{
 				return;
 			}
-			int slot = read_int32();
-			std::shared_ptr<Item> item = inventory->getItemBySlot(slot);
-			if (!item)
+
+			std::shared_ptr<Item> equip = inventory->getItemBySlot(equip_slot);
+			if (!equip)
 			{
 				return;
 			}
-			if (inventory_id == inventory_constants::types::Equip)
+			if (equip->get_hammers_used() == 2)
 			{
-				item->set_flag(item->get_flag() | item_constants::flags::Karma_Equip);
+				return;
 			}
-			else
-			{
-				item->set_flag(item->get_flag() | item_constants::flags::Karma_Use);
-			}
-			send_packet(PacketCreator().newItem(item, false));
 
+			equip->set_hammers_used(equip->get_hammers_used() + 1);
+			equip->set_free_slots(equip->get_free_slots() + 1);
+			send_packet(PacketCreator().sendHammerData(equip->get_hammers_used()));
+			send_packet(PacketCreator().hammerItem(equip));
 			cash_inventory->removeItem(item_id, 1);
+			changeMap(map_);
+
 			break;
 		}
 		*/
-		// to-do vicious hammer
-		/*case 5570000: // ViciousHammer
-			{
-				int inventory_id = read_int32();
-				int equip_slot = read_int32();
-				Inventory * inventory = get_inventory(inventory_id);
-				if (!inventory)
-				{
-					return;
-				}
-
-				std::shared_ptr<Item> equip = inventory->getItemBySlot(equip_slot);
-				if (!equip)
-				{
-					return;
-				}
-				if (equip->get_hammers_used() == 2)
-				{
-					return;
-				}
-
-				equip->set_hammers_used(equip->get_hammers_used() + 1);
-				equip->set_free_slots(equip->get_free_slots() + 1);
-				send_packet(PacketCreator().sendHammerData(equip->get_hammers_used()));
-				send_packet(PacketCreator().hammerItem(equip));
-				cash_inventory->removeItem(item_id, 1);
-				changeMap(map_);
-
-				break;
-			}
-			*/
 	}
 }
 
