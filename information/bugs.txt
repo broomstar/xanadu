@@ -147,6 +147,8 @@ buglist
 
 -------------------- other --------------------
 
+- item flags aren't saved to mysql, need to do this (needed for example for scissor of karma - zakum helmet)
+
 - to-do fix Vicious Hammer
 
 - improve angelscript related code (maybe save bytecode, maybe do other caching, and more)

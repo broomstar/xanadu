@@ -36,7 +36,7 @@ constexpr short kItemConstantsFlagsLock = 0x01; // Disables dropping/trading of 
 constexpr short kItemConstantsFlagsSpikes = 0x02; // "Add Prevent Slipping", enables normal movement on ice maps (EL Nath etc.)
 constexpr short kItemConstantsFlagsCold = 0x04; // "Add Prevent Coldness", prevents damage by coldness on ice maps (EL Nath etc.)
 constexpr short kItemConstantsFlagsUntradeable = 0x08; // Disables trading of the item
-constexpr short kItemConstantsFlagsKarma = 0x10;
+constexpr short kItemConstantsFlagsKarma = 0x10; // Enables one-time trading of an item/equip that normally cannot be traded like zakum helmet
 
 constexpr signed char kItemConstantsEquippedSlotsTamingMob = -18;
 constexpr signed char kItemConstantsEquippedSlotsTamingMobSaddle = -19;
