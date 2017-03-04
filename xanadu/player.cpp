@@ -876,279 +876,304 @@ void Player::player_connect()
 	inventories_[kInventoryConstantsTypesEtc] = new Inventory(this, kInventoryConstantsTypesEtc, etc_slots);
 	inventories_[kInventoryConstantsTypesCash] = new Inventory(this, kInventoryConstantsTypesCash, 36);
 
-	// account data
-	Poco::Data::Statement statement4(mysql_session);
-	statement4 << "SELECT gm, character_slots, storage_mesos, nxcash_credit FROM users WHERE id = " << user_id_;
-	statement4.execute();
-
-	Poco::Data::RecordSet rs2(statement4);
-
-	is_gm_ = rs2["gm"];
-	character_slots_ = rs2["character_slots"];
-	storage_mesos_ = rs2["storage_mesos"];
-	nx_cash_credit_ = rs2["nxcash_credit"];
-	storage_slots_ = 36;
-
-	// storage equips
-	Poco::Data::Statement statement5(mysql_session);
-	statement5 << "SELECT * FROM storage_equips WHERE user_id = " << user_id_;
-	size_t cols = statement5.execute();
-
-	Poco::Data::RecordSet rs3(statement5);
-
-	for (; cols > 0; --cols)
 	{
-		int item_id = rs3["equip_id"];
+		// account data
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT gm, character_slots, storage_mesos, nxcash_credit FROM users WHERE id = " << user_id_;
+		statement.execute();
 
-		std::shared_ptr<Item> equip(new Item(item_id));
+		Poco::Data::RecordSet rs(statement);
 
-		equip->set_slot(rs3["pos"]);
-		equip->set_free_slots(rs3["slots"]);
-		equip->set_used_scrolls(rs3["used_scrolls"]);
-		equip->set_str(rs3["str"]);
-		equip->set_dex(rs3["dex"]);
-		equip->set_int(rs3["iint"]);
-		equip->set_luk(rs3["luk"]);
-		equip->set_hp(rs3["hp"]);
-		equip->set_mp(rs3["mp"]);
-		equip->set_weapon_attack(rs3["weapon_attack"]);
-		equip->set_magic_attack(rs3["magic_attack"]);
-		equip->set_weapon_defense(rs3["weapon_def"]);
-		equip->set_magic_defense(rs3["magic_def"]);
-		equip->set_acc(rs3["accuracy"]);
-		equip->set_avoid(rs3["avoid"]);
-		equip->set_hand(rs3["hand"]);
-		equip->set_speed(rs3["speed"]);
-		equip->set_jump(rs3["jump"]);
+		is_gm_ = rs["gm"];
+		character_slots_ = rs["character_slots"];
+		storage_mesos_ = rs["storage_mesos"];
+		nx_cash_credit_ = rs["nxcash_credit"];
+		storage_slots_ = 36;
+	}
 
-		EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
+	{
+		// storage equips
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT * FROM storage_equips WHERE user_id = " << user_id_;
+		size_t cols = statement.execute();
 
-		if (data)
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
 		{
-			signed char i;
+			int item_id = rs["equip_id"];
 
-			for (i = 0; i < storage_items_.size(); ++i)
+			std::shared_ptr<Item> equip(new Item(item_id));
+
+			equip->set_slot(rs["pos"]);
+			equip->set_free_slots(rs["slots"]);
+			equip->set_used_scrolls(rs["used_scrolls"]);
+			equip->set_str(rs["str"]);
+			equip->set_dex(rs["dex"]);
+			equip->set_int(rs["iint"]);
+			equip->set_luk(rs["luk"]);
+			equip->set_hp(rs["hp"]);
+			equip->set_mp(rs["mp"]);
+			equip->set_weapon_attack(rs["weapon_attack"]);
+			equip->set_magic_attack(rs["magic_attack"]);
+			equip->set_weapon_defense(rs["weapon_def"]);
+			equip->set_magic_defense(rs["magic_def"]);
+			equip->set_acc(rs["accuracy"]);
+			equip->set_avoid(rs["avoid"]);
+			equip->set_hand(rs["hand"]);
+			equip->set_speed(rs["speed"]);
+			equip->set_jump(rs["jump"]);
+			equip->set_flag(rs["flags"]);
+
+			EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
+
+			if (data)
 			{
-				if (storage_items_[i]->get_inventory_id() > equip->get_inventory_id())
+				signed char i;
+
+				for (i = 0; i < storage_items_.size(); ++i)
 				{
-					break;
+					if (storage_items_[i]->get_inventory_id() > equip->get_inventory_id())
+					{
+						break;
+					}
+				}
+
+				storage_items_.insert(storage_items_.begin() + i, equip);
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// storage items
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT item_id, pos, amount, flags FROM storage_items WHERE user_id = " << user_id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int item_id = rs["item_id"];
+			short amount = rs["amount"];
+			signed char slot = rs["pos"];
+			short flags = rs["flags"];
+
+			std::shared_ptr<Item> item(new Item(item_id));
+			item->set_amount(amount);
+			item->set_slot(slot);
+			item->set_flag(flags);
+
+			ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
+
+			if (data)
+			{
+				signed char i;
+				for (i = 0; i < storage_items_.size(); ++i)
+				{
+					if (storage_items_[i]->get_inventory_id() > item->get_inventory_id())
+					{
+						break;
+					}
+				}
+				storage_items_.insert(storage_items_.begin() + i, item);
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// merchant storage items
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT item_id, pos, amount FROM merchant_storage_items WHERE player_id = " << id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int item_id = rs["item_id"];
+			short amount = rs["amount"];
+			signed char slot = rs["pos"];
+			short flags = rs["flags"];
+
+			std::shared_ptr<Item> item(new Item(item_id));
+			item->set_amount(amount);
+			item->set_slot(slot);
+			item->set_flag(flags);
+
+			ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
+
+			if (data)
+			{
+				merchant_storage_items_[static_cast<signed char>(merchant_storage_items_.size())] = item;
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// merchant storage equips
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT * FROM merchant_storage_equips WHERE player_id = " << id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int item_id = rs["equip_id"];
+			signed char slot = rs["pos"];
+
+			std::shared_ptr<Item> equip(new Item(item_id));
+			equip->set_slot(slot);
+
+			equip->set_free_slots(rs["slots"]);
+			equip->set_used_scrolls(rs["used_scrolls"]);
+			equip->set_str(rs["str"]);
+			equip->set_dex(rs["dex"]);
+			equip->set_int(rs["iint"]);
+			equip->set_luk(rs["luk"]);
+			equip->set_hp(rs["hp"]);
+			equip->set_mp(rs["mp"]);
+			equip->set_weapon_attack(rs["weapon_attack"]);
+			equip->set_magic_attack(rs["magic_attack"]);
+			equip->set_weapon_defense(rs["weapon_def"]);
+			equip->set_magic_defense(rs["magic_def"]);
+			equip->set_acc(rs["accuracy"]);
+			equip->set_avoid(rs["avoid"]);
+			equip->set_hand(rs["hand"]);
+			equip->set_speed(rs["speed"]);
+			equip->set_jump(rs["jump"]);
+			equip->set_flag(rs["flags"]);
+
+			EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
+
+			if (data)
+			{
+				merchant_storage_items_[static_cast<signed char>(merchant_storage_items_.size())] = equip;
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// equips
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT * FROM equips WHERE player_id = " << id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int item_id = rs["equip_id"];
+			signed char slot = rs["pos"];
+
+			std::shared_ptr<Item> equip(new Item(item_id));
+			equip->set_slot(slot);
+
+			equip->set_free_slots(rs["slots"]);
+			equip->set_used_scrolls(rs["used_scrolls"]);
+			equip->set_str(rs["str"]);
+			equip->set_dex(rs["dex"]);
+			equip->set_int(rs["iint"]);
+			equip->set_luk(rs["luk"]);
+			equip->set_hp(rs["hp"]);
+			equip->set_mp(rs["mp"]);
+			equip->set_weapon_attack(rs["weapon_attack"]);
+			equip->set_magic_attack(rs["magic_attack"]);
+			equip->set_weapon_defense(rs["weapon_def"]);
+			equip->set_magic_defense(rs["magic_def"]);
+			equip->set_acc(rs["accuracy"]);
+			equip->set_avoid(rs["avoid"]);
+			equip->set_hand(rs["hand"]);
+			equip->set_speed(rs["speed"]);
+			equip->set_jump(rs["jump"]);
+			equip->set_flag(rs["flags"]);
+
+			signed char inventory_id = (equip->get_slot() > 0 ? kInventoryConstantsTypesEquip : kInventoryConstantsTypesEquipped);
+			Inventory *inventory = get_inventory(inventory_id);
+			EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
+
+			if (inventory && data)
+			{
+				inventory->add_item_no_find_slot(equip, false);
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// items
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT item_id, pos, amount, flags FROM items WHERE player_id = " << id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int item_id = rs["item_id"];
+			short amount = rs["amount"];
+			signed char slot = rs["pos"];
+			short flags = rs["flags"];
+
+			std::shared_ptr<Item> item(new Item(item_id));
+			item->set_amount(amount);
+			item->set_slot(slot);
+			item->set_flag(flags);
+
+			Inventory *inventory = get_inventory(item->get_inventory_id());
+			ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
+
+			if (inventory && data)
+			{
+				inventory->add_item_no_find_slot(item, false);
+			}
+
+			rs.moveNext();
+		}
+	}
+
+	{
+		// pets
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT pet_id, pos, pet_slot, level, closeness FROM pets WHERE player_id = " << id_;
+		size_t cols = statement.execute();
+
+		Poco::Data::RecordSet rs(statement);
+
+		for (; cols > 0; --cols)
+		{
+			int pet_id = rs["pet_id"];
+
+			if (bool check = PetDataProvider::get_instance()->get_data_by_id(pet_id) != nullptr)
+				//if (inventory_constants::is_pet(pet_id))
+			{
+				std::shared_ptr<Item> pet(new Item(pet_id));
+				pet->set_pet_level(rs["level"]);
+				pet->set_slot(rs["pos"]);
+				pet->set_pet_slot(rs["pet_slot"]);
+				pet->set_closeness(rs["closeness"]);
+
+				get_inventory(kInventoryConstantsTypesCash)->add_item_no_find_slot(pet, false);
+
+				if (pet->get_pet_slot() >= 0 && pets_.size() < 3)
+				{
+					pet->set_pet_slot(static_cast<signed char>(pets_.size()));
+					pets_.push_back(pet);
 				}
 			}
 
-			storage_items_.insert(storage_items_.begin() + i, equip);
+			rs.moveNext();
 		}
-
-		rs3.moveNext();
-	}
-
-	// storage items
-	Poco::Data::Statement statement6(mysql_session);
-	statement6 << "SELECT item_id, pos, amount FROM storage_items WHERE user_id = " << user_id_;
-	cols = statement6.execute();
-
-	Poco::Data::RecordSet rs4(statement6);
-
-	for (; cols > 0; --cols)
-	{
-		int item_id = rs4["item_id"];
-		short amount = rs4["amount"];
-		signed char slot = rs4["pos"];
-
-		std::shared_ptr<Item> item(new Item(item_id));
-		item->set_amount(amount);
-		item->set_slot(slot);
-
-		ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
-
-		if (data)
-		{
-			signed char i;
-			for (i = 0; i < storage_items_.size(); ++i)
-			{
-				if (storage_items_[i]->get_inventory_id() > item->get_inventory_id())
-				{
-					break;
-				}
-			}
-			storage_items_.insert(storage_items_.begin() + i, item);
-		}
-
-		rs4.moveNext();
-	}
-
-	// merchant storage items
-	Poco::Data::Statement statement7(mysql_session);
-	statement7 << "SELECT item_id, pos, amount FROM merchant_storage_items WHERE player_id = " << id_;
-	cols = statement7.execute();
-
-	Poco::Data::RecordSet rs5(statement7);
-
-	for (; cols > 0; --cols)
-	{
-		int item_id = rs5["item_id"];
-		short amount = rs5["amount"];
-		signed char slot = rs5["pos"];
-
-		std::shared_ptr<Item> item(new Item(item_id));
-		item->set_amount(amount);
-		item->set_slot(slot);
-
-		ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
-
-		if (data)
-		{
-			merchant_storage_items_[static_cast<signed char>(merchant_storage_items_.size())] = item;
-		}
-
-		rs5.moveNext();
-	}
-
-	// merchant storage equips
-	Poco::Data::Statement statement8(mysql_session);
-	statement8 << "SELECT * FROM merchant_storage_equips WHERE player_id = " << id_;
-	cols = statement8.execute();
-
-	Poco::Data::RecordSet rs6(statement8);
-
-	for (; cols > 0; --cols)
-	{
-		int item_id = rs6["equip_id"];
-		signed char slot = rs6["pos"];
-
-		std::shared_ptr<Item> equip(new Item(item_id));
-		equip->set_slot(slot);
-
-		equip->set_free_slots(rs6["slots"]);
-		equip->set_used_scrolls(rs6["used_scrolls"]);
-		equip->set_str(rs6["str"]);
-		equip->set_dex(rs6["dex"]);
-		equip->set_int(rs6["iint"]);
-		equip->set_luk(rs6["luk"]);
-		equip->set_hp(rs6["hp"]);
-		equip->set_mp(rs6["mp"]);
-		equip->set_weapon_attack(rs6["weapon_attack"]);
-		equip->set_magic_attack(rs6["magic_attack"]);
-		equip->set_weapon_defense(rs6["weapon_def"]);
-		equip->set_magic_defense(rs6["magic_def"]);
-		equip->set_acc(rs6["accuracy"]);
-		equip->set_avoid(rs6["avoid"]);
-		equip->set_hand(rs6["hand"]);
-		equip->set_speed(rs6["speed"]);
-		equip->set_jump(rs6["jump"]);
-
-		EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
-
-		if (data)
-		{
-			merchant_storage_items_[static_cast<signed char>(merchant_storage_items_.size())] = equip;
-		}
-
-		rs6.moveNext();
-	}
-
-	// equips
-	Poco::Data::Statement statement9(mysql_session);
-	statement9 << "SELECT * FROM equips WHERE player_id = " << id_;
-	cols = statement9.execute();
-
-	Poco::Data::RecordSet rs7(statement9);
-
-	for (; cols > 0; --cols)
-	{
-		int item_id = rs7["equip_id"];
-		signed char slot = rs7["pos"];
-
-		std::shared_ptr<Item> equip(new Item(item_id));
-		equip->set_slot(slot);
-
-		equip->set_free_slots(rs7["slots"]);
-		equip->set_used_scrolls(rs7["used_scrolls"]);
-		equip->set_str(rs7["str"]);
-		equip->set_dex(rs7["dex"]);
-		equip->set_int(rs7["iint"]);
-		equip->set_luk(rs7["luk"]);
-		equip->set_hp(rs7["hp"]);
-		equip->set_mp(rs7["mp"]);
-		equip->set_weapon_attack(rs7["weapon_attack"]);
-		equip->set_magic_attack(rs7["magic_attack"]);
-		equip->set_weapon_defense(rs7["weapon_def"]);
-		equip->set_magic_defense(rs7["magic_def"]);
-		equip->set_acc(rs7["accuracy"]);
-		equip->set_avoid(rs7["avoid"]);
-		equip->set_hand(rs7["hand"]);
-		equip->set_speed(rs7["speed"]);
-		equip->set_jump(rs7["jump"]);
-
-		signed char inventory_id = (equip->get_slot() > 0 ? kInventoryConstantsTypesEquip : kInventoryConstantsTypesEquipped);
-		Inventory *inventory = get_inventory(inventory_id);
-		EquipData *data = EquipDataProvider::get_instance()->get_item_data(equip->get_item_id());
-
-		if (inventory && data)
-		{
-			inventory->add_item_no_find_slot(equip, false);
-		}
-
-		rs7.moveNext();
-	}
-
-	// items
-	Poco::Data::Statement statement10(mysql_session);
-	statement10 << "SELECT item_id, pos, amount FROM items WHERE player_id = " << id_;
-	cols = statement10.execute();
-
-	Poco::Data::RecordSet rs8(statement10);
-
-	for (; cols > 0; --cols)
-	{
-		int item_id = rs8["item_id"];
-		short amount = rs8["amount"];
-		signed char slot = rs8["pos"];
-
-		std::shared_ptr<Item> item(new Item(item_id));
-		item->set_amount(amount);
-		item->set_slot(slot);
-
-		Inventory *inventory = get_inventory(item->get_inventory_id());
-		ItemData *data = ItemDataProvider::get_instance()->get_item_data(item->get_item_id());
-
-		if (inventory && data)
-		{
-			inventory->add_item_no_find_slot(item, false);
-		}
-
-		rs8.moveNext();
-	}
-
-	// pets
-	Poco::Data::Statement statement11(mysql_session);
-	statement11 << "SELECT pet_id, pos, pet_slot, level, closeness FROM pets WHERE player_id = " << id_;
-	cols = statement11.execute();
-
-	Poco::Data::RecordSet rs9(statement11);
-
-	for (; cols > 0; --cols)
-	{
-		int pet_id = rs9["pet_id"];
-
-		if (bool check = PetDataProvider::get_instance()->get_data_by_id(pet_id) != nullptr)
-			//if (inventory_constants::is_pet(pet_id))
-		{
-			std::shared_ptr<Item> pet(new Item(pet_id));
-			pet->set_pet_level(rs9["level"]);
-			pet->set_slot(rs9["pos"]);
-			pet->set_pet_slot(rs9["pet_slot"]);
-			pet->set_closeness(rs9["closeness"]);
-
-			get_inventory(kInventoryConstantsTypesCash)->add_item_no_find_slot(pet, false);
-
-			if (pet->get_pet_slot() >= 0 && pets_.size() < 3)
-			{
-				pet->set_pet_slot(static_cast<signed char>(pets_.size()));
-				pets_.push_back(pet);
-			}
-		}
-
-		rs9.moveNext();
 	}
 
 	// is this needed in v0.83 GMS?
@@ -1178,28 +1203,30 @@ void Player::player_connect()
 		initialize_player_quests(29946, true, 0, 0);
 	}*/
 
-	// quests
-	Poco::Data::Statement statement12(mysql_session);
-	statement12 << "SELECT * FROM quests WHERE player_id = " << id_;
-	cols = statement12.execute();
-
-	Poco::Data::RecordSet rs10(statement12);
-
-	for (; cols > 0; --cols)
 	{
-		int quest_id = rs10["quest_id"];
-		bool is_completed = rs10["is_complete"];
-		int mob_id = rs10["killed_mob"];
-		int amount = rs10["amount"];
+		// quests
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT * FROM quests WHERE player_id = " << id_;
+		size_t cols = statement.execute();
 
-		QuestData *data = QuestDataProvider::get_instance()->get_quest_data(quest_id);
+		Poco::Data::RecordSet rs(statement);
 
-		if (data)
+		for (; cols > 0; --cols)
 		{
-			initialize_player_quests(quest_id, is_completed, mob_id, amount);
-		}
+			int quest_id = rs["quest_id"];
+			bool is_completed = rs["is_complete"];
+			int mob_id = rs["killed_mob"];
+			int amount = rs["amount"];
 
-		rs10.moveNext();
+			QuestData *data = QuestDataProvider::get_instance()->get_quest_data(quest_id);
+
+			if (data)
+			{
+				initialize_player_quests(quest_id, is_completed, mob_id, amount);
+			}
+
+			rs1.moveNext();
+		}
 	}
 
 	// add the monster riding skill to the player by default
@@ -1211,55 +1238,57 @@ void Player::player_connect()
 	monster_riding_skill.master_level_ = 0;
 	skills_[monster_riding_skill_id] = monster_riding_skill;
 
-	// load skills
-	Poco::Data::Statement statement13(mysql_session);
-	statement13 << "SELECT skill_id, level, master_level FROM skills WHERE player_id = " << id_;
-	cols = statement13.execute();
-
-	Poco::Data::RecordSet rs11(statement13);
-
-	for (; cols > 0; --cols)
 	{
-		int skill_id = rs11["skill_id"];
-		int skill_level = rs11["level"];
-		int master_level = rs11["master_level"];
+		// load skills
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT skill_id, level, master_level FROM skills WHERE player_id = " << id_;
+		size_t cols = statement.execute();
 
-		SkillData *data = SkillDataProvider::get_instance()->get_skill_data(skill_id);
+		Poco::Data::RecordSet rs(statement);
 
-		if (data)
+		for (; cols > 0; --cols)
 		{
-			Skill skill;
-			skill.level_ = skill_level;
-			skill.master_level_ = master_level;
+			int skill_id = rs["skill_id"];
+			int skill_level = rs["level"];
+			int master_level = rs["master_level"];
 
-			skills_[skill_id] = skill;
+			SkillData *data = SkillDataProvider::get_instance()->get_skill_data(skill_id);
+
+			if (data)
+			{
+				Skill skill;
+				skill.level_ = skill_level;
+				skill.master_level_ = master_level;
+
+				skills_[skill_id] = skill;
+			}
+
+			rs.moveNext();
 		}
+	}
 
-		rs11.moveNext();
+	for (int pos = kMinKeymapPos; pos < kMaxKeymapPos; ++pos)
+	{
+		keys_[pos] = Key();
+
+		Key &key = keys_[pos];
+		key.type = 0;
+		key.action = 0;
 	}
 
 	// load keymap
 	{
-		for (int pos = kMinKeymapPos; pos < kMaxKeymapPos; ++pos)
-		{
-			keys_[pos] = Key();
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT pos, type, action FROM keymap WHERE player_id = " << id_;
+		size_t cols = statement.execute();
 
-			Key &key = keys_[pos];
-			key.type = 0;
-			key.action = 0;
-		}
-
-		Poco::Data::Statement statement14(mysql_session);
-		statement14 << "SELECT pos, type, action FROM keymap WHERE player_id = " << id_;
-		cols = statement14.execute();
-
-		Poco::Data::RecordSet rs12(statement14);
+		Poco::Data::RecordSet rs(statement);
 
 		for (; cols > 0; --cols)
 		{
-			int pos = rs12["pos"];
-			signed char type = rs12["type"];
-			int action = rs12["action"];
+			int pos = rs["pos"];
+			signed char type = rs["type"];
+			int action = rs["action"];
 
 			keys_[pos] = Key();
 
@@ -1267,39 +1296,41 @@ void Player::player_connect()
 			key.type = type;
 			key.action = action;
 
-			rs12.moveNext();
+			rs.moveNext();
 		}
 	}
 
-	// load buddylist
-	Poco::Data::Statement statement15(mysql_session);
-	statement15 << "SELECT buddy_id FROM buddy_lists WHERE player_id = " << id_;
-	cols = statement15.execute();
-
-	Poco::Data::RecordSet rs13(statement15);
-
-	for (; cols > 0; --cols)
 	{
-		int buddy_id = rs13["buddy_id"];
+		// load buddylist
+		Poco::Data::Statement statement(mysql_session);
+		statement << "SELECT buddy_id FROM buddy_lists WHERE player_id = " << id_;
+		size_t cols = statement.execute();
 
-		Player *buddy = world->GetPlayerById(buddy_id);
+		Poco::Data::RecordSet rs(statement);
 
-		if (buddy && buddy->get_buddy(id_))
+		for (; cols > 0; --cols)
 		{
-			add_buddy(buddy->get_id(), buddy->get_name(), buddy->get_channel_id());
-			change_buddy_channel(buddy, id_, channel_id_);
-		}
-		else
-		{
-			std::string buddy_name = world->get_player_name_from_id(buddy_id);
+			int buddy_id = rs["buddy_id"];
 
-			if (buddy_name != "")
+			Player *buddy = world->GetPlayerById(buddy_id);
+
+			if (buddy && buddy->get_buddy(id_))
 			{
-				add_buddy(buddy_id, buddy_name, -1);
+				add_buddy(buddy->get_id(), buddy->get_name(), buddy->get_channel_id());
+				change_buddy_channel(buddy, id_, channel_id_);
 			}
-		}
+			else
+			{
+				std::string buddy_name = world->get_player_name_from_id(buddy_id);
 
-		rs13.moveNext();
+				if (buddy_name != "")
+				{
+					add_buddy(buddy_id, buddy_name, -1);
+				}
+			}
+
+			rs.moveNext();
+		}
 	}
 
 	// add the player to the world
@@ -2218,7 +2249,7 @@ void Player::save_equips()
 			std::shared_ptr<Item> equip = it.second;
 			if (firstrun)
 			{
-				statement2 << "INSERT INTO equips (equip_id, player_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump) VALUES";
+				statement2 << "INSERT INTO equips (equip_id, player_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump, flags) VALUES";
 				firstrun = false;
 			}
 			else
@@ -2245,7 +2276,8 @@ void Player::save_equips()
 				<< static_cast<int>(equip->get_avoid()) << ","
 				<< static_cast<int>(equip->get_hand()) << ","
 				<< static_cast<int>(equip->get_speed()) << ","
-				<< static_cast<int>(equip->get_jump())
+				<< static_cast<int>(equip->get_jump()) << ","
+				<< static_cast<int>(equip->get_flag())
 				<< ")";
 		}
 		if (!firstrun)
@@ -2277,14 +2309,14 @@ void Player::save_items()
 			{
 				if (firstrun)
 				{
-					statement2 << "INSERT INTO items (item_id, player_id, pos, amount) VALUES";
+					statement2 << "INSERT INTO items (item_id, player_id, pos, amount, flags) VALUES";
 					firstrun = false;
 				}
 				else
 				{
 					statement2 << ",";
 				}
-				statement2 << "(" << item->get_item_id() << "," << id_ << "," << static_cast<int>(item->get_slot()) << "," << static_cast<int>(item->get_amount()) << ")";
+				statement2 << "(" << item->get_item_id() << "," << id_ << "," << static_cast<int>(item->get_slot()) << "," << static_cast<int>(item->get_amount()) << "," << static_cast<int>(item->get_flag()) << ")";
 			}
 		}
 
@@ -2478,7 +2510,7 @@ void Player::save_storage_equips()
 		}
 		if (firstrun)
 		{
-			statement2 << "INSERT INTO storage_equips (equip_id, user_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump) VALUES";
+			statement2 << "INSERT INTO storage_equips (equip_id, user_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump, flags) VALUES";
 			firstrun = false;
 		}
 		else
@@ -2505,7 +2537,8 @@ void Player::save_storage_equips()
 			<< static_cast<int>(equip->get_avoid()) << ","
 			<< static_cast<int>(equip->get_hand()) << ","
 			<< static_cast<int>(equip->get_speed()) << ","
-			<< static_cast<int>(equip->get_jump())
+			<< static_cast<int>(equip->get_jump()) << ","
+			<< static_cast<int>(equip->get_flag())
 			<< ")";
 	}
 	if (!firstrun)
@@ -2533,7 +2566,7 @@ void Player::save_storage_items()
 		}
 		if (firstrun)
 		{
-			statement2 << "INSERT INTO storage_items (item_id, user_id, pos, amount) VALUES";
+			statement2 << "INSERT INTO storage_items (item_id, user_id, pos, amount, flags) VALUES";
 			firstrun = false;
 		}
 		else
@@ -2544,7 +2577,8 @@ void Player::save_storage_items()
 			<< item->get_item_id() << ","
 			<< user_id_ << ","
 			<< static_cast<int>(item->get_slot()) << ","
-			<< static_cast<int>(item->get_amount())
+			<< static_cast<int>(item->get_amount()) << ","
+			<< static_cast<int>(item->get_flag())
 			<< ")";
 	}
 	if (!firstrun)
@@ -2573,7 +2607,7 @@ void Player::save_merchant_storage_equips()
 		}
 		if (firstrun)
 		{
-			statement2 << "INSERT INTO merchant_storage_equips (equip_id, player_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump) VALUES";
+			statement2 << "INSERT INTO merchant_storage_equips (equip_id, player_id, pos, slots, used_scrolls, str, dex, iint, luk, hp, mp, weapon_attack, magic_attack, weapon_def, magic_def, accuracy, avoid, hand, speed, jump, flags) VALUES";
 			firstrun = false;
 		}
 		else
@@ -2600,7 +2634,8 @@ void Player::save_merchant_storage_equips()
 			<< static_cast<int>(equip->get_avoid()) << ","
 			<< static_cast<int>(equip->get_hand()) << ","
 			<< static_cast<int>(equip->get_speed()) << ","
-			<< static_cast<int>(equip->get_jump())
+			<< static_cast<int>(equip->get_jump()) << ","
+			<< static_cast<int>(equip->get_flag())
 			<< ")";
 	}
 	if (!firstrun)
@@ -2629,7 +2664,7 @@ void Player::save_merchant_storage_items()
 		}
 		if (firstrun)
 		{
-			statement2 << "INSERT INTO merchant_storage_items (item_id, player_id, pos, amount) VALUES";
+			statement2 << "INSERT INTO merchant_storage_items (item_id, player_id, pos, amount, flags) VALUES";
 			firstrun = false;
 		}
 		else
@@ -2640,7 +2675,8 @@ void Player::save_merchant_storage_items()
 			<< item->get_item_id() << ","
 			<< id_ << ","
 			<< static_cast<int>(item->get_slot()) << ","
-			<< static_cast<int>(item->get_amount())
+			<< static_cast<int>(item->get_amount()) << ","
+			<< static_cast<int>(item->get_flag())
 			<< ")";
 	}
 	if (!firstrun)

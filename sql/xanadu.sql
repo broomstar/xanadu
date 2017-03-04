@@ -116,6 +116,7 @@ CREATE TABLE items (
   `player_id` INT NOT NULL,
   `pos` INT NOT NULL,
   `amount` INT NOT NULL,
+  `flags` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
@@ -192,6 +193,7 @@ CREATE TABLE storage_equips (
   hand INT NOT NULL DEFAULT '0',
   speed INT NOT NULL DEFAULT '0',
   jump INT NOT NULL DEFAULT '0',
+  flags INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
@@ -201,6 +203,7 @@ CREATE TABLE storage_items (
   `user_id` INT NOT NULL,
   `pos` INT NOT NULL,
   `amount` INT NOT NULL,
+  `flags` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
@@ -226,6 +229,7 @@ CREATE TABLE merchant_storage_equips (
   hand INT NOT NULL DEFAULT '0',
   speed INT NOT NULL DEFAULT '0',
   jump INT NOT NULL DEFAULT '0',
+  flags INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
@@ -235,6 +239,7 @@ CREATE TABLE merchant_storage_items (
   `player_id` INT NOT NULL,
   `pos` INT NOT NULL,
   `amount` INT NOT NULL,
+  `flags` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
