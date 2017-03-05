@@ -312,6 +312,8 @@ public:
 	// misc
 	void ShowOwnPetLevelUp(signed char pet_slot);
 	void ShowPetLevelUp(int owner_player_id, signed char pet_slot);
+	void SendHammerData(int hammer_used);
+	void SendHammerMessage();
 
 	// templates
 

@@ -147,7 +147,9 @@ buglist
 
 -------------------- other --------------------
 
-- to-do fix Vicious Hammer
+- to-do save hammers used to database
+
+- equip isn't updated after using vicious hammer (note: this is just about the data that is displayed)
 
 - improve angelscript related code (maybe save bytecode, maybe do other caching, and more)
 

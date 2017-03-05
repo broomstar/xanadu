@@ -258,3 +258,10 @@ void Player::handle_hired_merchant_request()
 		send_packet(&packet);
 	}
 }
+
+void Player::handle_use_hammer()
+{
+	PacketCreator packet;
+	packet.SendHammerMessage();
+	send_packet(&packet);
+}

@@ -584,6 +584,9 @@ void Player::handle_packet_in_game()
 		case receive_headers::kARAN_COMBO:
 			handle_add_aran_combo();
 			break;
+		case receive_headers::kUSE_HAMMER:
+			handle_use_hammer();
+			break;
 		}
 	}
 	catch (Poco::Exception/* &e*/)

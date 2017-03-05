@@ -123,4 +123,5 @@ namespace send_headers
 	constexpr short kKEYMAP = 0x14F;
 	constexpr short kMTS_SHOW_CASH = 0x15B;
 	constexpr short kMTS_OPERATION = 0x15C;
+	constexpr short kVICIOUS_HAMMER = 0x162;
 }

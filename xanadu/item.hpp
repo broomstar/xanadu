@@ -68,7 +68,6 @@ public:
 	unsigned char get_free_slots();
 	void set_used_scrolls(unsigned char used_scrolls);
 	unsigned char get_used_scrolls();
-	signed char get_boss_damage();
 	void set_str(short str);
 	short get_str();
 	void set_dex(short dex);
@@ -99,6 +98,8 @@ public:
 	short get_speed();
 	void set_jump(short jump);
 	short get_jump();
+	void set_hammers_used(int hammers_used);
+	int get_hammers_used();
 
 private:
 
@@ -135,4 +136,5 @@ private:
 	short hand_;
 	short speed_;
 	short jump_;
+	int hammers_used_;
 };

@@ -1302,3 +1302,18 @@ void PacketCreator::ShowBuffEffect(int player_id, signed char effect_id, int ski
 	write<signed char>(0); // direction?
 	write<signed char>(skill_level);
 }
+
+void PacketCreator::SendHammerData(int hammer_used)
+{
+	write<short>(send_headers::kVICIOUS_HAMMER);
+	write<signed char>(0x39);
+	write<int>(0);
+	write<int>(hammer_used);
+}
+
+void PacketCreator::SendHammerMessage()
+{
+	write<short>(send_headers::kVICIOUS_HAMMER);
+	write<signed char>(0x3D);
+	write<int>(0);
+}

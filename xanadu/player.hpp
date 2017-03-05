@@ -332,6 +332,7 @@ public:
 	void handle_enter_mts();
 	void handle_leave_mts();
 	void handle_add_aran_combo();
+	void handle_use_hammer();
 	void movement_handler(short &position_x, short &position_y, short &foothold, signed char &stance);
 
 	// packet reading

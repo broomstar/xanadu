@@ -94,4 +94,5 @@ namespace receive_headers
 	constexpr short kHIT_REACTOR = 0xCD;
 	constexpr short kCHECK_CASH = 0xE4;
 	constexpr short kCASHSHOP_OPERATION = 0xE5;
+	constexpr short kUSE_HAMMER = 0x104;
 }

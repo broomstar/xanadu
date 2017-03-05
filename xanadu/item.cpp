@@ -64,7 +64,8 @@ Item::Item(int item_id, bool random_equip_stats):
 	avo_(0),
 	hand_(0),
 	speed_(0),
-	jump_(0)
+	jump_(0),
+	hammers_used_(0)
 {
 	if (is_pet())
 	{
@@ -336,11 +337,6 @@ unsigned char Item::get_used_scrolls()
 	return used_scrolls_;
 }
 
-signed char Item::get_boss_damage()
-{
-	return 0;
-}
-
 void Item::set_str(short str)
 {
 	str_ = str;
@@ -489,4 +485,14 @@ void Item::set_jump(short jump)
 short Item::get_jump()
 {
 	return jump_;
+}
+
+void Item::set_hammers_used(int hammers_used)
+{
+	hammers_used_ = hammers_used;
+}
+
+int Item::get_hammers_used()
+{
+	return hammers_used_;
 }
