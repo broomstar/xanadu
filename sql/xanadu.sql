@@ -66,6 +66,7 @@ CREATE TABLE equips (
   hand INT NOT NULL DEFAULT '0',
   speed INT NOT NULL DEFAULT '0',
   jump INT NOT NULL DEFAULT '0',
+  flags INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`primary_id`)
 );
 
