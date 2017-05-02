@@ -42,7 +42,6 @@ namespace send_headers
 	constexpr short kSERVERMESSAGE = 0x44;
 	constexpr short kSHOW_AVATAR_MEGA = 0x6F;
 	constexpr short kWARP_TO_MAP = 0x7D;
-	constexpr short kSET_MTS = 0x7E;
 	constexpr short kOPEN_CASHSHOP = 0x7F;
 	constexpr short kGROUP_CHAT = 0x86;
 	constexpr short kWHISPER = 0x87;
@@ -121,7 +120,5 @@ namespace send_headers
 	constexpr short kSHOW_CASH = 0x144;
 	constexpr short kCASHSHOP_OPERATION = 0x145;
 	constexpr short kKEYMAP = 0x14F;
-	constexpr short kMTS_SHOW_CASH = 0x15B;
-	constexpr short kMTS_OPERATION = 0x15C;
 	constexpr short kVICIOUS_HAMMER = 0x162;
 }

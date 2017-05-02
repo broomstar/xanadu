@@ -89,7 +89,6 @@ public:
 	void set_guild_rank(int rank);
 	int get_guild_rank();
 	bool get_is_in_cash_shop();
-	bool get_is_in_mts();
 	bool get_is_gm();
 	Inventory *get_inventory(signed char id);
 	std::shared_ptr<HiredMerchant> get_hired_merchant();
@@ -245,7 +244,6 @@ public:
 	// packet handlers
 	void handle_packet(unsigned short bytes_amount);
 	void handle_packet_in_cashshop();
-	void handle_packet_in_mts();
 	void handle_packet_in_game();
 	void handle_packet_in_login();
 
@@ -330,7 +328,6 @@ public:
 	void handle_merchant_storage_request();
 	void handle_hit_reactor();
 	void handle_enter_mts();
-	void handle_leave_mts();
 	void handle_add_aran_combo();
 	void handle_use_hammer();
 	void movement_handler(short &position_x, short &position_y, short &foothold, signed char &stance);
@@ -401,7 +398,6 @@ private:
 	bool trade_locked_;
 	bool in_game_;
 	bool in_cash_shop_;
-	bool in_mts_;
 	unsigned char level_;
 	unsigned char channel_id_;
 	signed char crusader_combo_value_;

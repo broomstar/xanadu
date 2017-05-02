@@ -13,8 +13,6 @@ need to work out the details of these features first
 
 - maybe implement pet fullness
 
-- maybe implement MTS fully (entering it is partially done)
-
 - maybe implement rings
 
 - maybe implement marriage

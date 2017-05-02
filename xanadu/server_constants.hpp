@@ -14,5 +14,3 @@ constexpr auto kWorld1Name = "Scania";
 constexpr auto kWorld1EventMessage = "";
 constexpr signed char kWorld1Flag = 0;
 constexpr auto kHeaderMessage = "";
-
-constexpr const bool kMTSEnabled = true;

@@ -40,11 +40,11 @@ void Player::handle_chat_command()
 		}
 		if (receiver_player->get_channel_id() == channel_id_)
 		{
-			if (receiver_player->get_is_in_cash_shop() || receiver_player->get_is_in_mts())
+			if (receiver_player->get_is_in_cash_shop())
 			{
 				{
 					PacketCreator packet;
-					packet.FindPlayer(receiver_player->get_name(), receiver_player->get_is_in_cash_shop() ? find_player_packet_mode2_constants::kCashshop : find_player_packet_mode2_constants::kMts, -1);
+					packet.FindPlayer(receiver_player->get_name(), find_player_packet_mode2_constants::kCashshop, -1);
 					send_packet(&packet);
 				}
 			}

@@ -73,7 +73,6 @@ Player::Player(Session *session) :
 	merchant_(nullptr),
 	in_hide_(false),
 	in_cash_shop_(false),
-	in_mts_(false),
 	in_game_(false),
 	aran_combo_value_(0),
 	last_gm_call_ticks_(0),
@@ -130,7 +129,7 @@ Player::~Player()
 		map_->remove_player(this);
 	}
 
-	if (in_game_ || in_cash_shop_ || in_mts_)
+	if (in_game_ || in_cash_shop_)
 	{
 		// trading
 		mesos_ += trade_mesos;
@@ -334,50 +333,6 @@ void Player::handle_packet_in_cashshop()
 		text.append("player_name: " + name_);
 
 		Logger logger("handle_packet_in_cashshop_unk_exceptions.txt");
-		logger.write(text.c_str());*/
-	}
-}
-
-void Player::handle_packet_in_mts()
-{
-	try
-	{
-		short header = read<short>();
-		switch (header)
-		{
-		case receive_headers::kREQUEST_MAP_CHANGE:
-			handle_leave_mts();
-			break;
-		}
-	}
-	catch (Poco::Exception/* &e*/)
-	{
-		/*std::string text(e.displayText());
-		text.append("\n header of the packet: ");
-		text.append(std::to_string(header) + "\n");
-		text.append("player_name: " + name_);
-
-		Logger logger("handle_packet_in_mts_poco_exceptions.txt");
-		logger.write(text.c_str());*/
-	}
-	catch (std::exception/* &e*/)
-	{
-		/*std::string text(e.what());
-		text.append("\n header of the packet: ");
-		text.append(std::to_string(header) + "\n");
-		text.append("player_name: " + name_);
-
-		Logger logger("handle_packet_in_mts_std_exceptions.txt");
-		logger.write(text.c_str());*/
-	}
-	catch (...)
-	{
-		/*std::string text("unknown exception");
-		text.append("\n header of the packet: ");
-		text.append(std::to_string(header) + "\n");
-		text.append("player_name: " + name_);
-
-		Logger logger("handle_packet_in_mts_unk_exceptions.txt");
 		logger.write(text.c_str());*/
 	}
 }
@@ -710,10 +665,6 @@ void Player::handle_packet(unsigned short bytes_amount)
 	if (in_cash_shop_)
 	{
 		handle_packet_in_cashshop();
-	}
-	else if (in_mts_)
-	{
-		handle_packet_in_mts();
 	}
 	else if (in_game_)
 	{
@@ -2932,11 +2883,6 @@ int Player::get_guild_rank()
 bool Player::get_is_in_cash_shop()
 {
 	return in_cash_shop_;
-}
-
-bool Player::get_is_in_mts()
-{
-	return in_mts_;
 }
 
 bool Player::get_is_gm()

@@ -355,9 +355,6 @@
     <ClCompile Include="logger.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
-    <ClCompile Include="mts_packets.cpp">
-      <Filter>send_packet_creator</Filter>
-    </ClCompile>
     <ClCompile Include="mts_handler.cpp">
       <Filter>receive_packet_handler</Filter>
     </ClCompile>
