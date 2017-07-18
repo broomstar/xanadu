@@ -223,7 +223,7 @@ void Map::check_drops()
 	unsigned long long ticks = GetTickCount64();
 
 	auto it = drops_.begin();
-	for ( ; it != drops_.end(); )
+	for (; it != drops_.end(); )
 	{
 		const std::shared_ptr<Drop> &drop = it->second;
 
@@ -234,10 +234,12 @@ void Map::check_drops()
 
 		if (ticks > (drop->get_time() + kDropDuration))
 		{
-			// packet
-			PacketCreator packet1;
-			packet1.RemoveDrop(drop->get_id(), 0, 0, 0);
-			send_packet(&packet1);
+			{
+				// packet
+				PacketCreator packet;
+				packet.RemoveDrop(drop->get_id(), 0, 0, 0);
+				send_packet(&packet);
+			}
 
 			it = drops_.erase(it);
 		}
@@ -263,20 +265,23 @@ void Map::add_player(Player *player)
 	// display reactors
 	for (auto reactor : reactors_)
 	{
-		PacketCreator packet1;
-		packet1.SpawnReactor(get_reactor_object_id(), reactor);
-		player->send_packet(&packet1);
+		{
+			PacketCreator packet;
+			packet.SpawnReactor(get_reactor_object_id(), reactor);
+			player->send_packet(&packet);
+		}
 	}
 
 	// display hired merchants
 	for (auto it : hired_merchants_)
 	{
 		std::shared_ptr<HiredMerchant> merchant = it.second;
-
-		// packet
-		PacketCreator packet7;
-		packet7.SpawnHiredMerchant(merchant);
-		player->send_packet(&packet7);
+		{
+			// packet
+			PacketCreator packet;
+			packet.SpawnHiredMerchant(merchant);
+			player->send_packet(&packet);
+		}
 	}
 
 	MapData *data = MapDataProvider::get_instance()->get_map_data_by_id(id_);
@@ -285,9 +290,11 @@ void Map::add_player(Player *player)
 	// display npcs
 	for (Npc *npc : *npcs)
 	{
-		PacketCreator packet;
-		packet.ShowNpc(npc);
-		player->send_packet(&packet);
+		{
+			PacketCreator packet;
+			packet.ShowNpc(npc);
+			player->send_packet(&packet);
+		}
 	}
 
 	// fm npcs
@@ -327,9 +334,11 @@ void Map::add_player(Player *player)
 	for (auto it : drops_)
 	{
 		std::shared_ptr<Drop> drop = it.second;
-		PacketCreator packet29;
-		packet29.ShowDrop(kDropPacketConstantsAnimationTypesShowExisting, drop, 0, 0);
-		player->send_packet(&packet29);
+		{
+			PacketCreator packet;
+			packet.ShowDrop(kDropPacketConstantsAnimationTypesShowExisting, drop, 0, 0);
+			player->send_packet(&packet);
+		}
 	}
 
 	// display players, summons and dragons
@@ -340,9 +349,11 @@ void Map::add_player(Player *player)
 		// * Or the player has a GM rank
 		if (!target_player->is_hidden() || player->get_is_gm())
 		{
-			PacketCreator packet6;
-			packet6.ShowPlayer(target_player);
-			player->send_packet(&packet6);
+			{
+				PacketCreator packet;
+				packet.ShowPlayer(target_player);
+				player->send_packet(&packet);
+			}
 		}
 
 		// display the player to the target player, if:
@@ -350,9 +361,11 @@ void Map::add_player(Player *player)
 		// * Or the target player has a GM rank
 		if (!player->is_hidden() || target_player->get_is_gm())
 		{
-			PacketCreator packet7;
-			packet7.ShowPlayer(player);
-			target_player->send_packet(&packet7);
+			{
+				PacketCreator packet;
+				packet.ShowPlayer(player);
+				target_player->send_packet(&packet);
+			}
 		}
 
 		// diplay target players summon to the player, if:
@@ -362,10 +375,12 @@ void Map::add_player(Player *player)
 		if (target_player->get_summon()
 			&& (!target_player->is_hidden() || player->get_is_gm()))
 		{
-			// send a packet
-			PacketCreator packet25;
-			packet25.SpawnSummon(target_player, target_player->get_summon(), false);
-			player->send_packet(&packet25);
+			{
+				// send a packet
+				PacketCreator packet;
+				packet.SpawnSummon(target_player, target_player->get_summon(), false);
+				player->send_packet(&packet);
+			}
 		}
 
 		// diplay players summon to the target player, if:
@@ -375,10 +390,12 @@ void Map::add_player(Player *player)
 		if (player->get_summon()
 			&& (!player->is_hidden() || target_player->get_is_gm()))
 		{
-			// send a packet
-			PacketCreator packet26;
-			packet26.SpawnSummon(player, player->get_summon(), false);
-			target_player->send_packet(&packet26);
+			{
+				// send a packet
+				PacketCreator packet;
+				packet.SpawnSummon(player, player->get_summon(), false);
+				target_player->send_packet(&packet);
+			}
 		}
 	}
 
@@ -390,10 +407,12 @@ void Map::add_player(Player *player)
 	{
 		if (!mob->is_dead())
 		{
-			// packet
-			PacketCreator packet37;
-			packet37.SpawnMonster(mob, mob_constants::kSpawnTypesOldSpawn);
-			player->send_packet(&packet37);
+			{
+				// packet
+				PacketCreator packet;
+				packet.SpawnMonster(mob, mob_constants::kSpawnTypesOldSpawn);
+				player->send_packet(&packet);
+			}
 
 			if (!mob->get_owner())
 			{
@@ -405,10 +424,12 @@ void Map::add_player(Player *player)
 	// spawn summon for the player
 	if (player->get_summon())
 	{
-		// send a packet
-		PacketCreator packet27;
-		packet27.SpawnSummon(player, player->get_summon(), false);
-		player->send_packet(&packet27);
+		{
+			// send a packet
+			PacketCreator packet;
+			packet.SpawnSummon(player, player->get_summon(), false);
+			player->send_packet(&packet);
+		}
 	}
 
 	// spawn pets for the player
@@ -417,11 +438,12 @@ void Map::add_player(Player *player)
 	for (auto pet : *pets)
 	{
 		pet->set_position(player->get_position_x(), player->get_position_y(), player->get_stance());
-
-		// packet
-		PacketCreator packet34;
-		packet34.ShowPet(player->get_id(), pet, true);
-		player->send_packet(&packet34);
+		{
+			// packet
+			PacketCreator packet;
+			packet.ShowPet(player->get_id(), pet, true);
+			player->send_packet(&packet);
+		}
 	}
 
 	// update players party
@@ -438,21 +460,26 @@ void Map::add_player(Player *player)
 		for (auto it : *players)
 		{
 			Player *target = it.second;
-			// send a packet
-			PacketCreator packet10;
-			packet10.UpdateParty(party);
-			target->send_packet(&packet10);
-			//
-			if (target->get_map() == this && target != player)
 			{
 				// send a packet
-				PacketCreator packet11;
-				packet11.UpdatePartyHp(player);
-				target->send_packet(&packet11);
-				// send a packet
-				PacketCreator packet12;
-				packet12.UpdatePartyHp(target);
-				player->send_packet(&packet12);
+				PacketCreator packet;
+				packet.UpdateParty(party);
+				target->send_packet(&packet);
+			}
+			if (target->get_map() == this && target != player)
+			{
+				{
+					// send a packet
+					PacketCreator packet;
+					packet.UpdatePartyHp(player);
+					target->send_packet(&packet);
+				}
+				{
+					// send a packet
+					PacketCreator packet;
+					packet.UpdatePartyHp(target);
+					player->send_packet(&packet);
+				}
 			}
 		}
 	}
@@ -482,9 +509,11 @@ void Map::add_player(Player *player)
 	// the following code in this function is for development purposes only
 	if (id_ == 980000101)
 	{
-		PacketCreator packet15;
-		packet15.StartCarnivalPartyQuest(mcpq_constants::kTeamRed);
-		send_packet(&packet15);
+		{
+			PacketCreator packet;
+			packet.StartCarnivalPartyQuest(mcpq_constants::kTeamRed);
+			send_packet(&packet);
+		}
 	}
 }
 
@@ -500,11 +529,11 @@ void Map::remove_player(Player *player)
 			break;
 		}
 	}
-
-	PacketCreator packet1;
-	packet1.RemovePlayer(player);
-	send_packet(&packet1);
-
+	{
+		PacketCreator packet;
+		packet.RemovePlayer(player);
+		send_packet(&packet);
+	}
 	// update mob controls
 	for (auto mob : mobs_)
 	{
@@ -601,16 +630,18 @@ bool Map::can_open_store(Player *player)
 		{
 			if (tools::get_distance(merchant->get_position_x(), merchant->get_position_y(), player->get_position_x(), player->get_position_y()) <= 23000)
 			{
-				// packet
-				PacketCreator packet1;
-				packet1.ShowMessage("You may not open a store here.", 5);
-				player->send_packet(&packet1);
-
-				// packet
-				PacketCreator packet2;
-				packet2.EnableAction();
-				player->send_packet(&packet2);
-
+				{
+					// packet
+					PacketCreator packet;
+					packet.ShowMessage("You may not open a store here.", 5);
+					player->send_packet(&packet);
+				}
+				{
+					// packet
+					PacketCreator packet;
+					packet.EnableAction();
+					player->send_packet(&packet);
+				}
 				return false;
 			}
 		}
@@ -727,10 +758,11 @@ void Map::drop_item_from_mob(short position_x, short position_y, Mob *mob, std::
 	std::shared_ptr<Drop> drop(new Drop(get_drop_object_id(), kDropPacketConstantsPickupTypesNormal, position_x, position_y, 0, owner, item));
 
 	drops_[drop->get_id()] = drop;
-
-	PacketCreator packet29;
-	packet29.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, mob->get_position_x(), mob->get_position_y());
-	send_packet(&packet29);
+	{
+		PacketCreator packet;
+		packet.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, mob->get_position_x(), mob->get_position_y());
+		send_packet(&packet);
+	}
 }
 
 void Map::drop_mesos_from_mob(short position_x, short position_y, Mob *mob, int amount, int owner)
@@ -739,10 +771,11 @@ void Map::drop_mesos_from_mob(short position_x, short position_y, Mob *mob, int 
 	std::shared_ptr<Drop> drop(new Drop(get_drop_object_id(), kDropPacketConstantsPickupTypesNormal, position_x, position_y, amount, owner, nullptr));
 
 	drops_[drop->get_id()] = drop;
-
-	PacketCreator packet29;
-	packet29.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, mob->get_position_x(), mob->get_position_y());
-	send_packet(&packet29);
+	{
+		PacketCreator packet;
+		packet.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, mob->get_position_x(), mob->get_position_y());
+		send_packet(&packet);
+	}
 }
 
 void Map::drop_from_player(std::shared_ptr<Item> item, Player *player)
@@ -765,10 +798,11 @@ void Map::drop_from_player(std::shared_ptr<Item> item, Player *player)
 	std::shared_ptr<Drop> drop(new Drop(drop_id, kDropPacketConstantsPickupTypesFreeForAll, x, y, 0, 0, item));
 
 	drops_[drop_id] = drop;
-
-	PacketCreator packet;
-	packet.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, x, player_position_y);
-	send_packet(&packet);
+	{
+		PacketCreator packet;
+		packet.ShowDrop(kDropPacketConstantsAnimationTypesDropAnimation, drop, x, player_position_y);
+		send_packet(&packet);
+	}
 }
 
 void Map::kill(Mob *mob)
@@ -777,10 +811,11 @@ void Map::kill(Mob *mob)
 
 	if (control && control->get_map() == this)
 	{
-		// packet
-		PacketCreator packet1;
-		packet1.EndControlMob(mob->get_object_id());
-		control->send_packet(&packet1);
+		{
+			PacketCreator packet;
+			packet.EndControlMob(mob->get_object_id());
+			control->send_packet(&packet);
+		}
 	}
 
 	mob->set_owner(nullptr);
@@ -804,10 +839,11 @@ void Map::kill(Mob *mob)
 		spawn_monster(monster_id, mob->get_position_x(), mob->get_position_y(), mob->get_original_foothold(), mob_constants::kSpawnTypesSummonByMob, mob->get_stance() % 2 == 0, mob->get_object_id());
 	}
 
-	// packet
-	PacketCreator packet8;
-	packet8.KillMob(mob->get_object_id());
-	send_packet(&packet8);
+	{
+		PacketCreator packet;
+		packet.KillMob(mob->get_object_id());
+		send_packet(&packet);
+	}
 
 	// zakum and other bosses check
 	if (bossing_)
@@ -837,18 +873,20 @@ void Map::kill(Mob *mob)
 
 				if (control && control->get_map() == this)
 				{
-					// packet
-					PacketCreator packet19;
-					packet19.EndControlMob(zakum_body->get_object_id());
-					control->send_packet(&packet19);
+					{
+						PacketCreator packet;
+						packet.EndControlMob(zakum_body->get_object_id());
+						control->send_packet(&packet);
+					}
 				}
 
 				zakum_body->set_owner(nullptr);
 
-				// packet
-				PacketCreator packet34;
-				packet34.KillMob(zakum_body->get_object_id());
-				send_packet(&packet34);
+				{
+					PacketCreator packet;
+					packet.KillMob(zakum_body->get_object_id());
+					send_packet(&packet);
+				}
 
 				zakum_body->reset();
 			}
@@ -888,10 +926,11 @@ void Map::spawn_monster(int mob_id, short x, short y, short foothold, signed cha
 
 	Mob *mob = new Mob(this, mob_id, get_mob_object_id(), x, y, foothold, flip ? 3 : 2, data->max_hp_, data->max_mp_, data->is_boss_, false);
 
-	// packet
-	PacketCreator packet1;
-	packet1.SpawnMonster(mob, spawn_type, from);
-	send_packet(&packet1);
+	{
+		PacketCreator packet;
+		packet.SpawnMonster(mob, spawn_type, from);
+		send_packet(&packet);
+	}
 
 	mob->find_control(true);
 	mobs_.push_back(mob);
