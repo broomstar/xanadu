@@ -46,21 +46,34 @@ void QuestDataProvider::load_data()
 		int quest_id = std::stoi(valuename1);
 		QuestData *quest = quests_[quest_id];
 
+		if (!quest)
+		{
+			continue;
+		}
+
 		WZNode node21 = wz_reader->base_["Quest"]["Act"][valuename1.c_str()];
 
-		/*
-					QuestRewardData * rew = new QuestRewardData();
+		QuestRewardData *rew = new QuestRewardData();
 
-					rew->setStart(rs["start"] == 0);
+		// TO-DO: fix this
+
+		/*			rew->setStart(rs["start"] == 0);
 					rew->setItem(rs["item"] == 1);
 					rew->set_exp(rs["exp"] == 1);
 					rew->setMesos(rs["mesos"] == 1);
 					rew->set_fame(rs["fame"] == 1);
 					rew->setID(rs["oid"]);
-					rew->setCount(rs["count"]);
+					rew->setCount(rs["count"]);*/
 
-					quest->add_reward(rew);
-					*/
+		rew->start = false;
+		rew->item = false;
+		rew->mesos = false;
+		rew->exp = true;
+		rew->fame = false;
+		rew->id = 10;
+		rew->count = 1;
+
+		quest->add_reward(rew);
 	}
 
 	// Check.img / Requests
@@ -74,6 +87,8 @@ void QuestDataProvider::load_data()
 		QuestData *quest = quests_[quest_id];
 
 		WZNode node31 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()];
+
+		// TO-DO: fix this
 
 		/*
 			for (size_t col = 0; col < rs.rowCount(); ++col)

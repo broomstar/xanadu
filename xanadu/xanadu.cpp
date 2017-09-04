@@ -25,7 +25,6 @@
 
 #include <thread>
 
-
 #include "script_handler.h"
 #include "server_constants.hpp"
 #include "session.hpp"
