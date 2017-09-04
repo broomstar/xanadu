@@ -5,27 +5,27 @@ one of the following:
 
 windows 7 64 bit (untested)
 windows 8 64 bit (untested)
-windows 8.1 64 bit (used and tested by the developer)
+windows 8.1 64 bit (well tested)
 windows 10 64 bit (untested)
 
 required programs, these need to be installed/put in place:
 
 * mysql server, version 5.7.x, 64 bit
 * mysql workbench, version 6.3.x, 64 bit
-* visual studio 2015 (community edition or other), update 3 for it is recommended
+* visual studio 2017 (community edition or other)
 * the target maplestory version (atleast the .wz files are needed;
-the default game path in the source is: "C:\\Nexon\\MapleStory v0.62\\" (it's changeable in game_constants.hpp))
+the default game path in the source is: "C:\\Nexon\\MapleStory v0.83\\" (it's changeable in game_constants.hpp))
 
 how to set up the source:
 
 * execute the sql files using mysql workbench
 
 * setup and compile the poco library (or have the already compiled .lib files ready)
-1. download poco C++ libraries Complete Edition 1.7.6
+1. download poco C++ libraries Complete Edition 1.7.8p3
 2. extract it to C:\\
-3. in the Foundation folder, open Foundation_x64_vs140.sln, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
-4. in the Data folder, open Data_x64_vs140.sln, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
-5. in the Data\\MySQL folder, open MySQL_x64_vs140.sln, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
+3. in the Foundation folder, open Foundation_x64_vs150.sln, remove the test projects, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
+4. in the Data folder, open Data_x64_vs150.sln, remove TestSuite project, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
+5. in the Data\\MySQL folder, open MySQL_x64_vs150.sln, remove TestSuite project, set the mode to debug_static_md and compile, then set the mode to release_static_md and compile
 important Note: when getting compilation errors related to mysql.h file, abort compilation and replace <mysql.h> where the error is with C:\Program Files\MySQL\MySQL Server 5.7\include and compile again/re-compile it
 
 * the angelscript library needs to be setup by downloading it, extracting it and compiling it.
@@ -33,7 +33,7 @@ important Note: when getting compilation errors related to mysql.h file, abort c
 get it from: http://www.angelcode.com/angelscript/downloads.html
 path should be: C:\angelscript_2.31.2\ (containg sdk and deeper folders)
 go to: C:\angelscript_2.31.2\sdk\angelscript\projects\msvc2015
-open angelscript.sln
+open angelscript.sln, choose yes/ok to upgrade it to a visual studio 2017 project
 set the option to x64 on the almost top bar in visual studio.
 set to multithreaded debug dll (debug) and mutlithreaded dll (release) in the code generation options in the project options
 then compile for debug and release

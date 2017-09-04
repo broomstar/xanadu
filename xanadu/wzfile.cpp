@@ -5,6 +5,8 @@
 #include <string>
 #include <codecvt>
 
+#include <emmintrin.h>
+
 #include "crypto_constants.hpp"
 #include "packet_constants.hpp"
 #include "game_constants.hpp"

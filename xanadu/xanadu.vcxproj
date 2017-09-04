@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -19,11 +19,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.8p3-all\Foundation\include;C:\poco-1.7.8p3-all\Data\include;C:\poco-1.7.8p3-all\Data\MySQL\include</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -68,7 +68,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.8p3-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.6-all\Foundation\include;C:\poco-1.7.6-all\Data\include;C:\poco-1.7.6-all\Data\MySQL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\angelscript_2.31.2\sdk\angelscript\include;C:\poco-1.7.8p3-all\Foundation\include;C:\poco-1.7.8p3-all\Data\include;C:\poco-1.7.8p3-all\Data\MySQL\include</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -98,7 +98,7 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.6-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\angelscript_2.31.2\sdk\angelscript\lib;C:\poco-1.7.8p3-all\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
