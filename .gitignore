@@ -1,7 +1,4 @@
 *.vs
-*.opensdf
-*.sdf
-*.suo
 x64/
 *.wz
 *.vc.opendb
