@@ -1,7 +1,4 @@
-*.vs
+*.vs/
 x64/
-*.wz
-*.vc.opendb
-*.vc.db
-enc_temp_folder
+*.wz/
 AS_DEBUG
