@@ -51,27 +51,75 @@ void QuestDataProvider::load_data()
 			continue;
 		}
 
-		WZNode node21 = wz_reader->base_["Quest"]["Act"][valuename1.c_str()];
+		WZNode node21 = wz_reader->base_["Quest"]["Act"][valuename1.c_str()]["1"];
 
 		QuestRewardData *rew = new QuestRewardData();
-
-		// TO-DO: fix this
-
-		/*			rew->setStart(rs["start"] == 0);
-					rew->setItem(rs["item"] == 1);
-					rew->set_exp(rs["exp"] == 1);
-					rew->setMesos(rs["mesos"] == 1);
-					rew->set_fame(rs["fame"] == 1);
-					rew->setID(rs["oid"]);
-					rew->setCount(rs["count"]);*/
 
 		rew->start = false;
 		rew->item = false;
 		rew->mesos = false;
-		rew->exp = true;
+		rew->exp = false;
 		rew->fame = false;
-		rew->id = 10;
-		rew->count = 1;
+		rew->id = 0;
+		rew->count = 0;
+
+		for (auto it3 : node21)
+		{
+			std::string valuename3 = it3.name();
+			
+			/*if (valuename3 == "start")
+			{
+				bool start = it3.get_int_value() ? 0 : 1;
+				rew->start = start;
+			}
+
+			else if (valuename3 == "item")
+			{
+				bool item = it3.get_int_value() ? 1 : 0;
+				rew->item = item;
+			}*/
+
+			/*else */if (valuename3 == "exp")
+			{
+				int exp = it3.get_int_value();
+				rew->exp = exp != 0;
+				rew->id = exp;
+			}
+
+			/*else if (valuename3 == "mesos")
+			{
+				bool mesos = it3.get_int_value() ? 1 : 0;
+				rew->mesos = mesos;
+			}
+
+			else if (valuename3 == "fame")
+			{
+				bool fame = it3.get_int_value() ? 1 : 0;
+				rew->fame = fame;
+			}
+
+			else if (valuename3 == "oid")
+			{
+				int oid = it3.get_int_value();
+				rew->id = oid;
+			}
+
+			else if (valuename3 == "count")
+			{
+				int count = it3.get_int_value();
+				rew->count = count;
+			}*/
+
+			// TO-DO: fix this
+
+			/*			rew->setStart(rs["start"] == 0);
+						rew->setItem(rs["item"] == 1);
+						rew->set_exp(rs["exp"] == 1);
+						rew->setMesos(rs["mesos"] == 1);
+						rew->set_fame(rs["fame"] == 1);
+						rew->setID(rs["oid"]);
+						rew->setCount(rs["count"]);*/
+		}
 
 		quest->add_reward(rew);
 	}
