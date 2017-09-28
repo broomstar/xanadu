@@ -3,7 +3,7 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
-- fix quest reward wz data loading
+-
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
 
