@@ -29,4 +29,6 @@ need to work out the details of these features first
 
 - maybe implement party quests (for example mcpq, ludipq, kerningpq)
 
+- maybe implement/fix character creation data loading for checks
+
 - ping/pong functionality? maybe needs to be implemented

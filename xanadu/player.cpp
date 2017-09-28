@@ -1168,7 +1168,7 @@ void Player::player_connect()
 		for (; cols > 0; --cols)
 		{
 			int quest_id = rs["quest_id"];
-			bool is_completed = rs["is_complete"];
+			bool is_completed = (rs["is_complete"] == 1);
 			int mob_id = rs["killed_mob"];
 			int amount = rs["amount"];
 
@@ -1179,7 +1179,7 @@ void Player::player_connect()
 				initialize_player_quests(quest_id, is_completed, mob_id, amount);
 			}
 
-			rs1.moveNext();
+			rs.moveNext();
 		}
 	}
 

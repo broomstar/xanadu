@@ -3,7 +3,7 @@ buglist
 
 -------------------- critical/blocking bugs --------------------
 
-- fix quest wz data loading
+- fix quest reward wz data loading
 
 -------------------- map and map life stuff (mobs, reactors, portals) --------------------
 
@@ -132,6 +132,8 @@ buglist
 - to-do fix when buddy is deleted, the buddy still see's the deleter as online (not sure if this is a bug)
 
 -------------------- bugs --------------------
+
+- saving multiple mobs for the quest mob requirement progress tracking does not work, only one mob per quest is saved (in Player.cpp quest saving code)
 
 - need to make a change in Item.cpp: unique id is only needed for cash stuff (cash items, cash equips and pets), change it to be that way
 

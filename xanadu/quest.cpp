@@ -15,7 +15,7 @@ Quest::Quest(int id, bool completed):
 
 bool Quest::add_killed_mob(int id, int amount)
 {
-	QuestData *data = QuestDataProvider::get_instance()->get_quest_data(id);
+	QuestData *data = QuestDataProvider::get_instance()->get_quest_data(id_);
 	if (!data)
 	{
 		return false;

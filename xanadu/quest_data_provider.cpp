@@ -38,7 +38,7 @@ void QuestDataProvider::load_data()
 
 	// Act.img / Rewards
 
-	WZNode node2 = wz_reader->base_["Quest"]["Act"];
+	/*WZNode node2 = wz_reader->base_["Quest"]["Act"];
 
 	for (auto it2 : node2)
 	{
@@ -79,7 +79,7 @@ void QuestDataProvider::load_data()
 				rew->item = item;
 			}*/
 
-			/*else */if (valuename3 == "exp")
+			/*else *if (valuename3 == "exp")
 			{
 				int exp = it3.get_int_value();
 				rew->exp = exp != 0;
@@ -108,7 +108,7 @@ void QuestDataProvider::load_data()
 			{
 				int count = it3.get_int_value();
 				rew->count = count;
-			}*/
+			}*
 
 			// TO-DO: fix this
 
@@ -118,11 +118,11 @@ void QuestDataProvider::load_data()
 						rew->setMesos(rs["mesos"] == 1);
 						rew->set_fame(rs["fame"] == 1);
 						rew->setID(rs["oid"]);
-						rew->setCount(rs["count"]);*/
+						rew->setCount(rs["count"]);*
 		}
 
 		quest->add_reward(rew);
-	}
+	}*/
 
 	// Check.img / Requests
 
@@ -136,25 +136,87 @@ void QuestDataProvider::load_data()
 
 		WZNode node31 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()];
 
-		// TO-DO: fix this
+		for (auto it4 : node31)
+		{
+			std::string valuename2 = it4.name();
 
-		/*
-			for (size_t col = 0; col < rs.rowCount(); ++col)
-			{
-			int object_id = rs["oid"];
-			int amount = rs["count"];
+			WZNode node32 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()][valuename2.c_str()];
 
-			if (rs["mob"] == 1)
+			for (auto it5 : node32)
 			{
-			quest->addMonsterRequirement(object_id, amount);
+				std::string valuename3 = it5.name();
+
+				if (valuename3 == "item")
+				{
+					WZNode node33 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()][valuename2.c_str()]["item"];
+
+					for (auto it6 : node33)
+					{
+						std::string valuename4 = it6.name();
+
+						WZNode node34 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()][valuename2.c_str()]["item"][valuename4.c_str()];
+
+						int object_id = 0;
+						int amount = 0;
+
+						for (auto it7 : node34)
+						{
+							std::string valuename5 = it7.name();
+
+							if (valuename5 == "id")
+							{
+								object_id = it7.get_int_value();
+							}
+
+							if (valuename5 == "count")
+							{
+								amount = it7.get_int_value();
+							}
+						}
+
+						if (object_id != 0 && amount != 0)
+						{
+							quest->add_item_requirement(object_id, amount);
+						}
+					}
+				}
+
+				else if (valuename3 == "mob")
+				{
+					WZNode node33 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()][valuename2.c_str()]["mob"];
+
+					for (auto it6 : node33)
+					{
+						std::string valuename4 = it6.name();
+
+						WZNode node34 = wz_reader->base_["Quest"]["Check"][valuename1.c_str()][valuename2.c_str()]["mob"][valuename4.c_str()];
+
+						int object_id = 0;
+						int amount = 0;
+
+						for (auto it7 : node34)
+						{
+							std::string valuename5 = it7.name();
+
+							if (valuename5 == "id")
+							{
+								object_id = it7.get_int_value();
+							}
+
+							if (valuename5 == "count")
+							{
+								amount = it7.get_int_value();
+							}
+						}
+
+						if (object_id != 0 && amount != 0)
+						{
+							quest->add_monster_requirement(object_id, amount);
+						}
+					}
+				}
 			}
-			else if (rs["item"] == 1)
-			{
-			quest->addItemRequirement(object_id, amount);
-			}
-			rs.moveNext();
-			}
-			*/
+		}
 	}
 }
 
