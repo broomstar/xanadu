@@ -144,20 +144,32 @@ void QuestDataProvider::load_data()
 
 					quest->add_reward(rew);
 				}
+
+				else if (valuename3 == "pop")
+				{
+					QuestRewardData *rew = new QuestRewardData();
+
+					rew->start = false;
+					rew->item = false;
+					rew->mesos = false;
+					rew->exp = false;
+					rew->fame = false;
+					rew->id = 0;
+					rew->count = 0;
+
+					rew->fame = (it5.get_int_value() != 0);
+					rew->id = it5.get_int_value();
+
+					quest->add_reward(rew);
+				}
 			}
 		}
 	}
-
+	// TO-DO implement this above this
 	/*if (valuename3 == "start")
 			{
 				bool start = it3.get_int_value() ? 0 : 1;
 				rew->start = start;
-			}
-
-			else if (valuename3 == "fame")
-			{
-				bool fame = it3.get_int_value() ? 1 : 0;
-				rew->fame = fame;
 			}*/
 
 	// Check.img / Requests
