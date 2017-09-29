@@ -77,9 +77,13 @@ buglist
 
 - Battleship and it's related skills (Corsair)
 
--------------------- npcs --------------------
+-------------------- scripted npcs --------------------
 
 - fix storage npcs (use the correct id's in player.cpp in the npc function)
+
+-------------------- scripted portals --------------------
+
+- elinia town portal to the library/grendel npc doesn't work
 
 -------------------- hired merchants --------------------
 
@@ -134,6 +138,10 @@ buglist
 -------------------- bugs --------------------
 
 - saving multiple mobs for the quest mob requirement progress tracking does not work, only one mob per quest is saved (in Player.cpp quest saving code)
+
+- quests give all possible rewards instead of one randomly from multiple when its a "secret" reward (not sure if this is a bug)
+
+- completed quests don't have a correct timestamp (not sure if this is a bug)
 
 - need to make a change in Item.cpp: unique id is only needed for cash stuff (cash items, cash equips and pets), change it to be that way
 
