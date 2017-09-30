@@ -1,5 +1,5 @@
 *.vs/
 x64/
-*.wz/
 enc_temp_folder/
+*.wz/
 AS_DEBUG
