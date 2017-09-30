@@ -12,6 +12,7 @@ void PacketCreator::SpawnSummon(Player *player, Summon *summon, bool animated)
 	write<int>(player->get_id());
 	write<int>(summon->object_id_);
 	write<int>(summon->skill_id_);
+	write<signed char>(10);
 	write<signed char>(summon->skill_level_);
 	write<short>(summon->position_x_);
 	write<short>(summon->position_y_);

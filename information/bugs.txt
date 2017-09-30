@@ -137,6 +137,8 @@ buglist
 
 -------------------- bugs --------------------
 
+- summon movement isn't shown to the third party
+
 - saving multiple mobs for the quest mob requirement progress tracking does not work, only one mob per quest is saved (in Player.cpp quest saving code)
 
 - quests give all possible rewards instead of one randomly from multiple when its a "secret" reward (not sure if this is a bug)

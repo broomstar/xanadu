@@ -112,7 +112,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -138,6 +138,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -326,7 +331,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -352,6 +357,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -540,7 +550,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -566,6 +576,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -754,7 +769,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -780,6 +795,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -968,7 +988,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -994,6 +1014,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -1182,7 +1207,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -1208,6 +1233,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -1396,7 +1426,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -1422,6 +1452,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -1610,7 +1645,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -1636,6 +1671,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -1824,7 +1864,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -1850,6 +1890,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -2038,7 +2083,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -2069,6 +2114,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -2257,7 +2307,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -2293,6 +2343,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
@@ -2481,7 +2536,7 @@ void EquipDataProvider::load_data()
 					slots = 5;
 				}
 
-				else if (islot == "Cp") // cap
+				else if (islot == "Cp" || islot == "HrCp") // cap
 				{
 					slots = 7;
 				}
@@ -2517,6 +2572,11 @@ void EquipDataProvider::load_data()
 				}
 
 				equip->slots = slots;
+			}
+
+			else if (valuename2 == "tuc") // slots
+			{
+				equip->slots = it2.get_int_value();
 			}
 
 			else if (valuename2 == "incMHP")
