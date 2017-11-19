@@ -1,4 +1,7 @@
 
+brew install cryptopp --c++11
+brew install fmt
+
 project name: xanadu
 project type: game server for GMS v0.83 (Global MapleStory version 0.83)
 
