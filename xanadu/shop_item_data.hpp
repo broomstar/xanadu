@@ -4,8 +4,7 @@
 
 // plain old data struct
 
-struct ShopItemData
-{
-	int id;
-	int price;
+struct ShopItemData {
+    int id;
+    int price;
 };

@@ -32,84 +32,77 @@
 
 #include "Poco\Data\MySQL\Connector.h"
 
-void ConnectionAcceptorThread()
-{
-	World *world = World::get_instance();
+void ConnectionAcceptorThread() {
+    World *world = World::get_instance();
 
-	auto endpoint = asio::ip::tcp::endpoint(asio::ip::tcp::v4(), kServerPort);
-	asio::ip::tcp::acceptor acceptor(world->get_io_service(), endpoint);
+    auto endpoint = asio::ip::tcp::endpoint(asio::ip::tcp::v4(), kServerPort);
+    asio::ip::tcp::acceptor acceptor(world->get_io_service(), endpoint);
 
-	while (world->is_accepting_connections())
-	{
-		std::shared_ptr<Session> session(new Session());
+    while (world->is_accepting_connections()) {
+        std::shared_ptr<Session> session(new Session());
 
-		std::error_code ec;
-		acceptor.accept(session->get_socket(), ec);
+        std::error_code ec;
+        acceptor.accept(session->get_socket(), ec);
 
-		if (!ec)
-		{
-			session->initialize();
-		}
-	}
+        if (!ec) {
+            session->initialize();
+        }
+    }
 }
 
 // entry point of the program
 
-int main(int argc, char *argv[])
-{
-	// get arguments
+int main(int argc, char *argv[]) {
+    // get arguments
 
-	bool is_dedicated_server = false;
+    bool is_dedicated_server = false;
 
-	for (int i = 0; i < argc; ++i)
-	{
-		char *argument = argv[i];
+    for (int i = 0; i < argc; ++i) {
+        char *argument = argv[i];
 
-		if (strcmp(argument, "-dedicated") == 0)
-		{
-			is_dedicated_server = true;
-		}
-	}
+        if (strcmp(argument, "-dedicated") == 0) {
+            is_dedicated_server = true;
+        }
+    }
 
-	// initialize mysql
+    // initialize mysql
 
-	Poco::Data::MySQL::Connector::registerConnector();
+    Poco::Data::MySQL::Connector::registerConnector();
 
-	// detach the console from the process, therefore close it, the process then runs as a background thread
-	// this is a windows-WINAPI function
-	
-	//FreeConsole();
+    // detach the console from the process, therefore close it, the process then runs as a background thread
+    // this is a windows-WINAPI function
 
-	// initialize the random number generator
+    //FreeConsole();
 
-	time_t time_value = time(nullptr);
-	srand(static_cast<unsigned int>(time_value));
+    // initialize the random number generator
 
-	// initialize the scripting engine
+    time_t time_value = time(nullptr);
+    srand(static_cast<unsigned int>(time_value));
 
-	script_engine::initialize_angelscript_engine();
+    // initialize the scripting engine
 
-	// create and initialize world
+    script_engine::initialize_angelscript_engine();
 
-	World world(is_dedicated_server);
-	world.initialize();
+    // create and initialize world
 
-	// start the connection acceptor thread
+    World world(is_dedicated_server);
+    world.initialize();
 
-	std::thread thread1(ConnectionAcceptorThread);
+    // start the connection acceptor thread
 
-	// start the i/o work
+    std::thread thread1(ConnectionAcceptorThread);
 
-	asio::io_service &io = world.get_io_service();
-	asio::io_service::work work(io);
+    // start the i/o work
 
-	for (;;)
-	{
-		std::error_code ec;
-		io.run(ec);
-	}
+    asio::io_service &io = world.get_io_service();
+    asio::io_service::work work(io);
 
-	// program exits successfully
+    for (;;) {
+        std::error_code ec;
+        io.run(ec);
+    }
 
-	return EXIT_SUCCESS;
+    // program exits successfully
+
+    return EXIT_SUCCESS;
 }

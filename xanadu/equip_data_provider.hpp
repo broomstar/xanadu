@@ -6,35 +6,37 @@
 
 struct EquipData;
 
-class EquipDataProvider
-{
+class EquipDataProvider {
 public:
 
-	// default constructor
-	EquipDataProvider() = default;
+    // default constructor
+    EquipDataProvider() = default;
 
-	// copy constructor
-	EquipDataProvider(const EquipDataProvider &other) = delete;
+    // copy constructor
+    EquipDataProvider(const EquipDataProvider &other) = delete;
 
-	// move constructor
-	EquipDataProvider(EquipDataProvider &&other) = delete;
+    // move constructor
+    EquipDataProvider(EquipDataProvider &&other) = delete;
 
-	// destructor
-	~EquipDataProvider() = default;
+    // destructor
+    ~EquipDataProvider() = default;
 
-	// copy assignment operator
-	EquipDataProvider &operator=(const EquipDataProvider &other) = delete;
+    // copy assignment operator
+    EquipDataProvider &operator=(const EquipDataProvider &other) = delete;
 
-	// move assignment operator
-	EquipDataProvider &operator=(EquipDataProvider &&other) = delete;
+    // move assignment operator
+    EquipDataProvider &operator=(EquipDataProvider &&other) = delete;
 
-	static EquipDataProvider *get_instance();
-	void load_data();
-	EquipData *get_item_data(int item_id);
-	std::unordered_map<int, EquipData *> *get_data();
+    static EquipDataProvider *get_instance();
+
+    void load_data();
+
+    EquipData *get_item_data(int item_id);
+
+    std::unordered_map<int, EquipData *> *get_data();
 
 private:
 
-	static EquipDataProvider *singleton_;
-	std::unordered_map<int, EquipData *> items_;
+    static EquipDataProvider *singleton_;
+    std::unordered_map<int, EquipData *> items_;
 };

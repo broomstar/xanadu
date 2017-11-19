@@ -6,34 +6,35 @@
 
 struct DropData;
 
-class MobDropsDataProvider
-{
+class MobDropsDataProvider {
 public:
 
-	// default constructor
-	MobDropsDataProvider() = default;
+    // default constructor
+    MobDropsDataProvider() = default;
 
-	// copy constructor
-	MobDropsDataProvider(const MobDropsDataProvider &other) = delete;
+    // copy constructor
+    MobDropsDataProvider(const MobDropsDataProvider &other) = delete;
 
-	// move constructor
-	MobDropsDataProvider(MobDropsDataProvider &&other) = delete;
+    // move constructor
+    MobDropsDataProvider(MobDropsDataProvider &&other) = delete;
 
-	// destructor
-	~MobDropsDataProvider() = default;
+    // destructor
+    ~MobDropsDataProvider() = default;
 
-	// copy assignment operator
-	MobDropsDataProvider &operator=(const MobDropsDataProvider &other) = delete;
+    // copy assignment operator
+    MobDropsDataProvider &operator=(const MobDropsDataProvider &other) = delete;
 
-	// move assignment operator
-	MobDropsDataProvider &operator=(MobDropsDataProvider &&other) = delete;
+    // move assignment operator
+    MobDropsDataProvider &operator=(MobDropsDataProvider &&other) = delete;
 
-	static MobDropsDataProvider *get_instance();
-	void load_data();
-	std::vector<DropData *> *get_drop_data(int mob_id);
+    static MobDropsDataProvider *get_instance();
+
+    void load_data();
+
+    std::vector<DropData *> *get_drop_data(int mob_id);
 
 private:
 
-	static MobDropsDataProvider *singleton_;
-	std::unordered_map<int, std::vector<DropData *>> drops_;
+    static MobDropsDataProvider *singleton_;
+    std::unordered_map<int, std::vector<DropData *>> drops_;
 };

@@ -3,8 +3,8 @@
 #include "cash_shop_item_data_provider.hpp"
 
 #include "cash_item_data.hpp"
-#include "wznode.hpp"
-#include "wzmain.hpp"
+#include "wz/wznode.hpp"
+#include "wz/wzmain.hpp"
 #include "world.hpp"
 
 // singleton

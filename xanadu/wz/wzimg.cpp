@@ -4,7 +4,7 @@
 #include "wzcrypto.hpp"
 #include "wznode.hpp"
 #include "wzmain.hpp"
-#include "world.hpp"
+#include "../world.hpp"
 
 void img_parse(WZImg *img)
 {

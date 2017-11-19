@@ -1,4 +1,4 @@
-#include "crypto.h"
+#include "crypto.hpp"
 #include <cstring>
 
 #include <aes.h>
@@ -62,7 +62,7 @@ namespace crypto {
 		//aes_init();
 
 		byte temp_iv[CryptoPP::AES::BLOCKSIZE];
-		memset(temp_iv, 0x00, CryptoPP::AES::BLOCKSIZE);
+		memset(temp_iv, 0x00, (size_t) CryptoPP::AES::BLOCKSIZE);
 
 
 		while (size > pos) {

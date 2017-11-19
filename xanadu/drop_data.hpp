@@ -4,8 +4,7 @@
 
 // plain old data struct
 
-struct DropData
-{
-	int item_id;
-	int chance;
+struct DropData {
+    int item_id;
+    int chance;
 };

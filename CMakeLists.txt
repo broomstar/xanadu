@@ -4,39 +4,39 @@ project(xanadu)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        xanadu/scriptarray/scriptarray.cpp
-        xanadu/scriptarray/scriptarray.h
-        xanadu/scripts/npcs/el_nath_magic_spot_npc.cpp
-        xanadu/scripts/npcs/female_stylist_nimakin.cpp
-        xanadu/scripts/npcs/first_eos_rock_npc.cpp
-        xanadu/scripts/npcs/fourth_eos_rock_npc.cpp
-        xanadu/scripts/npcs/gachapon_npc_handler.cpp
-        xanadu/scripts/npcs/guild_creator_npc.cpp
-        xanadu/scripts/npcs/guild_emblem_npc.cpp
-        xanadu/scripts/npcs/handle_bowman_job_advancer.cpp
-        xanadu/scripts/npcs/handle_mage_job_advancer.cpp
-        xanadu/scripts/npcs/handle_npc_sera.cpp
-        xanadu/scripts/npcs/handle_npc_spinel.cpp
-        xanadu/scripts/npcs/handle_pirate_job_advancer.cpp
-        xanadu/scripts/npcs/handle_thief_job_advancer.cpp
-        xanadu/scripts/npcs/handle_warrior_job_advancer.cpp
-        xanadu/scripts/npcs/handle_zakum_npcs.cpp
-        xanadu/scripts/npcs/horntail_entrance_npc.cpp
-        xanadu/scripts/npcs/jeff_elnath_npc.cpp
-        xanadu/scripts/npcs/male_stylist_kin.cpp
-        xanadu/scripts/npcs/maple_leaf_exchanger_npc.cpp
-        xanadu/scripts/npcs/npcs_pq_henesys.cpp
-        xanadu/scripts/npcs/npcs_pq_kerning.cpp
-        xanadu/scripts/npcs/npcs_pq_ludi_maze.cpp
-        xanadu/scripts/npcs/npcs_pq_ludibrium.cpp
-        xanadu/scripts/npcs/npcs_ship_plane_subway.cpp
-        xanadu/scripts/npcs/orbis_magic_spot_npc.cpp
-        xanadu/scripts/npcs/papulatus_npc.cpp
-        xanadu/scripts/npcs/second_eos_rock_npc.cpp
-        xanadu/scripts/npcs/third_eos_rock_npc.cpp
-        xanadu/scriptstdstring/scriptstdstring.cpp
-        xanadu/scriptstdstring/scriptstdstring.h
-        xanadu/scriptstdstring/scriptstdstring_utils.cpp
+#        xanadu/scriptarray/scriptarray.cpp
+#        xanadu/scriptarray/scriptarray.h
+#        xanadu/scripts/npcs/el_nath_magic_spot_npc.cpp
+#        xanadu/scripts/npcs/female_stylist_nimakin.cpp
+#        xanadu/scripts/npcs/first_eos_rock_npc.cpp
+#        xanadu/scripts/npcs/fourth_eos_rock_npc.cpp
+#        xanadu/scripts/npcs/gachapon_npc_handler.cpp
+#        xanadu/scripts/npcs/guild_creator_npc.cpp
+#        xanadu/scripts/npcs/guild_emblem_npc.cpp
+#        xanadu/scripts/npcs/handle_bowman_job_advancer.cpp
+#        xanadu/scripts/npcs/handle_mage_job_advancer.cpp
+#        xanadu/scripts/npcs/handle_npc_sera.cpp
+#        xanadu/scripts/npcs/handle_npc_spinel.cpp
+#        xanadu/scripts/npcs/handle_pirate_job_advancer.cpp
+#        xanadu/scripts/npcs/handle_thief_job_advancer.cpp
+#        xanadu/scripts/npcs/handle_warrior_job_advancer.cpp
+#        xanadu/scripts/npcs/handle_zakum_npcs.cpp
+#        xanadu/scripts/npcs/horntail_entrance_npc.cpp
+#        xanadu/scripts/npcs/jeff_elnath_npc.cpp
+#        xanadu/scripts/npcs/male_stylist_kin.cpp
+#        xanadu/scripts/npcs/maple_leaf_exchanger_npc.cpp
+#        xanadu/scripts/npcs/npcs_pq_henesys.cpp
+#        xanadu/scripts/npcs/npcs_pq_kerning.cpp
+#        xanadu/scripts/npcs/npcs_pq_ludi_maze.cpp
+#        xanadu/scripts/npcs/npcs_pq_ludibrium.cpp
+#        xanadu/scripts/npcs/npcs_ship_plane_subway.cpp
+#        xanadu/scripts/npcs/orbis_magic_spot_npc.cpp
+#        xanadu/scripts/npcs/papulatus_npc.cpp
+#        xanadu/scripts/npcs/second_eos_rock_npc.cpp
+#        xanadu/scripts/npcs/third_eos_rock_npc.cpp
+#        xanadu/scriptstdstring/scriptstdstring.cpp
+#        xanadu/scriptstdstring/scriptstdstring.h
+#        xanadu/scriptstdstring/scriptstdstring_utils.cpp
         xanadu/attackinfo.hpp
         xanadu/buddy.cpp
         xanadu/buddy.hpp
@@ -219,21 +219,21 @@ set(SOURCE_FILES
         xanadu/valid_char_data_provider.hpp
         xanadu/world.cpp
         xanadu/world.hpp
-        xanadu/wzcrypto.cpp
-        xanadu/wzcrypto.hpp
-        xanadu/wzdata.hpp
-        xanadu/wzdata_constants.hpp
-        xanadu/wzfile.cpp
-        xanadu/wzfile.hpp
-        xanadu/wzimg.cpp
-        xanadu/wzimg.hpp
-        xanadu/wzmain.cpp
-        xanadu/wzmain.hpp
-        xanadu/wznode.cpp
-        xanadu/wznode.hpp
+        xanadu/wz/wzcrypto.cpp
+        xanadu/wz/wzcrypto.hpp
+        xanadu/wz/wzdata.hpp
+        xanadu/wz/wzdata_constants.hpp
+        xanadu/wz/wzfile.cpp
+        xanadu/wz/wzfile.hpp
+        xanadu/wz/wzimg.cpp
+        xanadu/wz/wzimg.hpp
+        xanadu/wz/wzmain.cpp
+        xanadu/wz/wzmain.hpp
+        xanadu/wz/wznode.cpp
+        xanadu/wz/wznode.hpp
         xanadu/xanadu.cpp)
 
-include_directories(/usr/local/Cellar/cryptopp/5.6.5)
+include_directories(/usr/local/Cellar/cryptopp/5.6.5/include/cryptopp)
 link_directories(/usr/local/Cellar/cryptopp/5.6.5/lib)
 add_executable(xanadu ${SOURCE_FILES})
 target_link_libraries(xanadu cryptopp fmt)

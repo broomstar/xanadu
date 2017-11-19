@@ -4,8 +4,8 @@
 
 #include "item_data.hpp"
 #include "world.hpp"
-#include "wznode.hpp"
-#include "wzmain.hpp"
+#include "wz/wznode.hpp"
+#include "wz/wzmain.hpp"
 
 // singleton
 

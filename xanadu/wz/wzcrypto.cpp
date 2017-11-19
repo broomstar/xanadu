@@ -2,13 +2,14 @@
 
 #include "wzcrypto.hpp"
 
-#include "crypto_constants.hpp"
+#include "../crypto_constants.hpp"
 
 #include <cstring>
 
 #include <emmintrin.h>
 
-#include "aes/aes.h"
+#include <aes.h>
+#include <modes.h>
 
 void wz_crypto_initialize(struct WZCrypto *crypto)
 {
@@ -23,14 +24,21 @@ void wz_crypto_initialize(struct WZCrypto *crypto)
 		memcpy(big_iv + i, kWzFileKeyIv, 4);
 	}
 
-	aes_encrypt_ctx cx[1];
-	aes_init();
-	aes_encrypt_key256(kAesKeys, cx);
-	aes_encrypt(big_iv, crypto->Keys[1], cx);
+//	aes_encrypt_ctx cx[1];
+//	aes_init();
+//	aes_encrypt_key256(kAesKeys, cx);
+//	aes_encrypt(big_iv, crypto->Keys[1], cx);
+
+	byte temp_iv[CryptoPP::AES::BLOCKSIZE];
+	memset(temp_iv, 0x00, (size_t) CryptoPP::AES::BLOCKSIZE);
+	CryptoPP::AES::Encryption aesEncryption(kAesKeys, 32);
+
 
 	for (int i = 16; i < 0x10000; i += 16)
 	{
-		aes_encrypt(crypto->Keys[1] + i - 16, crypto->Keys[1] + i, cx);
+//		aes_encrypt(crypto->Keys[1] + i - 16, crypto->Keys[1] + i, cx);
+		CryptoPP::OFB_Mode_ExternalCipher::Encryption ofbEncrytion(aesEncryption, temp_iv);
+
 	}
 
 	// hide warnings about shortened values

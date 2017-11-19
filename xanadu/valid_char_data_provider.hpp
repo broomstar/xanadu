@@ -5,45 +5,45 @@
 #include <vector>
 #include <unordered_map>
 
-namespace ValidItemType
-{
-	enum
-	{
-		Top,
-		Bottom,
-		Shoes,
-		Weapon
-	};
+namespace ValidItemType {
+    enum {
+        Top,
+        Bottom,
+        Shoes,
+        Weapon
+    };
 }
 
-class ValidCharDataProvider
-{
+class ValidCharDataProvider {
 public:
 
-	// default constructor
-	ValidCharDataProvider() = default;
+    // default constructor
+    ValidCharDataProvider() = default;
 
-	// copy constructor
-	ValidCharDataProvider(const ValidCharDataProvider &other) = delete;
+    // copy constructor
+    ValidCharDataProvider(const ValidCharDataProvider &other) = delete;
 
-	// move constructor
-	ValidCharDataProvider(ValidCharDataProvider &&other) = delete;
+    // move constructor
+    ValidCharDataProvider(ValidCharDataProvider &&other) = delete;
 
-	// destructor
-	~ValidCharDataProvider() = default;
+    // destructor
+    ~ValidCharDataProvider() = default;
 
-	// copy assignment operator
-	ValidCharDataProvider &operator=(const ValidCharDataProvider &other) = delete;
+    // copy assignment operator
+    ValidCharDataProvider &
+    operator=(const ValidCharDataProvider &other) = delete;
 
-	// move assignment operator
-	ValidCharDataProvider &operator=(ValidCharDataProvider &&other) = delete;
+    // move assignment operator
+    ValidCharDataProvider &operator=(ValidCharDataProvider &&other) = delete;
 
-	static ValidCharDataProvider *get_instance();
-	void load_data();
-	bool is_valid_item(int id, int type);
+    static ValidCharDataProvider *get_instance();
+
+    void load_data();
+
+    bool is_valid_item(int id, int type);
 
 private:
 
-	static ValidCharDataProvider *singleton_;
-	std::unordered_map<int, std::vector<int>> valid_items_;
+    static ValidCharDataProvider *singleton_;
+    std::unordered_map<int, std::vector<int>> valid_items_;
 };

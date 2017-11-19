@@ -1,7 +1,7 @@
 //
 
-#include "../player.hpp"
-#include "../constants.hpp"
+#include "../../player.hpp"
+#include "../../constants.hpp"
 
 void Player::handle_el_nath_magic_spot_npc()
 {

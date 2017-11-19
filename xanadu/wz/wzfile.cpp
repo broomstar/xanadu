@@ -7,14 +7,14 @@
 
 #include <emmintrin.h>
 
-#include "crypto_constants.hpp"
-#include "packet_constants.hpp"
-#include "game_constants.hpp"
+#include "../crypto_constants.hpp"
+#include "../packet_constants.hpp"
+#include "../game_constants.hpp"
 #include "wznode.hpp"
 #include "wzimg.hpp"
 #include "wzcrypto.hpp"
 #include "wzmain.hpp"
-#include "world.hpp"
+#include "../world.hpp"
 
 void WZFile::initialize(WZNode n)
 {

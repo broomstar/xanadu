@@ -9,8 +9,8 @@
 #include "map_foothold_data.hpp"
 #include "map_reactor_data.hpp"
 #include "map_portal_data.hpp"
-#include "wznode.hpp"
-#include "wzmain.hpp"
+#include "wz/wznode.hpp"
+#include "wz/wzmain.hpp"
 #include "world.hpp"
 
 // singleton

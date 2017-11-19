@@ -4,10 +4,9 @@
 
 // plain old data struct
 
-struct CashItemData
-{
-	int id;
-	int item_id;
-	int price;
-	short count;
+struct CashItemData {
+    int id;
+    int item_id;
+    int price;
+    short count;
 };

@@ -5,8 +5,8 @@
 #include "pet_data.hpp"
 #include "item_data_provider.hpp"
 #include "item_data.hpp"
-#include "wznode.hpp"
-#include "wzmain.hpp"
+#include "wz/wznode.hpp"
+#include "wz/wzmain.hpp"
 #include "world.hpp"
 
 // singleton

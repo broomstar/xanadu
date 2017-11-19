@@ -2,7 +2,7 @@
 
 #include "wzmain.hpp"
 
-#include "game_constants.hpp"
+#include "../game_constants.hpp"
 #include "wzfile.hpp"
 #include "wznode.hpp"
 #include "wzimg.hpp"
