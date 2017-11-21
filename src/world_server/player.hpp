@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <string>
 
+#include <Poco/Timestamp.h>
+
 #include "character.hpp"
 #include "item.hpp"
 #include "key.hpp"
@@ -621,17 +623,38 @@ public:
 
     // template function specialisation for reading bytes based on the type bool
 
-    template<>
-    bool read<bool>() {
-        bool x = read<signed char>() != 0;
+//    template<>
+//    bool read<bool>() {
+//        bool x = read<signed char>() != 0;
+//        return x;
+//    }
 
+    bool read_bool() {
+        bool x = read<signed char>() != 0;
         return x;
     }
 
     // template function specialisation for reading bytes based on the type std::string
 
-    template<>
-    std::string read<std::string>() {
+//    template<>
+//    std::string read<std::string>() {
+//        int len = read<short>();
+//
+//        if (recv_length_ <= recv_pos_) {
+//            return "";
+//        }
+//
+//        if (len > (recv_length_ - recv_pos_)) {
+//            return "";
+//        }
+//
+//        std::string s((char *) session_->get_receive_buffer() + recv_pos_, len);
+//        recv_pos_ += len;
+//
+//        return s;
+//    }
+
+    std::string read_string() {
         int len = read<short>();
 
         if (recv_length_ <= recv_pos_) {

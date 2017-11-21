@@ -108,7 +108,7 @@ void Player::handle_party_action() {
             if (!party_) {
                 return;
             }
-            std::string &target = read<std::string>();
+            const std::string &target = read_string();
             Player *invited = World::get_instance()->GetPlayerByName(target);
             if (!invited) {
                 return;

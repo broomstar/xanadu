@@ -12,7 +12,7 @@ void PacketCreator::SpawnReactor(int object_id, MapReactorData *reactor) {
     write<short>(reactor->position_x);
     write<short>(reactor->position_y);
     write<signed char>(reactor->stance);
-    write<std::string>(""); // reactor name
+    write_string(""); // reactor name
 }
 
 void PacketCreator::DestroyReactor(int object_id, MapReactorData *reactor) {

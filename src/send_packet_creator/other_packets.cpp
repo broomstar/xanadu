@@ -94,7 +94,7 @@ void PacketCreator::UpdateQuestInfo(signed char mode, Quest *quest) {
             write<signed char>(0);
             break;
         case 1:
-            write<std::string>(quest->get_killed_mobs1());
+            write_string(quest->get_killed_mobs1());
             break;
         case 2:
             write<long long>(quest->get_completion_time());
@@ -107,9 +107,9 @@ PacketCreator::GainExp(int exp, bool in_chat, bool white, int party_bonus) {
     write<short>(send_headers::kSHOW_STATUS_INFO);
     write<signed char>(
             3); // mode: 0 = drop pickup, 1 = quest message, 3 = increase exp, 4 = increase fame, 5 = increase mesos, there are also much other types
-    write<bool>(white); // white or yellow
+    write_bool(white); // white or yellow
     write<int>(exp); // amount of exp
-    write<bool>(in_chat); // in chat or on screen
+    write_bool(in_chat); // in chat or on screen
     write<int>(0); // Bonus Event EXP (+value)
     write<signed char>(0);
     write<signed char>(0);
@@ -145,11 +145,11 @@ PacketCreator::ShowAvatarMega(Player *player, unsigned char ear, int item_id,
                               std::string message3, std::string message4) {
     write<short>(send_headers::kSHOW_AVATAR_MEGA);
     write<int>(item_id);
-    write<std::string>(player->get_name());
-    write<std::string>(message);
-    write<std::string>(message2);
-    write<std::string>(message3);
-    write<std::string>(message4);
+    write_string(player->get_name());
+    write_string(message);
+    write_string(message2);
+    write_string(message3);
+    write_string(message4);
     write<int>(player->get_channel_id());
     write<signed char>(ear);
     AddCharLook(player, true);
@@ -165,7 +165,7 @@ void PacketCreator::UseChalkBoard(int player_id, const std::string &message) {
     write<short>(send_headers::kCHALKBOARD);
     write<int>(player_id);
     write<signed char>(1); // mode: 0 = close, 1 = create
-    write<std::string>(message);
+    write_string(message);
 }
 
 void PacketCreator::UseScroll(int player_id, bool success, bool cursed,
@@ -174,7 +174,7 @@ void PacketCreator::UseScroll(int player_id, bool success, bool cursed,
     write<int>(player_id);
     write<signed char>(success ? 1 : 0);
     write<signed char>(cursed ? 1 : 0);
-    write<bool>(legendary_spirit);
+    write_bool(legendary_spirit);
     write<signed char>(0);
 }
 
@@ -204,20 +204,20 @@ void PacketCreator::ShowPlayer(Player *player) {
     write<short>(send_headers::kSPAWN_PLAYER);
     write<int>(player->get_id());
     write<unsigned char>(player->get_level());
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
 
     // guild info
 
     Guild *guild = player->get_guild();
 
     if (guild) {
-        write<std::string>(guild->get_name());
+        write_string(guild->get_name());
         write<short>(guild->get_logo_background());
         write<signed char>(guild->get_logo_background_color());
         write<short>(guild->get_logo());
         write<signed char>(guild->get_logo_color());
     } else {
-        write<std::string>("");
+        write_string("");
         write<short>(0);
         write<signed char>(0);
         write<short>(0);
@@ -357,7 +357,7 @@ void PacketCreator::ShowPlayer(Player *player) {
     for (auto &pet : *pets) {
         write<signed char>(kStartPetInfo);
         write<int>(pet->get_item_id());
-        write<std::string>(pet->get_name());
+        write_string(pet->get_name());
         write<long long>(pet->get_unique_id());
         write<short>(pet->get_position_x());
         write<short>(pet->get_position_y());
@@ -379,11 +379,11 @@ void PacketCreator::ShowPlayer(Player *player) {
 
     bool has_minigame = false;
 
-    write<bool>(has_minigame); // bool or miniroomtype?
+    write_bool(has_minigame); // bool or miniroomtype?
 
     if (has_minigame) {
         write<int>(0); // map object id
-        write<std::string>("hello"); // description text
+        write_string("hello"); // description text
         write<signed char>(0); // specific if game if private?
         write<signed char>(10); // type
         write<signed char>(
@@ -399,10 +399,10 @@ void PacketCreator::ShowPlayer(Player *player) {
     std::string chalkboard_text = player->get_chalk_board();
     bool has_chalkboard = (chalkboard_text != "");
 
-    write<bool>(has_chalkboard);
+    write_bool(has_chalkboard);
 
     if (has_chalkboard) {
-        write<std::string>(chalkboard_text);
+        write_string(chalkboard_text);
     }
 
     // end of chalkboard info
@@ -411,7 +411,7 @@ void PacketCreator::ShowPlayer(Player *player) {
 
     bool has_couple_ring = false; // to-do if check it has it actually
 
-    write<bool>(has_couple_ring); // couple ring
+    write_bool(has_couple_ring); // couple ring
 
     if (has_couple_ring) {
         // to-do write couple ring data
@@ -423,7 +423,7 @@ void PacketCreator::ShowPlayer(Player *player) {
 
     bool has_friendship_ring = false; // to-do if check it has it actually
 
-    write<bool>(has_friendship_ring); // friendship ring
+    write_bool(has_friendship_ring); // friendship ring
 
     if (has_friendship_ring) {
         // to-do write friendship ring data
@@ -435,7 +435,7 @@ void PacketCreator::ShowPlayer(Player *player) {
 
     bool has_marriage_ring = false; // to-do if check it has it actually
 
-    write<bool>(has_marriage_ring); // marriage ring
+    write_bool(has_marriage_ring); // marriage ring
 
     if (has_marriage_ring) {
         // to-do write marriage ring data
@@ -448,7 +448,7 @@ void PacketCreator::ShowPlayer(Player *player) {
     // end of rings info
 
     bool has_new_year_info = false;
-    write<bool>(has_new_year_info);
+    write_bool(has_new_year_info);
 
     if (has_new_year_info) {
         // to-do write new year info data
@@ -493,7 +493,7 @@ void PacketCreator::tremble_map_effect(signed char type, int delay)
 void PacketCreator::MapEffect(signed char mode, std::string name) {
     write<short>(send_headers::kMAP_EFFECT);
     write<signed char>(mode);
-    write<std::string>(name);
+    write_string(name);
 }
 
 void
@@ -622,10 +622,10 @@ void PacketCreator::writeCharacterData(Player *player) {
     write<signed char>(player->get_buddy_list_capacity());
 
     bool has_linked_name = false;
-    write<bool>(has_linked_name);
+    write_bool(has_linked_name);
 
     if (has_linked_name) {
-        write<std::string>(""); // linked name
+        write_string(""); // linked name
     }
 
     AddInventoryInfo(player);
@@ -803,7 +803,7 @@ void PacketCreator::AddQuestInfo(Player *player) {
     for (auto &it : *quests_in_progress) {
         Quest *quest = it.second.get();
         write<short>(quest->get_id());
-        write<std::string>(quest->get_killed_mobs1());
+        write_string(quest->get_killed_mobs1());
     }
 
     // completed quests data
@@ -852,7 +852,7 @@ void PacketCreator::change_map(Player *player, bool is_connect_packet) {
     write<short>(send_headers::kWARP_TO_MAP);
     write<int>(player->get_channel_id());
     write<signed char>(1);
-    write<bool>(is_connect_packet);
+    write_bool(is_connect_packet);
 
     // messages on the screen that disappears after some seconds
     // maybe used in combination with quiet ban? (so upon login player is informed about it)
@@ -891,7 +891,7 @@ void PacketCreator::AddCharLook(Player *player, bool megaphone) {
     write<signed char>(player->get_gender());
     write<signed char>(player->get_skin_color());
     write<int>(player->get_face());
-    write<bool>(megaphone);
+    write_bool(megaphone);
     write<int>(player->get_hair());
 
     std::unordered_map<signed char, int> visible_equips;
@@ -975,7 +975,7 @@ void PacketCreator::UpdatePlayer(Player *player) {
 
     bool has_couple_ring = false;
 
-    write<bool>(has_couple_ring); // couple ring
+    write_bool(has_couple_ring); // couple ring
 
     if (has_couple_ring) {
         // to-do
@@ -983,7 +983,7 @@ void PacketCreator::UpdatePlayer(Player *player) {
 
     bool has_friendship_ring = false;
 
-    write<bool>(has_friendship_ring); // friendship ring
+    write_bool(has_friendship_ring); // friendship ring
 
     if (has_friendship_ring) {
         // to-do
@@ -991,7 +991,7 @@ void PacketCreator::UpdatePlayer(Player *player) {
 
     bool has_marriage_ring = false;
 
-    write<bool>(has_marriage_ring); // marriage ring
+    write_bool(has_marriage_ring); // marriage ring
 
     if (has_marriage_ring) {
         // to-do
@@ -1043,19 +1043,19 @@ void PacketCreator::ShowInfo(Player *player) {
     write<signed char>(player->get_level());
     write<short>(player->get_job());
     write<short>(player->get_fame());
-    write<bool>(player->is_married());
+    write_bool(player->is_married());
 
     // guild info
 
     Guild *guild = player->get_guild();
 
     if (guild) {
-        write<std::string>(guild->get_name());
+        write_string(guild->get_name());
     } else {
-        write<std::string>("-");
+        write_string("-");
     }
 
-    write<std::string>(""); // guild alliance name
+    write_string(""); // guild alliance name
 
     // end of guild info
 
@@ -1075,7 +1075,7 @@ void PacketCreator::ShowInfo(Player *player) {
         write<signed char>(StartPetInfo);
 
         write<int>(pet->get_item_id());
-        write<std::string>(pet->get_name());
+        write_string(pet->get_name());
         write<signed char>(pet->get_pet_level());
         write<short>(pet->get_pet_closeness());
         write<signed char>(pet->get_pet_fullness());
@@ -1105,7 +1105,7 @@ void PacketCreator::ShowInfo(Player *player) {
 
     // mount info
     bool has_tamed_mob = (player->get_mount_item_id() != 0);
-    write<bool>(has_tamed_mob);
+    write_bool(has_tamed_mob);
     if (has_tamed_mob) {
         write<int>(1); // level
         write<int>(0); // exp
@@ -1148,7 +1148,7 @@ void PacketCreator::ShowInfo(Player *player) {
 void PacketCreator::SendFame(std::string name, signed char type) {
     write<short>(send_headers::kFAME);
     write<signed char>(5);
-    write<std::string>(name);
+    write_string(name);
     write<signed char>(type);
 }
 
@@ -1156,7 +1156,7 @@ void
 PacketCreator::SendFamee(std::string name2, signed char type, int newFame) {
     write<short>(send_headers::kFAME);
     write<signed char>(0);
-    write<std::string>(name2);
+    write_string(name2);
     write<signed char>(type);
     write<int>(newFame);
 }

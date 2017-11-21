@@ -71,51 +71,51 @@ set(SOURCE_FILES
         src/receive_packet_handler/portal_script_handler.cpp
         src/receive_packet_handler/quest_handler.cpp
         src/receive_packet_handler/reactor_handler.cpp
-        src/receive_packet_handler/script_handler.cpp
+        #        src/receive_packet_handler/script_handler.cpp
         src/receive_packet_handler/skills_handler.cpp
         src/receive_packet_handler/stats_handler.cpp
         src/receive_packet_handler/storage_handler.cpp
         src/receive_packet_handler/summon_handler.cpp
-        src/script_engine/scriptarray/scriptarray.cpp
-        src/script_engine/scriptarray/scriptarray.h
-        src/script_engine/scriptstdstring/scriptstdstring.cpp
-        src/script_engine/scriptstdstring/scriptstdstring.h
-        src/script_engine/scriptstdstring/scriptstdstring_utils.cpp
-        src/script_engine/script_handler.h
-        src/scripts/npcs/1012000.as
-        src/scripts/npcs/1022001.as
-        src/scripts/npcs/1032000.as
-        src/scripts/npcs/1052016.as
-        src/scripts/npcs/9201056.as
-        src/scripts/npcs/el_nath_magic_spot_npc.cpp
-        src/scripts/npcs/female_stylist_nimakin.cpp
-        src/scripts/npcs/first_eos_rock_npc.cpp
-        src/scripts/npcs/fourth_eos_rock_npc.cpp
-        src/scripts/npcs/gachapon_npc_handler.cpp
-        src/scripts/npcs/guild_creator_npc.cpp
-        src/scripts/npcs/guild_emblem_npc.cpp
-        src/scripts/npcs/handle_bowman_job_advancer.cpp
-        src/scripts/npcs/handle_mage_job_advancer.cpp
-        src/scripts/npcs/handle_npc_sera.cpp
-        src/scripts/npcs/handle_npc_spinel.cpp
-        src/scripts/npcs/handle_pirate_job_advancer.cpp
-        src/scripts/npcs/handle_thief_job_advancer.cpp
-        src/scripts/npcs/handle_warrior_job_advancer.cpp
-        src/scripts/npcs/handle_zakum_npcs.cpp
-        src/scripts/npcs/horntail_entrance_npc.cpp
-        "src/scripts/npcs/info ids.txt"
-        src/scripts/npcs/jeff_elnath_npc.cpp
-        src/scripts/npcs/male_stylist_kin.cpp
-        src/scripts/npcs/maple_leaf_exchanger_npc.cpp
-        src/scripts/npcs/npcs_pq_henesys.cpp
-        src/scripts/npcs/npcs_pq_kerning.cpp
-        src/scripts/npcs/npcs_pq_ludi_maze.cpp
-        src/scripts/npcs/npcs_pq_ludibrium.cpp
-        src/scripts/npcs/npcs_ship_plane_subway.cpp
-        src/scripts/npcs/orbis_magic_spot_npc.cpp
-        src/scripts/npcs/papulatus_npc.cpp
-        src/scripts/npcs/second_eos_rock_npc.cpp
-        src/scripts/npcs/third_eos_rock_npc.cpp
+        #        src/script_engine/scriptarray/scriptarray.cpp
+        #        src/script_engine/scriptarray/scriptarray.h
+        #        src/script_engine/scriptstdstring/scriptstdstring.cpp
+        #        src/script_engine/scriptstdstring/scriptstdstring.h
+        #        src/script_engine/scriptstdstring/scriptstdstring_utils.cpp
+        #        src/script_engine/script_handler.h
+        #        src/scripts/npcs/1012000.as
+        #        src/scripts/npcs/1022001.as
+        #        src/scripts/npcs/1032000.as
+        #        src/scripts/npcs/1052016.as
+        #        src/scripts/npcs/9201056.as
+        #        src/scripts/npcs/el_nath_magic_spot_npc.cpp
+        #        src/scripts/npcs/female_stylist_nimakin.cpp
+        #        src/scripts/npcs/first_eos_rock_npc.cpp
+        #        src/scripts/npcs/fourth_eos_rock_npc.cpp
+        #        src/scripts/npcs/gachapon_npc_handler.cpp
+        #        src/scripts/npcs/guild_creator_npc.cpp
+        #        src/scripts/npcs/guild_emblem_npc.cpp
+        #        src/scripts/npcs/handle_bowman_job_advancer.cpp
+        #        src/scripts/npcs/handle_mage_job_advancer.cpp
+        #        src/scripts/npcs/handle_npc_sera.cpp
+        #        src/scripts/npcs/handle_npc_spinel.cpp
+        #        src/scripts/npcs/handle_pirate_job_advancer.cpp
+        #        src/scripts/npcs/handle_thief_job_advancer.cpp
+        #        src/scripts/npcs/handle_warrior_job_advancer.cpp
+        #        src/scripts/npcs/handle_zakum_npcs.cpp
+        #        src/scripts/npcs/horntail_entrance_npc.cpp
+        #        "src/scripts/npcs/info ids.txt"
+        #        src/scripts/npcs/jeff_elnath_npc.cpp
+        #        src/scripts/npcs/male_stylist_kin.cpp
+        #        src/scripts/npcs/maple_leaf_exchanger_npc.cpp
+        #        src/scripts/npcs/npcs_pq_henesys.cpp
+        #        src/scripts/npcs/npcs_pq_kerning.cpp
+        #        src/scripts/npcs/npcs_pq_ludi_maze.cpp
+        #        src/scripts/npcs/npcs_pq_ludibrium.cpp
+        #        src/scripts/npcs/npcs_ship_plane_subway.cpp
+        #        src/scripts/npcs/orbis_magic_spot_npc.cpp
+        #        src/scripts/npcs/papulatus_npc.cpp
+        #        src/scripts/npcs/second_eos_rock_npc.cpp
+        #        src/scripts/npcs/third_eos_rock_npc.cpp
         src/send_packet_creator/buddy_packets.cpp
         src/send_packet_creator/buff_packets.cpp
         src/send_packet_creator/cash_shop_packets.cpp
@@ -239,7 +239,15 @@ set(SOURCE_FILES
         src/wz_reader/wznode.hpp
         src/xanadu.cpp)
 
-include_directories(src/ src/wz_reader src/constants /usr/local/Cellar/cryptopp/5.6.5/include/cryptopp)
-link_directories(/usr/local/Cellar/cryptopp/5.6.5/lib)
+include_directories(src/
+        src/database
+        src/world_server
+        src/wz_reader
+        src/constants
+        /usr/local/Cellar/cryptopp/5.6.5/include/cryptopp
+        /Users/linjian/Cpp/User/local/include)
+link_directories(
+        /usr/local/Cellar/cryptopp/5.6.5/lib
+        /Users/linjian/Cpp/User/local/lib)
 add_executable(xanadu ${SOURCE_FILES})
-target_link_libraries(xanadu cryptopp fmt)
+target_link_libraries(xanadu cryptopp fmt PocoDataMySQL PocoData PocoFoundation)

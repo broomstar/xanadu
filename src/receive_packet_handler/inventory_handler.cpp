@@ -119,7 +119,7 @@ void Player::handle_use_cash_item() {
     switch (item_id) {
         case 5071000: // Megaphone
         {
-            std::string message = (name_ + " : " + read<std::string>());
+            std::string message = (name_ + " : " + read_string());
             {
                 PacketCreator packet;
                 packet.ShowMessage(message, 2);
@@ -131,7 +131,7 @@ void Player::handle_use_cash_item() {
         }
         case 5072000: // Super Megaphone
         {
-            std::string message = (name_ + " : " + read<std::string>());
+            std::string message = (name_ + " : " + read_string());
             signed char whisper = read<signed char>();
             {
                 PacketCreator packet;
@@ -143,7 +143,7 @@ void Player::handle_use_cash_item() {
         }
         case 5076000: // Item Megaphone
         {
-            std::string message = (get_name() + " : " + read<std::string>());
+            std::string message = (get_name() + " : " + read_string());
             signed char whisper = read<signed char>();
             signed char has_item = read<signed char>();
 
@@ -183,7 +183,7 @@ void Player::handle_use_cash_item() {
             std::string text[] = {"", "", ""};
 
             for (unsigned char i = 0; i < lines; ++i) {
-                std::string line = (name_ + " : " + read<std::string>());
+                std::string line = (name_ + " : " + read_string());
 
                 text[i] = line;
             }
@@ -246,7 +246,7 @@ void Player::handle_use_cash_item() {
         }
         case 5370000: // Chalk Board
         {
-            chalk_board_text_ = read<std::string>();
+            chalk_board_text_ = read_string();
             {
                 PacketCreator packet;
                 packet.UseChalkBoard(id_, chalk_board_text_);
@@ -263,10 +263,10 @@ void Player::handle_use_cash_item() {
         case 5390001: // Cloud9Messenger
         case 5390002: // LoveholicMessenger
         {
-            std::string msg = read<std::string>();
-            std::string msg2 = read<std::string>();
-            std::string msg3 = read<std::string>();
-            std::string msg4 = read<std::string>();
+            std::string msg = read_string();
+            std::string msg2 = read_string();
+            std::string msg3 = read_string();
+            std::string msg4 = read_string();
             signed char whisper = read<signed char>();
 
             {

@@ -36,7 +36,7 @@
 #include "utilities/tools.hpp"
 #include "logger.hpp"
 
-#include "Poco\Data\RecordSet.h"
+#include "Poco/Data/RecordSet.h"
 
 // constructor
 
@@ -2455,7 +2455,7 @@ void Player::save() {
 }
 
 void Player::handle_add_aran_combo() {
-    unsigned long long ticks = GetTickCount64();
+    unsigned long long ticks = tools::GetTickCount64();
     if ((ticks - last_aran_combo_ticks_) > 3500) {
         aran_combo_value_ = 0;
     }

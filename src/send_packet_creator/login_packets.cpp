@@ -15,7 +15,7 @@ PacketCreator::get_handshake(unsigned char *iv_recv, unsigned char *iv_send) {
     write<short>(kPacketHandshakeServerLength +
                  static_cast<short>(kGameMinorVersion.length()));
     write<short>(kGameVersion);
-    write<std::string>(kGameMinorVersion);
+    write_string(kGameMinorVersion);
     write<int>(*(int *) iv_recv);
     write<int>(*(int *) iv_send);
     write<signed char>(kGameLocale);
@@ -92,7 +92,7 @@ PacketCreator::LoginRequest(signed char success_or_failure_reason, int user_id,
     write<signed char>(
             0); // nSubGradeCode (0x80 is admin, 0x20 and 0x40 = subgm), for GM commands and maybe other stuff
     write<signed char>(0); // nCountryID
-    write<std::string>(account_name);
+    write_string(account_name);
     write<signed char>(0); // nPurchaseExp
     write<signed char>(0); // quiet ban/chat block reason
     write<long long>(0); // quiet ban/chat unblock time/date
@@ -151,9 +151,9 @@ void PacketCreator::ShowWorld() {
     write<short>(send_headers_login::kSERVER_LIST);
     write<signed char>(
             world->get_id()); // kServerListPacketNoWorlds = no worlds, >= 0 is world id with data
-    write<std::string>(world->get_name());
+    write_string(world->get_name());
     write<signed char>(kWorld1Flag);
-    write<std::string>(kWorld1EventMessage);
+    write_string(kWorld1EventMessage);
     write<short>(100);
     write<short>(100);
     write<signed char>(0);
@@ -165,7 +165,7 @@ void PacketCreator::ShowWorld() {
          channel_id < channels_count; ++channel_id) {
         std::string channel_name = (world->get_name() + "-" +
                                     std::to_string(channel_id + 1));
-        write<std::string>(channel_name);
+        write_string(channel_name);
         write<int>(0); // channel population
         write<signed char>(world->get_id());
         write<signed char>(channel_id);
@@ -178,7 +178,7 @@ void PacketCreator::ShowWorld() {
     {
         write<short>(236); // X position
         write<short>(122); // Y position
-        write<std::string>("test"); // message
+        write_string("test"); // message
     }*/
 }
 
@@ -236,7 +236,7 @@ void PacketCreator::AddCharLook(Character *character, bool megaphone) {
     write<signed char>(character->get_gender());
     write<signed char>(character->get_skin());
     write<int>(character->get_face());
-    write<bool>(megaphone);
+    write_bool(megaphone);
     write<int>(character->get_hair());
 
     std::unordered_map<signed char, int> visible_equips;
@@ -307,7 +307,7 @@ void PacketCreator::ShowCharacter(Character *character, bool view_all) {
 
     // rankings
     bool enable_rankings = false;
-    write<bool>(enable_rankings);
+    write_bool(enable_rankings);
     if (enable_rankings) {
         write<int>(0); // world rank
         write<int>(0); // world rank move
@@ -341,8 +341,8 @@ PacketCreator::ShowCharacters(std::unordered_map<int, Character *> *characters,
 
 void PacketCreator::CheckName(std::string name, bool name_used) {
     write<short>(send_headers_login::kCHECK_CHARACTER_NAME);
-    write<std::string>(name);
-    write<bool>(name_used);
+    write_string(name);
+    write_bool(name_used);
 }
 
 // success or error value:

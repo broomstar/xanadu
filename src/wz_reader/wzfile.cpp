@@ -5,6 +5,10 @@
 #include <string>
 #include <codecvt>
 
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+
 #include <emmintrin.h>
 
 #include "../constants/crypto_constants.hpp"
@@ -14,7 +18,7 @@
 #include "wzimg.hpp"
 #include "wzcrypto.hpp"
 #include "wzmain.hpp"
-#include "../world.hpp"
+#include "world.hpp"
 
 void WZFile::initialize(WZNode n)
 {
@@ -253,6 +257,7 @@ void WZFile::directory(WZNode n)
 
 void WZFile::wzfile_open(const char *filename)
 {
+	/*
 	HANDLE file = CreateFileA(filename, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
 	if (file == INVALID_HANDLE_VALUE)
 	{
@@ -272,6 +277,35 @@ void WZFile::wzfile_open(const char *filename)
 	}
 
 	off = base;
+	*/
+
+	int fd;
+	fd = open(filename, O_RDWR|O_CREAT, 0666);
+	if (fd == -1)
+	{
+		return;
+	}
+
+	struct stat st;
+	int r = fstat(fd, &st);
+	if (r == -1)
+	{
+		close(fd);
+		return;
+	}
+
+	int len=st.st_size;
+
+	char *p = (char*)mmap(NULL, len, PROT_READ /*| PROT_WRITE*/, MAP_SHARED, fd, 0);
+	if(p == NULL || p == (void*)-1)
+	{
+
+		printf("映射失败:%m\n");
+		close(fd);
+		return;
+	}
+
+	off = p;
 }
 
 unsigned long long WZFile::wzfile_tell(void)

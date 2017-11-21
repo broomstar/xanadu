@@ -6,7 +6,7 @@
 #include "player.hpp"
 #include "world.hpp"
 
-#include "Poco\Data\RecordSet.h"
+#include "Poco/Data/RecordSet.h"
 
 // constructor
 

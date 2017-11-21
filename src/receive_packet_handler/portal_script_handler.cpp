@@ -10,7 +10,7 @@
 
 void Player::handle_use_scripted_portal() {
     skip_bytes(1);
-    std::string portal_name = read<std::string>();
+    std::string portal_name = read_string();
 
     MapData *data = MapDataProvider::get_instance()->get_map_data_by_id(
             map_->get_id());

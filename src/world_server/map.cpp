@@ -193,7 +193,7 @@ void Map::check_drops() {
         return;
     }
 
-    unsigned long long ticks = GetTickCount64();
+    unsigned long long ticks = tools::GetTickCount64();
 
     auto it = drops_.begin();
     for (; it != drops_.end();) {

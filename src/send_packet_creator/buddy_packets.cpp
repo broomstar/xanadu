@@ -31,16 +31,16 @@ void PacketCreator::BuddyListInvite(Player *player) {
     write<short>(send_headers::kBUDDY_LIST);
     write<signed char>(BuddylistSendPacketActions::kInvite);
     write<int>(player->get_id());
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     WriteBuddyData(player->get_id(), player->get_name(),
                    Buddylist::kOppositeStatusRequested,
                    player->get_channel_id(), std::string("Default Group"));
     write<signed char>(0);
 }
 
-void PacketCreator::WriteBuddyData(int id, std::string &name,
+void PacketCreator::WriteBuddyData(int id, const std::string &name,
                                    signed char opposite_status, int channel_id,
-                                   std::string &group_name) {
+                                   const std::string &group_name) {
     write<int>(id);
     write_string(name, 13);
     write<signed char>(opposite_status);

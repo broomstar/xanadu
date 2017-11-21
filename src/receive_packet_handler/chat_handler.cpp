@@ -19,7 +19,7 @@
 
 void Player::handle_chat_command() {
     signed char type = read<signed char>();
-    std::string name = read<std::string>();
+    std::string name = read_string();
 
     Player *receiver_player = World::get_instance()->GetPlayerByName(name);
 
@@ -66,7 +66,7 @@ void Player::handle_chat_command() {
         }
         case chat_command_handler_type_constants::kWhisper: {
             if (receiver_player) {
-                std::string message = read<std::string>();
+                std::string message = read_string();
 
                 if (message.empty()) {
                     return;
@@ -99,7 +99,7 @@ void Player::handle_chat_command() {
 void Player::handle_use_chat() {
     World *world = World::get_instance(); // this pointer is often used in this function so declare it right away
 
-    std::string message = read<std::string>();
+    std::string message = read_string();
 
     if (message.empty()) {
         return;
@@ -109,7 +109,7 @@ void Player::handle_use_chat() {
         return;
     }
 
-    bool bubble_only = read<bool>(); // Skill macros only display chat bubble
+    bool bubble_only = read_bool(); // Skill macros only display chat bubble
 
     if (get_is_gm() && message[0] == '!') {
         // GM Commands
@@ -596,7 +596,7 @@ void Player::handle_use_chat() {
         std::string command = message.substr(1, message.find(" ") - 1);
 
         if (command == "gm") {
-            unsigned long long ticks = GetTickCount64();
+            unsigned long long ticks = tools::GetTickCount64();
 
             // "cooldown" 3 minutes
 
@@ -721,7 +721,7 @@ void Player::handle_use_group_chat() {
         }
     }
 
-    const std::string &message = read<std::string>();
+    const std::string &message = read_string();
 
     if (message.empty()) {
         return;

@@ -7,9 +7,9 @@
 #include <functional>
 
 #include "../crypto/crypto.hpp"
-#include "../packetcreator.hpp"
-#include "../player.hpp"
-#include "../world.hpp"
+#include "packetcreator.hpp"
+#include "player.hpp"
+#include "world.hpp"
 
 //#include "logger.hpp"
 

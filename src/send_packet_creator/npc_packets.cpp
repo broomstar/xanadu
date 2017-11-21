@@ -17,11 +17,11 @@ void PacketCreator::ShowNpc(Npc *npc) {
     write<int>(npc->get_npc_id());
     write<short>(npc->get_position_x());
     write<short>(npc->get_position_y());
-    write<bool>(!npc->get_flip());
+    write_bool(!npc->get_flip());
     write<short>(npc->get_foothold());
     write<short>(npc->get_rx0());
     write<short>(npc->get_rx1());
-    write<bool>(
+    write_bool(
             true); // sets wether the npc is shown or not (1/true = show, 0/false = hide)
 }
 
@@ -73,7 +73,7 @@ void PacketCreator::send_simple(int npc_id, std::string text) {
     write<int>(npc_id);
     write<signed char>(4); // type: Simple
     write<signed char>(0); // speaker
-    write<std::string>(text);
+    write_string(text);
 }
 
 void PacketCreator::send_yes_no(int npc_id, std::string text) {
@@ -82,7 +82,7 @@ void PacketCreator::send_yes_no(int npc_id, std::string text) {
     write<int>(npc_id);
     write<signed char>(1); // type: YesNo
     write<signed char>(0); // speaker
-    write<std::string>(text);
+    write_string(text);
 }
 
 void PacketCreator::send_back_next(int npc_id, std::string text, bool back,
@@ -92,7 +92,7 @@ void PacketCreator::send_back_next(int npc_id, std::string text, bool back,
     write<int>(npc_id);
     write<signed char>(0); // type: Normal
     write<signed char>(0); // speaker
-    write<std::string>(text);
+    write_string(text);
 
     write<signed char>(back);
     write<signed char>(next);
@@ -105,7 +105,7 @@ void PacketCreator::send_style(int styles[], int size, int npc_id,
     write<int>(npc_id);
     write<signed char>(7); // type: Style
     write<signed char>(0); // speaker
-    write<std::string>(text);
+    write_string(text);
 
     write<signed char>(size);
 

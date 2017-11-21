@@ -9,7 +9,7 @@ void PacketCreator::EnterCashShop(Player *player) {
     write<short>(send_headers::kOPEN_CASHSHOP);
     writeCharacterData(player);
     write<signed char>(1);
-    write<std::string>(player->get_user_name());
+    write_string(player->get_user_name());
 
     /*
 
@@ -408,7 +408,7 @@ maybe has to-do with the event bool below?
 
     // -------------------------------------------------------------------------------
 
-    write<bool>(false); // bool Event On
+    write_bool(false); // bool Event On
     write<int>(150); // Highest Character Level In This Account
 }
 

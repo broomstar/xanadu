@@ -4,6 +4,7 @@
 
 #include <ctime>
 #include <random>
+#include <Poco/Timestamp.h>
 
 namespace tools {
     int random_int(int min, int max) {
@@ -99,6 +100,11 @@ namespace tools {
         if (skill_id / 10000 % 100 && skill_id / 10000 % 10 == 2)
             return true;
         return false;
+    }
+
+    unsigned long long GetTickCount64() {
+        Poco::Timestamp now;
+        return static_cast<unsigned long long int>(now.raw());
     }
 
 }

@@ -10,9 +10,9 @@ void PacketCreator::ShowChatMessage(Player *player, const std::string &message,
                                     bool bubble_only) {
     write<short>(send_headers::kCHATTEXT);
     write<int>(player->get_id());
-    write<bool>(player->get_is_gm());
-    write<std::string>(message);
-    write<bool>(bubble_only);
+    write_bool(player->get_is_gm());
+    write_string(message);
+    write_bool(bubble_only);
 }
 
 enum message_types {
@@ -36,7 +36,7 @@ void PacketCreator::ShowMessage(const std::string &message, unsigned char type,
         write<signed char>(message != "");
     }
 
-    write<std::string>(message);
+    write_string(message);
 
     switch (type) {
         case kSuperMegaphone: {
@@ -66,8 +66,8 @@ void PacketCreator::FindPlayerReply(const std::string &name, bool success) {
     write<short>(send_headers::kWHISPER);
     write<signed char>(
             find_player_or_whisper_packet_action_constants::kFindPlayerReply);
-    write<std::string>(name);
-    write<bool>(success);
+    write_string(name);
+    write_bool(success);
 }
 
 void PacketCreator::FindPlayer(const std::string &name, signed char mode2,
@@ -75,7 +75,7 @@ void PacketCreator::FindPlayer(const std::string &name, signed char mode2,
     write<short>(send_headers::kWHISPER);
     write<signed char>(
             find_player_or_whisper_packet_action_constants::kFindPlayerMapOrChannelOrMtsOrCashshop);
-    write<std::string>(name);
+    write_string(name);
     write<signed char>(mode2);
     write<int>(
             map_id_or_channel_id); // mapid or channelid or -1 if mts or cash shop
@@ -89,15 +89,15 @@ void PacketCreator::WhisperPlayer(Player *player, const std::string &message) {
     write<short>(send_headers::kWHISPER);
     write<signed char>(
             find_player_or_whisper_packet_action_constants::kWhisper);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     write<short>(player->get_channel_id());
-    write<std::string>(message);
+    write_string(message);
 }
 
 void PacketCreator::ShowGroupChat(unsigned char type, const std::string &name,
                                   const std::string &message) {
     write<short>(send_headers::kGROUP_CHAT);
     write<signed char>(type);
-    write<std::string>(name);
-    write<std::string>(message);
+    write_string(name);
+    write_string(message);
 }

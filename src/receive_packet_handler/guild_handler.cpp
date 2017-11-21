@@ -16,7 +16,7 @@ void Player::handle_guild_action() {
             if (guild_) {
                 return;
             }
-            std::string &name = read<std::string>();
+            const std::string &name = read_string();
             if (name.length() < 4 || name.length() > 12 ||
                 World::get_instance()->guild_name_used(name)) {
                 return;
@@ -31,7 +31,7 @@ void Player::handle_guild_action() {
             if (!guild_ || guild_rank_ > 2) {
                 return;
             }
-            std::string &target = read<std::string>();
+            const std::string &target = read_string();
             Player *invited = World::get_instance()->GetPlayerByName(target);
             if (!invited || invited->get_guild()) {
                 return;
@@ -73,7 +73,7 @@ void Player::handle_guild_action() {
         case 8: // Expell a player
         {
             int target_player_id = read<int>();
-            std::string target_player_name = read<std::string>();
+            std::string target_player_name = read_string();
 
             if (!guild_ || guild_rank_ > 2) {
                 return;
@@ -90,11 +90,11 @@ void Player::handle_guild_action() {
                 return;
             }
 
-            std::string rank1 = read<std::string>();
-            std::string rank2 = read<std::string>();
-            std::string rank3 = read<std::string>();
-            std::string rank4 = read<std::string>();
-            std::string rank5 = read<std::string>();
+            std::string rank1 = read_string();
+            std::string rank2 = read_string();
+            std::string rank3 = read_string();
+            std::string rank4 = read_string();
+            std::string rank5 = read_string();
 
             guild_->SetRank1(rank1, false);
             guild_->SetRank2(rank2, false);
@@ -160,7 +160,7 @@ void Player::handle_guild_action() {
                 return;
             }
 
-            std::string &notice = read<std::string>();
+            const std::string &notice = read_string();
             guild_->SetNotice(notice, false);
             {
                 PacketCreator packet;
@@ -191,8 +191,8 @@ void Player::handle_guild_bbs_action() {
             }
 
             bool b_notice = (read<signed char>() == 1 ? true : false);
-            std::string title = read<std::string>(); // String title = correctLength(slea.readMapleAsciiString(), 25);
-            std::string text = read<std::string>(); // String text = correctLength(slea.readMapleAsciiString(), 600);
+            std::string title = read_string(); // String title = correctLength(slea.readMapleAsciiString(), 25);
+            std::string text = read_string(); // String text = correctLength(slea.readMapleAsciiString(), 600);
 
             int icon = read<int>();
             if (icon >= 0x64 && icon <= 0x6a) {
@@ -237,7 +237,7 @@ void Player::handle_guild_bbs_action() {
         }
         case kReply: {
             local_thread_id = read<int>();
-            std::string text = read<std::string>(); // text = correctLength(slea.readMapleAsciiString(), 25);
+            std::string text = read_string(); // text = correctLength(slea.readMapleAsciiString(), 25);
             // newBBSReply(c, localthreadid, text);
             break;
         }

@@ -16,7 +16,7 @@ void PacketCreator::ShowDrop(signed char type, std::shared_ptr<Drop> drop,
 
     bool is_mesos = drop->is_mesos();
 
-    write<bool>(is_mesos);
+    write_bool(is_mesos);
 
     if (is_mesos) {
         write<int>(drop->get_mesos());
@@ -46,7 +46,7 @@ void PacketCreator::ShowDrop(signed char type, std::shared_ptr<Drop> drop,
         write<long long>(kNoExpirationTime);
     }
 
-    write<bool>(
+    write_bool(
             true); // 1/true = pet pickup enabled (for mob drops), 0/false = pet pickup disabled (for player drops)
 }
 

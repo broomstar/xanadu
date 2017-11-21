@@ -21,12 +21,12 @@ PacketCreator::ShowTrade(Player *player, Player *partner, signed char number) {
     if (number == 1) {
         write<signed char>(0);
         AddCharLook(partner);
-        write<std::string>(partner->get_name());
+        write_string(partner->get_name());
     }
 
     write<signed char>(number);
     AddCharLook(player);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     write<signed char>(-1);
 }
 
@@ -34,7 +34,7 @@ void PacketCreator::InviteTrade(Player *player) {
     write<short>(send_headers::kPLAYER_INTERACTION);
     write<signed char>(2); // action
     write<signed char>(3);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     write<int>(0);
 }
 
@@ -43,7 +43,7 @@ void PacketCreator::JoinTrade(Player *player) {
     write<signed char>(4); // action
     write<signed char>(1);
     AddCharLook(player);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
 }
 
 void PacketCreator::TradeError(signed char side, signed char message) {
@@ -58,7 +58,7 @@ void PacketCreator::ShowTradeChat(signed char side, std::string &message) {
     write<signed char>(6); // action
     write<signed char>(8);
     write<signed char>(side);
-    write<std::string>(message);
+    write_string(message);
 }
 
 void PacketCreator::TradeMesos(int mesos, signed char number) {
@@ -97,7 +97,7 @@ void PacketCreator::GetHiredMerchant(Player *player,
                     player->get_id()));
     write<signed char>(0);
     write<int>(merchant->get_item_id());
-    write<std::string>("Hired Merchant");
+    write_string("Hired Merchant");
 
     for (signed char slot = kHiredMerchantConstantsSlotsMin;
          slot <= kHiredMerchantConstantsSlotsMax; ++slot) {
@@ -106,7 +106,7 @@ void PacketCreator::GetHiredMerchant(Player *player,
         if (visitor) {
             write<signed char>(slot);
             AddCharLook(visitor);
-            write<std::string>(visitor->get_name());
+            write_string(visitor->get_name());
         }
     }
 
@@ -114,11 +114,11 @@ void PacketCreator::GetHiredMerchant(Player *player,
 
     write<short>(0); // messages
 
-    write<std::string>(merchant->get_owner_name());
+    write_string(merchant->get_owner_name());
 
     if (merchant->is_owner(player->get_id())) {
         write<int>(0); // time left
-        write<bool>(first_time);
+        write_bool(first_time);
 
         write<signed char>(0); // sold size
 
@@ -127,13 +127,13 @@ void PacketCreator::GetHiredMerchant(Player *player,
         write<int>(s.get_item_id()); // itemid of purchased
         write<short>(s.getQuantity()); // number of purchased
         write<int>(s.get_mesos()); // total price
-        write<std::string>(s.getBuyer()); // name of the buyer
+        write_string(s.getBuyer()); // name of the buyer
         }*/
 
         write<int>(merchant->get_merchant_mesos());
     }
 
-    write<std::string>(merchant->get_description());
+    write_string(merchant->get_description());
     write<signed char>(16); // slots
     write<int>(player->get_mesos());
     write<signed char>(static_cast<unsigned char>(merchant->get_num_items()));
@@ -176,7 +176,7 @@ void PacketCreator::HiredMerchantChat(signed char slot, std::string &message) {
     write<signed char>(6); // action
     write<signed char>(8);
     write<signed char>(slot);
-    write<std::string>(message);
+    write_string(message);
 }
 
 void PacketCreator::HiredMerchantVisitorLeave(signed char slot) {
@@ -190,7 +190,7 @@ void PacketCreator::HiredMerchantVisitorAdd(Player *player, signed char slot) {
     write<signed char>(4); // action
     write<signed char>(slot);
     AddCharLook(player);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
 }
 
 // mode:
@@ -220,10 +220,10 @@ PacketCreator::SpawnHiredMerchant(std::shared_ptr<HiredMerchant> merchant) {
     write<short>(merchant->get_position_x());
     write<short>(merchant->get_position_y());
     write<short>(0);
-    write<std::string>(merchant->get_owner_name());
+    write_string(merchant->get_owner_name());
     write<signed char>(5);
     write<int>(merchant->get_id());
-    write<std::string>(merchant->get_description());
+    write_string(merchant->get_description());
     write<signed char>(merchant->get_item_id() % 10);
     write<signed char>(1);
     write<signed char>(4);

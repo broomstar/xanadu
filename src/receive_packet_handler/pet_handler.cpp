@@ -144,7 +144,7 @@ void Player::handle_pet_chat() {
 
     skip_bytes(1);
     signed char act = read<signed char>();
-    std::string message = read<std::string>();
+    std::string message = read_string();
     {
         PacketCreator packet;
         packet.ShowPetChat(id_, pet, act, message);

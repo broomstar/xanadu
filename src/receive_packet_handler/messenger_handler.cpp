@@ -42,7 +42,7 @@ void Player::handle_messenger_action() {
         }
         case MessengerReceivePaketActions::kInvite: {
             if (messenger_) {
-                std::string invited_name = read<std::string>();
+                std::string invited_name = read_string();
                 Player *target = World::get_instance()->GetPlayerByName(
                         invited_name);
                 if (target) {
@@ -76,7 +76,7 @@ void Player::handle_messenger_action() {
             break;
         }
         case MessengerReceivePaketActions::kDecline: {
-            std::string inviter_name = read<std::string>();
+            std::string inviter_name = read_string();
             Player *target = World::get_instance()->GetPlayerByName(
                     inviter_name);
             if (target) {
@@ -90,8 +90,8 @@ void Player::handle_messenger_action() {
         }
         case MessengerReceivePaketActions::kChat: {
             if (messenger_) {
-                std::string name = read<std::string>();
-                std::string text = read<std::string>();
+                std::string name = read_string();
+                std::string text = read_string();
                 {
                     PacketCreator packet;
                     packet.MessengerChat(name, text);

@@ -8,8 +8,8 @@
 #include "constants/constants.hpp"
 
 #include <angelscript.h>
-#include "scriptstdstring\scriptstdstring.h"
-#include "scriptarray\scriptarray.h"
+#include "scriptstdstring/scriptstdstring.h"
+#include "scriptarray/scriptarray.h"
 
 // Implement a simple message callback function for as
 void MessageCallback(const asSMessageInfo *msg, void *param) {

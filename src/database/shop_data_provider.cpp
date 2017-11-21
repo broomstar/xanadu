@@ -6,7 +6,7 @@
 
 #include "world.hpp"
 
-#include "Poco\Data\RecordSet.h"
+#include "Poco/Data/RecordSet.h"
 
 // singleton
 

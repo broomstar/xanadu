@@ -4,7 +4,7 @@
 
 #include <chrono>
 
-#include "../world.hpp"
+#include "world.hpp"
 
 // constructor
 

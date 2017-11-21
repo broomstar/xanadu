@@ -13,12 +13,12 @@ void PacketCreator::ShowPet(int owner_player_id, std::shared_ptr<Item> pet,
     write<short>(send_headers::kPET_SPAWN);
     write<int>(owner_player_id);
     write<signed char>(pet->get_pet_slot());
-    write<bool>(show);
+    write_bool(show);
     write<signed char>(0);
 
     if (show) {
         write<int>(pet->get_item_id());
-        write<std::string>(pet->get_name());
+        write_string(pet->get_name());
         write<long long>(pet->get_unique_id());
         write<short>(pet->get_position_x());
         write<short>(pet->get_position_y());
@@ -55,7 +55,7 @@ void PacketCreator::ShowPetChat(int owner_player_id, std::shared_ptr<Item> pet,
     write<signed char>(pet->get_pet_slot());
     write<signed char>(0);
     write<signed char>(act);
-    write<std::string>(message);
+    write_string(message);
     write<signed char>(0);
 }
 
@@ -66,7 +66,7 @@ PacketCreator::PetCommandReplay(int owner_player_id, std::shared_ptr<Item> pet,
     write<int>(owner_player_id);
     write<signed char>(pet->get_pet_slot());
     write<signed char>(0); // if not food, this byte is needed
-    write<bool>(animation == 1);
+    write_bool(animation == 1);
     write<signed char>(animation);
     write<signed char>(0); // success byte
     write<signed char>(0);

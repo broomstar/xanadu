@@ -4,7 +4,7 @@
 #include "wzcrypto.hpp"
 #include "wznode.hpp"
 #include "wzmain.hpp"
-#include "../world.hpp"
+#include "world.hpp"
 
 void img_parse(WZImg *img)
 {
@@ -63,8 +63,8 @@ void img_extended_property(WZImg *img, WZNode n)
 	else if (strcmp(name, "Shape2D#Vector2D") == 0)
 	{
 		n.reserve(2);
-		n.g("x", 0).set(img->file.read_value());
-		n.g("y", 1).set(img->file.read_value());
+		n.g(const_cast<char *>("x"), 0).set(img->file.read_value());
+		n.g(const_cast<char *>("y"), 1).set(img->file.read_value());
 	}
 	else if (strcmp(name, "UOL") == 0)
 	{

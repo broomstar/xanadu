@@ -26,10 +26,10 @@
 #include "quest_data_provider.hpp"
 #include "map_data_provider.hpp"
 #include "constants/server_constants.hpp"
-#include "wz/wznode.hpp"
-#include "wz/wzmain.hpp"
+#include "wznode.hpp"
+#include "wzmain.hpp"
 
-#include "Poco\Data\RecordSet.h"
+#include "Poco/Data/RecordSet.h"
 
 // singleton
 
@@ -604,7 +604,7 @@ unsigned char World::get_channel_id_for_user_id(int user_id)
 
 void World::add_fame(int player_id)
 {
-	player_fame_ticks_[player_id] = GetTickCount64();
+	player_fame_ticks_[player_id] = tools::GetTickCount64();
 }
 
 void World::remove_fame(int player_id)
@@ -623,12 +623,9 @@ bool World::can_fame(int player_id)
 		return true;
 	}
 
-	if ((GetTickCount64() - player_fame_ticks_[player_id]) > (24 * 60 * 60 * 1000))
-	{
-		return true;
-	}
-
-	return false;
+	Poco::Timestamp now;
+	unsigned long long ticks = static_cast<unsigned long long int>(now.raw());
+	return ticks - player_fame_ticks_[player_id] > 24 * 60 * 60 * 1000;
 }
 
 bool World::is_online_user(std::string user_name)

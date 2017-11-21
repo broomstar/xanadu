@@ -25,4 +25,6 @@ namespace tools {
     short get_job_id_from_skill_id(int skill_id);
 
     bool is_fourth_job_skill(int skill_id);
+
+    unsigned long long  GetTickCount64();
 }

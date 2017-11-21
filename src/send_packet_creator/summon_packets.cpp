@@ -19,7 +19,7 @@ void PacketCreator::SpawnSummon(Player *player, Summon *summon, bool animated) {
     write<short>(0); // foothold
     write<signed char>(summon_get_movement_type(summon->skill_id_));
     write<signed char>(summon_get_summon_type(summon->skill_id_));
-    write<bool>(animated);
+    write_bool(animated);
 }
 
 void PacketCreator::MoveSummon(int owner_player_id, short start_position_x,

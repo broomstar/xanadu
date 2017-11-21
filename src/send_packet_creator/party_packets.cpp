@@ -76,7 +76,7 @@ void PacketCreator::InviteParty(Player *from) {
     write<short>(send_headers::kPARTY_OPERATION);
     write<signed char>(PartySendPaketActions::kInvite);
     write<int>(from->get_party()->get_id());
-    write<std::string>(from->get_name());
+    write_string(from->get_name());
     write<signed char>(0);
 }
 
@@ -91,16 +91,16 @@ void PacketCreator::PartyCreated(int party_id) {
 }
 
 void PacketCreator::LeaveParty(Party *party, int player_id, bool leave,
-                               std::string &player_name, bool expel) {
+                               const std::string &player_name, bool expel) {
     write<short>(send_headers::kPARTY_OPERATION);
     write<signed char>(PartySendPaketActions::kRemoveOrLeave);
     write<int>(party->get_id());
     write<int>(player_id);
-    write<bool>(leave);
+    write_bool(leave);
 
     if (leave) {
-        write<bool>(expel);
-        write<std::string>(player_name);
+        write_bool(expel);
+        write_string(player_name);
         PartyInfo(party);
     }
 }
@@ -109,7 +109,7 @@ void PacketCreator::JoinParty(Player *player) {
     write<short>(send_headers::kPARTY_OPERATION);
     write<signed char>(PartySendPaketActions::kJoin);
     write<int>(player->get_party()->get_id());
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     PartyInfo(player->get_party());
 }
 
@@ -118,7 +118,7 @@ void PacketCreator::ChangeLeader(int new_leader_player_id,
     write<short>(send_headers::kPARTY_OPERATION);
     write<signed char>(PartySendPaketActions::kChangeLeader);
     write<int>(new_leader_player_id);
-    write<bool>(leader_disconnected);
+    write_bool(leader_disconnected);
 }
 
 void PacketCreator::UpdateParty(Party *party) {

@@ -7,14 +7,14 @@
 
 void PacketCreator::EnableAction(bool unstuck) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(
+    write_bool(
             unstuck); // 1 / true = fix client lock and update client time/tick
     write<int>(kCharacterStatsNone);
 }
 
 void PacketCreator::UpdateLevel(unsigned char level) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(kCharacterStatsLevel);
 
     write<unsigned char>(level);
@@ -22,7 +22,7 @@ void PacketCreator::UpdateLevel(unsigned char level) {
 
 void PacketCreator::UpdateSp(Player *player, short value) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(kCharacterStatsSp);
 
     write<short>(value); // remaining sp
@@ -31,7 +31,7 @@ void PacketCreator::UpdateSp(Player *player, short value) {
 void PacketCreator::UpdateApStats(short str, short dex, short intt, short luk,
                                   short ap) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(kCharacterStatsStr | kCharacterStatsDex | kCharacterStatsInt |
                kCharacterStatsLuk | kCharacterStatsAp); // stat: update mask
 
@@ -46,7 +46,7 @@ void PacketCreator::UpdateApStats(short str, short dex, short intt, short luk,
 // skin, job, str, dex, int, luk, ap, sp (has own packet)
 void PacketCreator::UpdateStatShort(int stat, short value) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(stat);
 
     write<short>(value);
@@ -55,7 +55,7 @@ void PacketCreator::UpdateStatShort(int stat, short value) {
 // face, hair, hp, maxhp, mp, maxmp, fame, exp, mesos
 void PacketCreator::UpdateStatInt(int stat, int value) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(stat);
 
     write<int>(value);
@@ -63,7 +63,7 @@ void PacketCreator::UpdateStatInt(int stat, int value) {
 
 void PacketCreator::PetStatUpdate(Player *player) {
     write<short>(send_headers::kUPDATE_STATS);
-    write<bool>(true); // 1 / true = fix client lock and update client time/tick
+    write_bool(true); // 1 / true = fix client lock and update client time/tick
     write<int>(kCharacterStatsPet);
 
     auto pets = *player->get_pets();

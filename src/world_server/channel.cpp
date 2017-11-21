@@ -3,8 +3,8 @@
 #include "channel.hpp"
 
 #include "map.hpp"
-#include "wz/wznode.hpp"
-#include "wz/wzmain.hpp"
+#include "wznode.hpp"
+#include "wzmain.hpp"
 #include "world.hpp"
 
 // constructor

@@ -45,14 +45,14 @@ PacketCreator::carnival_pq_summon(signed char tab, signed char summon_number,
     write<signed char>(tab);
     write<signed char>(
             summon_number); // each mob in cpq has a specific summon number
-    write<std::string>(player_name);
+    write_string(player_name);
 }
 
 void PacketCreator::carnival_pq_died(signed char lost_cp, unsigned char team,
                                      std::string player_name) {
     write<short>(send_headers::kMONSTER_CARNIVAL_DIED);
     write<unsigned char>(team);
-    write<std::string>(player_name);
+    write_string(player_name);
     write<signed char>(lost_cp);
 }
 
@@ -64,7 +64,7 @@ void PacketCreator::leave_carnival_pq(bool player_is_leader, unsigned char team,
     write<short>(send_headers::kMONSTER_CARNIVAL_LEAVE);
     write<signed char>(player_is_leader ? 6 : 0);
     write<unsigned char>(team);
-    write<std::string>(player_name);
+    write_string(player_name);
 }
 
 // cpq_show_game_result

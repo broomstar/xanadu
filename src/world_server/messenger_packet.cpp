@@ -12,7 +12,7 @@ void PacketCreator::MessengerAddPlayer(Player *player) {
     write<signed char>(MessengerSendPaketActions::kOpen);
     write<signed char>(player->get_messenger_position());
     AddCharLook(player, true);
-    write<std::string>(player->get_name());
+    write_string(player->get_name());
     write<short>(player->get_channel_id());
 }
 
@@ -31,7 +31,7 @@ void PacketCreator::MessengerRemovePlayer(signed char pos) {
 void PacketCreator::MessengerInvite(Player *inviter) {
     write<short>(send_headers::kMESSENGER);
     write<signed char>(MessengerSendPaketActions::kInvite);
-    write<std::string>(inviter->get_name());
+    write_string(inviter->get_name());
     write<signed char>(0);
     write<int>(inviter->get_messenger()->get_id());
     write<signed char>(0);
@@ -40,20 +40,20 @@ void PacketCreator::MessengerInvite(Player *inviter) {
 void PacketCreator::MessengerNote(std::string invited, bool invite_successful) {
     write<short>(send_headers::kMESSENGER);
     write<signed char>(MessengerSendPaketActions::kNote);
-    write<std::string>(invited);
-    write<bool>(invite_successful);
+    write_string(invited);
+    write_bool(invite_successful);
 }
 
 void PacketCreator::MessengerDeclined(std::string invited) {
     write<short>(send_headers::kMESSENGER);
     write<signed char>(MessengerSendPaketActions::kDecline);
-    write<std::string>(invited);
+    write_string(invited);
     write<signed char>(0);
 }
 
 void PacketCreator::MessengerChat(std::string name, std::string text) {
     write<short>(send_headers::kMESSENGER);
     write<signed char>(MessengerSendPaketActions::kChat);
-    write<std::string>(name);
-    write<std::string>(text);
+    write_string(name);
+    write_string(text);
 }

@@ -19,7 +19,7 @@ Drop::Drop(int id, signed char type, short position_x, short position_y,
         position_y_(position_y),
         mesos_(mesos),
         owner_player_id_(owner_player_id),
-        time_(GetTickCount64()) {
+        time_(tools::GetTickCount64()) {
 }
 
 bool Drop::loot_drop(Player *player, signed char pet_slot) {

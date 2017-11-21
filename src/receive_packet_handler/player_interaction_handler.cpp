@@ -52,7 +52,7 @@ void Player::handle_item_transportation() {
                         return;
                     }
 
-                    std::string description = read<std::string>();
+                    std::string description = read_string();
                     skip_bytes(1);
                     short item_slot = read<short>();
                     int item_id = read<int>();
@@ -172,7 +172,7 @@ void Player::handle_item_transportation() {
         }
         case 6: // Miniroom Chat
         {
-            std::string message = (name_ + " : " + read<std::string>());
+            std::string message = (name_ + " : " + read_string());
 
             if (trade_partner_) {
                 {
@@ -403,7 +403,7 @@ void Player::handle_item_transportation() {
             }
 
             skip_bytes(2);
-            std::string pic = read<std::string>();
+            std::string pic = read_string();
             int map_object_id = read<int>();
 
             auto merchant = map_->get_hired_merchant(map_object_id);

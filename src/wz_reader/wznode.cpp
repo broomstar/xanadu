@@ -7,7 +7,7 @@
 #include "wzmain.hpp"
 #include "wzdata.hpp"
 #include "wzdata_constants.hpp"
-#include "../world.hpp"
+#include "world.hpp"
 
 // default constructor
 

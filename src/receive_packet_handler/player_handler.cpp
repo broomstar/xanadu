@@ -139,7 +139,7 @@ void Player::handle_change_map() {
         }
     } else if (type == -1) // normal portal
     {
-        std::string portal_name = read<std::string>();
+        std::string portal_name = read_string();
 
         MapData *data = MapDataProvider::get_instance()->get_map_data_by_id(
                 map_->get_id());

@@ -11,7 +11,7 @@
 #include "constants/job_constants.hpp"
 #include "constants/constants.hpp"
 
-#include "Poco\Data\RecordSet.h"
+#include "Poco/Data/RecordSet.h"
 
 void Player::handle_login_request() {
     World *world = World::get_instance();
@@ -19,12 +19,12 @@ void Player::handle_login_request() {
         return;
     }
 
-    user_name_ = read<std::string>();
+    user_name_ = read_string();
     if (user_name_.size() < 4 || user_name_.size() > 13) {
         return;
     }
 
-    std::string password = read<std::string>();
+    std::string password = read_string();
     if (password.size() < 4 || password.size() > 13) {
         return;
     }
@@ -225,7 +225,7 @@ void Player::handle_view_all_characters() {
 }
 
 void Player::handle_connect_game() {
-    std::string pic = read<std::string>();
+    std::string pic = read_string();
     int player_id = read<int>();
 
     {
@@ -236,7 +236,7 @@ void Player::handle_connect_game() {
 }
 
 void Player::handle_connect_game_vac() {
-    std::string pic = read<std::string>();
+    std::string pic = read_string();
     int player_id = read<int>();
     int world_id = read<int>();
 
@@ -258,7 +258,7 @@ void Player::handle_connect_game_vac() {
 }
 
 void Player::handle_character_creation_name_check() {
-    std::string name = read<std::string>();
+    std::string name = read_string();
     if (name.length() < 4 || name.length() > 12) {
         return;
     }
@@ -271,7 +271,7 @@ void Player::handle_character_creation_name_check() {
 }
 
 void Player::handle_create_character() {
-    std::string name = read<std::string>();
+    std::string name = read_string();
     if (name.length() < 4 || name.length() > 12) {
         return;
     }
@@ -477,7 +477,7 @@ void Player::handle_create_character() {
 }
 
 void Player::handle_delete_character() {
-    std::string pic = read<std::string>();
+    std::string pic = read_string();
     int player_id = read<int>();
 
     // remove character data from mysql

@@ -10,7 +10,7 @@ void Player::handle_buddy_list_action() {
     signed char type = read<signed char>();
     switch (type) {
         case BuddylistReceivePacketActions::kAdd: {
-            std::string player_name = read<std::string>();
+            std::string player_name = read_string();
             add_buddy(player_name);
             break;
         }

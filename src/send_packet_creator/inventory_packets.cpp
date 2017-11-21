@@ -72,7 +72,7 @@ void PacketCreator::ItemInfo(Item *item, bool show_position) {
     write<signed char>(item_type);
     write<int>(item_id);
 
-    write<bool>(is_cash);
+    write_bool(is_cash);
 
     if (is_cash) {
         write<long long>(item->get_unique_id());
@@ -99,7 +99,7 @@ void PacketCreator::ItemInfo(Item *item, bool show_position) {
             write<short>(item->get_hand());
             write<short>(item->get_speed());
             write<short>(item->get_jump());
-            write<std::string>(item->get_owner_name());
+            write_string(item->get_owner_name());
             write<short>(item->get_flag());
             write<signed char>(
                     0); // item level up type? (from v0.95 GMS: _ZtlSecureTear_nLevelUpType_CS)
@@ -121,7 +121,7 @@ void PacketCreator::ItemInfo(Item *item, bool show_position) {
 
         case kItem: {
             write<short>(item->get_amount());
-            write<std::string>(item->get_owner_name());
+            write_string(item->get_owner_name());
             write<short>(item->get_flag());
 
             if (item->is_star()) {
@@ -148,7 +148,7 @@ void PacketCreator::ItemInfo(Item *item, bool show_position) {
 
 void PacketCreator::UpdateSlot(std::shared_ptr<Item> item) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(1); // how many items to upgrade
 
     write<signed char>(
@@ -162,7 +162,7 @@ void PacketCreator::UpdateSlot(std::shared_ptr<Item> item) {
 void PacketCreator::MoveItem(signed char inventory_id, short source_slot,
                              short destination_slot) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(1); // how many items to update
 
     write<signed char>(
@@ -180,7 +180,7 @@ void PacketCreator::MoveItem(signed char inventory_id, short source_slot,
 
 void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(from_drop); // sets wether to unstuck the client and update tick
+    write_bool(from_drop); // sets wether to unstuck the client and update tick
     write<signed char>(1); // how many items to add
 
     write<signed char>(
@@ -194,7 +194,7 @@ void PacketCreator::NewItem(std::shared_ptr<Item> item, bool from_drop) {
 void
 PacketCreator::remove_item(signed char inventory_id, int slot, bool from_drop) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(from_drop); // sets wether to unstuck the client and update tick
+    write_bool(from_drop); // sets wether to unstuck the client and update tick
     write<signed char>(1); // how many items to remove
 
     write<signed char>(
@@ -211,7 +211,7 @@ PacketCreator::remove_item(signed char inventory_id, int slot, bool from_drop) {
 void PacketCreator::MoveItemMerge(signed char inventory_id, short source_slot,
                                   short destination_slot, short amount) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(2); // how many items to update
 
     write<signed char>(
@@ -234,7 +234,7 @@ PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot,
                                 short source_amount, short destination_slot,
                                 short destination_amount) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(2); // how many items to update
 
     write<signed char>(
@@ -255,7 +255,7 @@ PacketCreator::MoveItemMergeTwo(signed char inventory_id, short source_slot,
 void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll,
                                  std::shared_ptr<Item> equip, bool destroyed) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(destroyed ? 2 : 3); // how many items to update
 
     write<signed char>((scroll->get_amount() > 1) ? 1
@@ -288,7 +288,7 @@ void PacketCreator::ScrolledItem(std::shared_ptr<Item> scroll,
 
 void PacketCreator::InventoryUpdatePet(Item *pet) {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(false); // sets wether to unstuck the client and update tick
+    write_bool(false); // sets wether to unstuck the client and update tick
     write<signed char>(1); // how many items to upgrade
 
     write<signed char>(
@@ -301,6 +301,6 @@ void PacketCreator::InventoryUpdatePet(Item *pet) {
 
 void PacketCreator::get_inventory_full() {
     write<short>(send_headers::kMODIFY_INVENTORY_ITEM);
-    write<bool>(true); // sets wether to unstuck the client and update tick
+    write_bool(true); // sets wether to unstuck the client and update tick
     write<signed char>(0); // how many items to upgrade
 }

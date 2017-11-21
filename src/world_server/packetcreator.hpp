@@ -4,6 +4,8 @@
 
 #include <memory>
 #include <unordered_map>
+#include <string>
+#include <vector>
 
 #include "constants/packet_constants.hpp"
 
@@ -119,8 +121,8 @@ public:
 
     void BuddyListInvite(Player *player);
 
-    void WriteBuddyData(int id, std::string &name, signed char opposite_status,
-                        int channel_id, std::string &group_name);
+    void WriteBuddyData(int id, const std::string &name, signed char opposite_status,
+                        int channel_id, const std::string &group_name);
 
     void UpdateBuddyChannel(int player_id, int channel_id);
 
@@ -393,7 +395,7 @@ public:
     void PartyCreated(int party_id);
 
     void LeaveParty(Party *party, int player_id, bool leave,
-                    std::string &player_name, bool expel);
+                    const std::string &player_name, bool expel);
 
     void InviteParty(Player *from);
 
@@ -638,24 +640,52 @@ public:
 
     // template function specialisation for writing bytes based on the type bool
 
-    template<>
-    void write<bool>(bool value) {
-        // adjust buffer
+//    template<>
+//    void write<bool>(bool value) {
+//        // adjust buffer
+//
+//        if (length_ + sizeof(bool) >= buffer_size_) {
+//            buffer_ = (unsigned char *) realloc(buffer_, buffer_size_ +
+//                                                         kIncreasePacketBufferSize);
+//            buffer_size_ += kIncreasePacketBufferSize;
+//        }
+//
+//        buffer_[length_] = static_cast<unsigned char>(value ? 1 : 0);
+//        ++length_;
+//    }
 
+    void write_bool(bool value) {
+        // adjust buffer
         if (length_ + sizeof(bool) >= buffer_size_) {
             buffer_ = (unsigned char *) realloc(buffer_, buffer_size_ +
                                                          kIncreasePacketBufferSize);
             buffer_size_ += kIncreasePacketBufferSize;
         }
 
-        buffer_[length_] = (value ? 1 : 0);
+        buffer_[length_] = static_cast<unsigned char>(value ? 1 : 0);
         ++length_;
     }
-
     // template function specialisation for writing bytes based on the type std::string
 
-    template<>
-    void write<std::string>(std::string str) {
+//    template<>
+//    void write_string(std::string str) {
+//        size_t len = str.length();
+//
+//        // adjust buffer
+//
+//        if (length_ + len >= buffer_size_) {
+//            buffer_ = (unsigned char *) realloc(buffer_, buffer_size_ +
+//                                                         kIncreasePacketBufferSize);
+//            buffer_size_ += kIncreasePacketBufferSize;
+//        }
+//
+//        write<short>(static_cast<short>(len));
+//
+//        memcpy(buffer_ + length_, str.c_str(), len);
+//        length_ += len;
+//    }
+
+    void write_string(const std::string str) {
         size_t len = str.length();
 
         // adjust buffer
