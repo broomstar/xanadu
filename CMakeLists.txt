@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(xanadu)
 
+
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
@@ -71,17 +72,17 @@ set(SOURCE_FILES
         src/receive_packet_handler/portal_script_handler.cpp
         src/receive_packet_handler/quest_handler.cpp
         src/receive_packet_handler/reactor_handler.cpp
-        #        src/receive_packet_handler/script_handler.cpp
+        src/receive_packet_handler/script_handler.cpp
         src/receive_packet_handler/skills_handler.cpp
         src/receive_packet_handler/stats_handler.cpp
         src/receive_packet_handler/storage_handler.cpp
         src/receive_packet_handler/summon_handler.cpp
-        #        src/script_engine/scriptarray/scriptarray.cpp
-        #        src/script_engine/scriptarray/scriptarray.h
-        #        src/script_engine/scriptstdstring/scriptstdstring.cpp
-        #        src/script_engine/scriptstdstring/scriptstdstring.h
-        #        src/script_engine/scriptstdstring/scriptstdstring_utils.cpp
-        #        src/script_engine/script_handler.h
+        src/script_engine/scriptarray/scriptarray.cpp
+        src/script_engine/scriptarray/scriptarray.h
+        src/script_engine/scriptstdstring/scriptstdstring.cpp
+        src/script_engine/scriptstdstring/scriptstdstring.h
+        src/script_engine/scriptstdstring/scriptstdstring_utils.cpp
+        src/script_engine/script_handler.h
         #        src/scripts/npcs/1012000.as
         #        src/scripts/npcs/1022001.as
         #        src/scripts/npcs/1032000.as
@@ -245,9 +246,15 @@ include_directories(src/
         src/wz_reader
         src/constants
         /usr/local/Cellar/cryptopp/5.6.5/include/cryptopp
-        /Users/linjian/Cpp/User/local/include)
+        /Users/linjian/Cpp/User/local/include
+        /Users/linjian/Cpp/sdk/angelscript/include
+        )
 link_directories(
         /usr/local/Cellar/cryptopp/5.6.5/lib
-        /Users/linjian/Cpp/User/local/lib)
+        /Users/linjian/Cpp/User/local/lib
+        /usr/local/Cellar/mysql/5.7.20/lib
+        /usr/local/opt/openssl/lib
+        /Users/linjian/Cpp/sdk/angelscript/projects/xcode/build/Release)
 add_executable(xanadu ${SOURCE_FILES})
-target_link_libraries(xanadu cryptopp fmt PocoDataMySQL PocoData PocoFoundation)
+
+target_link_libraries(xanadu libangelscript.a libcryptopp.a libfmt.a libmysqld.a libssl.a libcrypto.a libPocoDataMySQL.a libPocoData.a libPocoFoundation.a)
